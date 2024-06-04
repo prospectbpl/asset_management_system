@@ -28,7 +28,7 @@ const ApplicationSetting = ({ handleLogout, username }) => {
             const data = response.data;
             if (data) {
                 setFormData(data);
-                setFavicon(data.favicon ? data.favicon : ''); // Handle null favicon value
+                setFavicon(data.favicon ? data.favicon : ''); // Handle null favicon 
                 setLandingPageLogo(data.landingPageLogo ? data.landingPageLogo : ''); // Handle null landingPageLogo value
                 setDashboardLogo(data.dashboardLogo ? data.dashboardLogo : ''); // Handle null dashboardLogo value
             }
