@@ -118,6 +118,7 @@ const AddAsset = ({ onClose, onUpdate }) => {
                                     value={assetType}
                                     onChange={handleChange}
                                     required
+                                    
                                 >
                                     <option value="" disabled hidden>Select Type</option>
                                     <option value="Movable">Movable</option>
