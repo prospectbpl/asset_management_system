@@ -1,0 +1,66 @@
+name: 🚀 Deploy File to cPanel
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  FTP-Deploy-Action:
+    name: 🎉 Deploy
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 🚚 Get latest code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - name: Use Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Cache npm dependencies
+        uses: actions/cache@v4
+        id: cache-node-modules
+        with:
+          path: "**/node_modules"
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+
+      - name: 🔨 Install Dependencies
+        if: steps.cache-node-modules.outputs.cache-hit != 'true'
+        run: |
+          npm install
+        env:
+          CI: false
+
+      - name: 📂 Build for Server 1
+        run: |
+          npm run build:server1
+          git reset --hard
+        env:
+          CI: false
+
+      - name: 📂 Sync folders and files to the first server
+        uses: SamKirkland/FTP-Deploy-Action@4.3.3
+        with:
+          server: ${{ secrets.FTP_HOST_1 }}
+          username: ${{ secrets.FTP_USERNAME_1 }}
+          password: ${{ secrets.FTP_PASSWORD_1 }}
+          local-dir: build/
+
+      - name: 📂 Build for Server 2
+        run: |
+          npm run build:server2
+          git reset --hard
+        env:
+          CI: false
+
+      - name: 📂 Sync folders and files to the second server
+        uses: SamKirkland/FTP-Deploy-Action@4.3.3
+        with:
+          server: ${{ secrets.FTP_HOST_2 }}
+          username: ${{ secrets.FTP_USERNAME_2 }}
+          password: ${{ secrets.FTP_PASSWORD_2 }}
+          local-dir: build/
