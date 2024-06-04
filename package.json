@@ -1,6 +1,6 @@
 {
   "name": "demo",
-  "homepage": "https://demo1.prospectdigital.in",
+  "homepage": "https://default.url",
   "version": "0.1.1",
   "private": true,
   "dependencies": {
