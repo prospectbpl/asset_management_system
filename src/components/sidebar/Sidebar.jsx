@@ -282,7 +282,7 @@ function Sidebar({ handleLogout }) {
               </a>
               <div id="collapseAsset" className="collapse" aria-labelledby="headingAsset" data-parent="#accordionSidebar">
                 <div className="bg-white py-2 collapse-inner rounded">
-                  <h6 style={{background:"#3F65D3"}} className="collapse-header">Assets:</h6>
+                  <h6  className="collapse-header">Assets:</h6>
                   <a className="collapse-item" href="#" onClick={handleAddAssetModal}>Add Asset master</a>
                   <Link to="/assetmasterlist" className="collapse-item"><span>Asset Master List</span></Link>
                   <a className="collapse-item" href="#" onClick={handleAddAsset}>Add new Asset</a>
@@ -292,7 +292,7 @@ function Sidebar({ handleLogout }) {
                   {/* <Link to="/assetlist" className="collapse-item"><span>Asset List</span></Link> */}
                   <Link to="/assettransfer" className="collapse-item"><span>Asset Transfer</span></Link>
                   {/* <a className="collapse-item" href="#">Transfer Asset</a> */}
-                  <h6 style={{background:"#3F65D3"}} className="collapse-header">Asset on Maintenance:</h6>
+                  <h6  className="collapse-header">Asset on Maintenance:</h6>
                   <a className="collapse-item" href="#" onClick={handleAddAssetMaintenanceModal}>Add new Maintenance</a>
                   <Link className="collapse-item" to="/assetMaintenance" ><span>Asset Maintenance</span>
                   </Link>
@@ -300,12 +300,12 @@ function Sidebar({ handleLogout }) {
                   </Link>
                   <Link className="collapse-item" to="/UnfinishedMaintenance" ><span>Unfinished Maintenance</span>
                   </Link>
-                  <h6 style={{background:"#3F65D3"}} className="collapse-header">Asset on Insurance:</h6>
+                  <h6  className="collapse-header">Asset on Insurance:</h6>
                   <a className="collapse-item" href="#" onClick={handleAddAssetInsuranceModal}>Add Insurance</a>
                   <Link className="collapse-item" to="/AssetInsurance" >
                     <span>Asset Insurance</span>
                   </Link>
-                  <h6 style={{background:"#3F65D3"}} className="collapse-header">Asset Lost:</h6>
+                  <h6  className="collapse-header">Asset Lost:</h6>
                   <a className="collapse-item" onClick={handleAddAssetLost}>
                     Add Asset Lost
                   </a>
@@ -327,7 +327,7 @@ function Sidebar({ handleLogout }) {
               </a>
               <div id="collapsecomponent" className="collapse" aria-labelledby="headingcategory" data-parent="#accordionSidebar">
                 <div className="bg-white py-2 collapse-inner rounded">
-                  <h6 style={{background:"#3F65D3"}} className="collapse-header">Component:</h6>
+                  <h6  className="collapse-header">Component:</h6>
                   <a className="collapse-item" href="#" onClick={handleAddHeadComponent}>Add Head Component</a>
                   <a className="collapse-item" href="#" onClick={handleAddComponentListModal}>Add Component List</a>
                   <Link className="collapse-item" to="/componentlist" >
@@ -348,10 +348,10 @@ function Sidebar({ handleLogout }) {
               </a>
               <div id="collapseMaster" className="collapse" aria-labelledby="headingEmployee" data-parent="#accordionSidebar">
                 <div className="bg-white py-2 collapse-inner rounded">
-                  {/* <h6 style={{background:"#3F65D3"}} className="collapse-header">Asset Master:</h6>
+                  {/* <h6  className="collapse-header">Asset Master:</h6>
                   <a className="collapse-item" href="#" onClick={handleAddAsset}>Add new Asset</a>
                   <Link to="/assetlist" className="collapse-item"><span>Asset List</span></Link> */}
-                  <h6 style={{background:"#3F65D3"}} className="collapse-header">Employees:</h6>
+                  <h6  className="collapse-header">Employees:</h6>
                   <a className="collapse-item" href="#" onClick={handleAddEmployee} >Add new Employee </a>
                   {/* <Link className="collapse-item" to="/Employeelist" >
                     <span>Employee List</span>
@@ -359,12 +359,12 @@ function Sidebar({ handleLogout }) {
                   <Link to="/Employeelist" className="collapse-item" onClick={() => handleListClick("/Employeelist")}>
                     <span>Employee List</span>
                   </Link>
-                  <h6 style={{background:"#3F65D3"}} className="collapse-header">Category Master:</h6>
+                  <h6  className="collapse-header">Category Master:</h6>
                   <a className="collapse-item" href="#" onClick={handleAddCategory}>Add new category</a>
                   <Link className="collapse-item" to="/categoryList" >
                     <span>Category List</span>
                   </Link>
-                  <h6 style={{background:"#3F65D3"}} className="collapse-header">Vendor Master:</h6>
+                  <h6  className="collapse-header">Vendor Master:</h6>
                   <a className="collapse-item" href="#" onClick={handleAddVendor}>Add new vendor </a>
                   <Link to="/vendorlist" className="collapse-item" onClick={() => handleListClick("/vendorlist")}>
                     <span>Vendor List</span>
@@ -372,12 +372,12 @@ function Sidebar({ handleLogout }) {
                   {/* <Link className="collapse-item" to="/vendorlist">
                     <span>Vendor List</span>
                   </Link> */}
-                  <h6 style={{background:"#3F65D3"}} className="collapse-header">Brand Master:</h6>
+                  <h6  className="collapse-header">Brand Master:</h6>
                   <a className="collapse-item" href="#" onClick={handleAddBrand}>Add new Brand</a>
                   <Link className="collapse-item" to="/brandlist">
                     <span>Brand List</span>
                   </Link>
-                  <h6 style={{background:"#3F65D3"}} className="collapse-header">site Master:</h6>
+                  <h6  className="collapse-header">site Master:</h6>
                   <a className="collapse-item" href="#" onClick={handleAddSite}>Add new Site </a>
                   {/* <Link className="collapse-item" to="/sitelist">
                     <span>Site List</span>
@@ -385,22 +385,22 @@ function Sidebar({ handleLogout }) {
                   <Link to="/sitelist" className="collapse-item" onClick={() => handleListClick("/sitelist")}>
                     <span>Site List</span>
                   </Link>
-                  <h6 style={{background:"#3F65D3"}} className="collapse-header">Transporter Master:</h6>
+                  <h6  className="collapse-header">Transporter Master:</h6>
                   <a className="collapse-item" href="#" onClick={handleAddTransporterModal}>Add Transporter</a>
                   <Link className="collapse-item" to="/transporterlist">
                     <span>Transporter List</span>
                   </Link>
-                  {/* <h6 style={{background:"#3F65D3"}} className="collapse-header">Employee Master:</h6>
+                  {/* <h6  className="collapse-header">Employee Master:</h6>
                   <a className="collapse-item" href="#" onClick={handleAddEmployee} >Add new Employee </a>
                   <Link className="collapse-item" to="/Employeelist" >
                     <span>Employee List</span>
                   </Link>
-                  <h6 style={{background:"#3F65D3"}} className="collapse-header">Client Master:</h6>
+                  <h6  className="collapse-header">Client Master:</h6>
                   <a className="collapse-item" onClick={handleAddClient}>Add new Client </a>
                   <Link className="collapse-item" to="/clientList" >
                     <span>Client List</span>
                   </Link>
-                  <h6 style={{background:"#3F65D3"}} className="collapse-header">Component Master:</h6>
+                  <h6  className="collapse-header">Component Master:</h6>
                   <a className="collapse-item" href="#" onClick={handleAddHeadComponent}>Add Head Component</a>
                   <a className="collapse-item" href="#" onClick={handleAddComponentListModal}>Add Component List</a>
                   <Link className="collapse-item" to="/componentlist" >
@@ -409,12 +409,12 @@ function Sidebar({ handleLogout }) {
                   <Link className="collapse-item" to="/fullcomponentList">
                     <span>Full Component List</span>
                   </Link>
-                  <h6 style={{background:"#3F65D3"}} className="collapse-header">Asset Insurence:</h6>
+                  <h6  className="collapse-header">Asset Insurence:</h6>
                   <a className="collapse-item" href="#" onClick={handleAddAssetInsuranceModal}>Add Insurance</a>
                   <Link className="collapse-item" to="/AssetInsurance" >
                     <span>Asset Insurance</span>
                   </Link>
-                  <h6 style={{background:"#3F65D3"}} className="collapse-header">Asset Maintenance:</h6>
+                  <h6  className="collapse-header">Asset Maintenance:</h6>
                   <a className="collapse-item" href="#" onClick={handleAddAssetMaintenanceModal}>Add new Maintenance</a>
                   <Link className="collapse-item" to="/assetMaintenance" ><span>Asset Maintenance</span>
                   </Link>
@@ -435,7 +435,7 @@ function Sidebar({ handleLogout }) {
               </a>
               <div id="collapseEmployee" className="collapse" aria-labelledby="headingEmployee" data-parent="#accordionSidebar">
                 <div className="bg-white py-2 collapse-inner rounded">
-                  <h6 style={{background:"#3F65D3"}} className="collapse-header">Employees:</h6>
+                  <h6  className="collapse-header">Employees:</h6>
                   <a className="collapse-item" href="#" onClick={handleAddEmployee} >Add new Employee </a>
                   <Link className="collapse-item" to="/Employeelist" >
                     <span>Employee List</span>
@@ -452,7 +452,7 @@ function Sidebar({ handleLogout }) {
               </a>
               <div id="collapsevendor" className="collapse" aria-labelledby="headingvendor" data-parent="#accordionSidebar">
                 <div className="bg-white py-2 collapse-inner rounded">
-                  <h6 style={{background:"#3F65D3"}} className="collapse-header">vendors:</h6>
+                  <h6  className="collapse-header">vendors:</h6>
                   <a className="collapse-item" href="#" onClick={handleAddVendor}>Add new vendor </a>
                   <Link className="collapse-item" to="/vendorlist">
                     <span>Vendor List</span>
@@ -469,7 +469,7 @@ function Sidebar({ handleLogout }) {
               </a>
               <div id="collapseClient" className="collapse" aria-labelledby="headingClient" data-parent="#accordionSidebar">
                 <div className="bg-white py-2 collapse-inner rounded">
-                  <h6 style={{background:"#3F65D3"}} className="collapse-header">Clients:</h6>
+                  <h6  className="collapse-header">Clients:</h6>
                   <a className="collapse-item" onClick={handleAddClient}>Add new Client </a>
                   {/* <Link className="collapse-item" to="/clientList" >
                     <span>Client List</span>
@@ -490,7 +490,7 @@ function Sidebar({ handleLogout }) {
               </a>
               <div id="collapseSite" className="collapse" aria-labelledby="headingSite" data-parent="#accordionSidebar">
                 <div className="bg-white py-2 collapse-inner rounded">
-                  <h6 style={{background:"#3F65D3"}} className="collapse-header">Sites:</h6>
+                  <h6  className="collapse-header">Sites:</h6>
                   <a className="collapse-item" onClick={handleAddSite}>Add new Site </a>
                   <Link className="collapse-item" to="/sitelist">
                     <span>Site List</span>
@@ -508,7 +508,7 @@ function Sidebar({ handleLogout }) {
               </a>
               <div id="collapsebrand" className="collapse" aria-labelledby="headingvendor" data-parent="#accordionSidebar">
                 <div className="bg-white py-2 collapse-inner rounded">
-                  <h6 style={{background:"#3F65D3"}} className="collapse-header">Brand:</h6>
+                  <h6  className="collapse-header">Brand:</h6>
                   <a className="collapse-item" href="#" onClick={handleAddBrand}>Add new Brand</a>
                   <Link className="collapse-item" to="/brandlist">
                     <span>Brand List</span>
@@ -525,7 +525,7 @@ function Sidebar({ handleLogout }) {
               </a>
               <div id="collapsecategory" className="collapse" aria-labelledby="headingcategory" data-parent="#accordionSidebar">
                 <div className="bg-white py-2 collapse-inner rounded">
-                  <h6 style={{background:"#3F65D3"}} className="collapse-header">Category:</h6>
+                  <h6  className="collapse-header">Category:</h6>
                   <a className="collapse-item" href="#" onClick={handleAddCategory}>Add new category</a>
                   <Link className="collapse-item" to="/categoryList" >
                     <span>Category List</span>
@@ -542,7 +542,7 @@ function Sidebar({ handleLogout }) {
               </a>
               <div id="collapsesetting" className="collapse" aria-labelledby="headingcategory" data-parent="#accordionSidebar">
                 <div className="bg-white py-2 collapse-inner rounded">
-                  <h6 style={{background:"#3F65D3"}} className="collapse-header">Setting:</h6>
+                  <h6  className="collapse-header">Setting:</h6>
                   <Link className="collapse-item" to="/applicationsetting" >
                     <span>Application Setting</span>
                   </Link>
