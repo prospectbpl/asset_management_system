@@ -60,8 +60,6 @@ function Assetlist({ handleLogout, username }) {
 
   const apiUrl = process.env.REACT_APP_LOCAL_URL;
 
-
-
   useEffect(() => {
     fetchAssets();
   }, []);

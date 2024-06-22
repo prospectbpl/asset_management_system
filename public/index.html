@@ -25,11 +25,11 @@
   <script>
     window.addEventListener('DOMContentLoaded', async () => {
       try {
-        const response = await fetch(`https://demo1server.prospectdigital.in/settings`);
+        const response = await fetch(`${process.env.REACT_APP_LOCAL_URL}/settings`);
         const data = await response.json();
   
         // Construct URL to favicon image
-        const faviconUrl = `https://demo1server.prospectdigital.in/uploads/settings/${data.favicon}`;
+        const faviconUrl = `${process.env.REACT_APP_LOCAL_URL}/uploads/settings/${data.favicon}`;
         
         // Create a new link element for the favicon
         const favicon = document.createElement('link');
