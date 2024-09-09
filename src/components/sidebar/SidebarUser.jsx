@@ -22,7 +22,7 @@ import AddTransporterModal from "../../pages/AssetMaster/AddTransporterModal";
 
 // import { Dashboard } from "@mui/icons-material";
 
-function Sidebar({ handleLogout }) {
+function SidebarUser({ handleLogout }) {
   // chenge the sidebar  
   const [style, setStyle] = useState("navbar-nav bg-gradient-primary sidebar sidebar-dark accordion");
 
@@ -579,4 +579,4 @@ function Sidebar({ handleLogout }) {
   );
 }
 
-export default Sidebar;
+export default SidebarUser;

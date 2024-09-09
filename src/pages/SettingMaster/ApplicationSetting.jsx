@@ -103,7 +103,7 @@ const ApplicationSetting = ({ handleLogout, username }) => {
                                         <h4>Asset Settings</h4>
                                     </div>
                                 </div>
-                                <div className="panel-body"  style={{ maxHeight: "calc(100vh - 140px)", overflowY: "auto", overflowX:"hidden" }}>
+                                <div className="panel-body"  style={{ maxHeight: "calc(100vh - 100px)", overflowY: "auto", overflowX:"hidden" }}>
                                     <form onSubmit={handleSubmit} className="form-inner" encType="multipart/form-data" acceptCharset="utf-8">
                                         <input type="hidden" name="id" value={formData.id} autoComplete="off" />
                                         <div className="form-group row">
@@ -119,7 +119,7 @@ const ApplicationSetting = ({ handleLogout, username }) => {
                                             </div>
                                         </div>
                                         <div className="form-group row">
-                                            <label htmlFor="email" className="col-xs-3 col-form-label">Email Addresss<span style={{ color: "red"}}>*</span></label>
+                                            <label htmlFor="email" className="col-xs-3 col-form-label">Email Address<span style={{ color: "red"}}>*</span></label>
                                             <div className="col-xs-9">
                                                 <input name="email" type="text" className="form-control" id="email" placeholder="Email Address" value={formData.email} onChange={handleInputChange} autoComplete="off" />
                                             </div>
