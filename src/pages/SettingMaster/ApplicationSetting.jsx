@@ -119,7 +119,7 @@ const ApplicationSetting = ({ handleLogout, username }) => {
                                             </div>
                                         </div>
                                         <div className="form-group row">
-                                            <label htmlFor="email" className="col-xs-3 col-form-label">Email Address<span style={{ color: "red"}}>*</span></label>
+                                            <label htmlFor="email" className="col-xs-3 col-form-label">Email Addresss<span style={{ color: "red"}}>*</span></label>
                                             <div className="col-xs-9">
                                                 <input name="email" type="text" className="form-control" id="email" placeholder="Email Address" value={formData.email} onChange={handleInputChange} autoComplete="off" />
                                             </div>
