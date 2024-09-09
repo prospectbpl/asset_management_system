@@ -51,6 +51,7 @@
     "build": "react-scripts build",
     "build:server1": "env-cmd -f .env.server1 react-scripts build",
     "build:server2": "env-cmd -f .env.server2 react-scripts build",
+    "build:server3": "env-cmd -f .env.server3 react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },

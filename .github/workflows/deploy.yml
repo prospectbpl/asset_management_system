@@ -74,3 +74,23 @@ jobs:
           retry-count: 3
           retry-delay: 30
           timeout: 60000
+
+      - name: 📂 Build for Server 3
+        run: |
+          npm run build:server3
+          git reset --hard
+        env:
+          CI: false
+
+      - name: 📂 Sync folders and files to the second server
+        id: ftp-deploy-server3
+        uses: SamKirkland/FTP-Deploy-Action@4.3.3
+        with:
+          server: ${{ secrets.FTP_HOST_3 }}
+          username: ${{ secrets.FTP_USERNAME_3 }}
+          password: ${{ secrets.FTP_PASSWORD_3 }}
+          local-dir: build/
+          debug: true
+          retry-count: 3
+          retry-delay: 30
+          timeout: 60000

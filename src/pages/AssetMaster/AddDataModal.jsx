@@ -86,14 +86,14 @@
 //     }
 //   };
 
-  // const fetchAssetTagPrefix = async () => { // Fetch asset tag prefix function
-  //   try {
-  //     const response = await axios.get(`${process.env.REACT_APP_LOCAL_URL}/settings`);
-  //     setAssetTagPrefix(response.data.assetTagPrefix);
-  //   } catch (error) {
-  //     console.error('Error fetching asset tag prefix:', error);
-  //   }
-  // };
+// const fetchAssetTagPrefix = async () => { // Fetch asset tag prefix function
+//   try {
+//     const response = await axios.get(`${process.env.REACT_APP_LOCAL_URL}/settings`);
+//     setAssetTagPrefix(response.data.assetTagPrefix);
+//   } catch (error) {
+//     console.error('Error fetching asset tag prefix:', error);
+//   }
+// };
 
 //   const handleChange = (e) => {
 //     const { name, value, files } = e.target;
@@ -610,14 +610,14 @@
 //   const handleChange = (e) => {
 //     const { name, value, files } = e.target;
 
-    // if (name === "name") {
-    //   const currentYear = new Date().getFullYear();
-    //   const generatedAssetTag = `${assetTagPrefix}${currentYear}${(lastAssetId + 1).toString().padStart(3, '0')}`;
-    //   setFormData({
-    //     ...formData,
-    //     [name]: value,
-    //     assettag: generatedAssetTag,
-    //   });
+// if (name === "name") {
+//   const currentYear = new Date().getFullYear();
+//   const generatedAssetTag = `${assetTagPrefix}${currentYear}${(lastAssetId + 1).toString().padStart(3, '0')}`;
+//   setFormData({
+//     ...formData,
+//     [name]: value,
+//     assettag: generatedAssetTag,
+//   });
 //     } else if (name === "vendorcompanyname") {
 //       const selectedVendor = vendors.find(
 //         (vendor) => vendor.vendorCompanyName === value
@@ -2507,7 +2507,7 @@
 //     }
 //   };
 
-  
+
 //   const fetchLastAssetId = async () => {
 //     try {
 //       const response = await axios.get(`${process.env.REACT_APP_LOCAL_URL}/lastAssetId`);
@@ -2519,7 +2519,7 @@
 
 //   const handleChange = (e) => {
 //     const { name, value, files, type, checked } = e.target;
-  
+
 //     if (type === "radio") {
 //       if (name === "dimensionsEnabled") {
 //         setFormData({
@@ -2610,7 +2610,7 @@
 //       }
 //     }
 //   };
-  
+
 
 //   const handleImageChange = (e) => {
 //     const file = e.target.files[0];
@@ -3199,7 +3199,7 @@
 
 //   const handleChange = (e) => {
 //     const { name, value, files, type, checked } = e.target;
-  
+
 //     if (type === "radio") {
 //       if (name === "dimensionsEnabled") {
 //         setFormData({
@@ -3869,7 +3869,7 @@ const AddDataModal = ({ onClose, onUpdateAssets }) => {
 
   const handleChange = (e) => {
     const { name, value, files, type, checked } = e.target;
-  
+
     if (type === "radio") {
       if (name === "dimensionsEnabled") {
         setFormData({
@@ -3962,7 +3962,7 @@ const AddDataModal = ({ onClose, onUpdateAssets }) => {
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     const fileSize = file.size / 1024;
-  
+
     if (fileSize > 200) {
       setError("Maximum file size is 200KB");
     } else {
@@ -3973,7 +3973,7 @@ const AddDataModal = ({ onClose, onUpdateAssets }) => {
       });
     }
   };
-  
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -4029,29 +4029,29 @@ const AddDataModal = ({ onClose, onUpdateAssets }) => {
 
       const transferHistoryResponse = await axios.post(`${process.env.REACT_APP_LOCAL_URL}/purchase-history`, {
         formDataToSend,
-        assetType:formData.assetType,
-        asset_master_id:formData.assetMaster_id,
-        assettag:formData.assettag,
-        brand:formData.brand,
-        brand_id:formData.brand_id,
-        category_id:formData.category_id,
-        category_name:formData.categoryName,
-        cost:formData.cost,
-        description:formData.description,
+        assetType: formData.assetType,
+        asset_master_id: formData.assetMaster_id,
+        assettag: formData.assettag,
+        brand: formData.brand,
+        brand_id: formData.brand_id,
+        category_id: formData.category_id,
+        category_name: formData.categoryName,
+        cost: formData.cost,
+        description: formData.description,
         // height:formData.dimensions[height],
         // length:formData.dimensions[length],
-        location:formData.location,
-        name:formData.name,
-        purchaseDate:formData.purchaseDate,
-        qrCodeData:formData.qrCodeData,
-        addQuantity:formData.quantity,
-        registrationNumber:formData.registrationNumber,
-        rtoName:formData.rtoName,
-        serial:formData.serial,
-        site_master_id:formData.site_id,
+        location: formData.location,
+        name: formData.name,
+        purchaseDate: formData.purchaseDate,
+        qrCodeData: formData.qrCodeData,
+        addQuantity: formData.quantity,
+        registrationNumber: formData.registrationNumber,
+        rtoName: formData.rtoName,
+        serial: formData.serial,
+        site_master_id: formData.site_id,
         // units:formData.dimensions[units],
-        vendor_id:formData.vendor_id,
-        vendorcompanyname:formData.vendorcompanyname,
+        vendor_id: formData.vendor_id,
+        vendorcompanyname: formData.vendorcompanyname,
         // width:formData.dimensions[width]
       });
       console.log("Transfer history data uploaded successfully:", transferHistoryResponse.data);
@@ -4150,7 +4150,7 @@ const AddDataModal = ({ onClose, onUpdateAssets }) => {
                   />
                 </div>
                 <div className="form-group col-md-6">
-                  <label>Dimensions<span style={{ color: "red"}}>*</span></label>
+                  <label>Dimensions<span style={{ color: "red" }}>*</span></label>
                   <div className="form-check" style={{ marginLeft: "5px" }} >
                     <input
                       className="form-check-input"
