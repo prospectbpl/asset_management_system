@@ -48,18 +48,7 @@ const SearchBar = ({ username, handleLogout }) => {
 
             {/*  <!-- Topbar --> */}
             <nav className="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
-              {/*  <!-- Sidebar Toggle (Topbar) --> */}
-              <button
-                id="sidebarToggleTop"
-                className="btn btn-link d-md-none rounded-circle mr-3"
-                onClick={changeStyle1}
-              >
-                <i className="fa fa-bars"></i>
-              </button>
-
-              {/*  <!-- Topbar Search --> */}
-
-
+              <h3 className="pt-1 fw-bolder text-center w-100">Asset Managment</h3>
               {/*  <!-- Topbar Navbar --> */}
               <ul className="navbar-nav ml-auto">
                 {/*  <!-- Nav Item - Search Dropdown (Visible Only XS) --> */}
@@ -106,7 +95,7 @@ const SearchBar = ({ username, handleLogout }) => {
                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <span className="mr-2 d-none d-lg-inline text-gray-600 small">{username}</span>
                     <img src={profilePicture} alt="avatar"
-                     className="img-profile rounded-circle" />
+                      className="img-profile rounded-circle" />
                   </a>
                   {/*  <!-- Dropdown - User Information --> */}
                   <div className="dropdown-menu dropdown-menu-right shadow animated--grow-in"

@@ -12,7 +12,7 @@ import axios from "axios";
 import AddBrandModal from "../../pages/BrandMaster/AddBrandModal";
 import AddComponent from "../../pages/ComponentMaster/AddComponent";
 import AddComponentList from "../../pages/ComponentMaster/AddComponentList";
-import AddInsuranceModal from "../../pages/AssetMaster/AddAssetInsuranceModal";
+import AddInsuranceModal from "../../pages/Insurance/AddAssetInsuranceModal";
 import AddMaintenanceData from "../../pages/AssetMaster/AddMaintenanceData";
 import AddAsset from "../../pages/AssetMaster/AddAsset";
 import { ToastContainer, toast } from 'react-toastify';
@@ -199,12 +199,6 @@ function Sidebar({ handleLogout }) {
     setIsAssetModalOpen(false);
   };
 
-  const handleListClick = (path) => {
-    if (window.location.pathname === path) {
-      window.location.reload();
-    }
-  };
-
   const [dashboardLogo, setDashboardLogo] = useState([]);
 
   useEffect(() => {
@@ -220,6 +214,12 @@ function Sidebar({ handleLogout }) {
     fetchDashboardLogo();
   }, []);
 
+  const handleListClick = (path) => {
+    if (window.location.pathname === path) {
+      window.location.reload();
+    }
+  };
+
   const handleUpdate = () => {
     toast.success("successfully uploaded");
   }
@@ -234,14 +234,14 @@ function Sidebar({ handleLogout }) {
           {/*  <!-- Sidebar --> */}
           <ul className={style} id="accordionSidebar">
             {/*  <!-- Sidebar - Brand --> */}
-            <a className="sidebar-brand d-flex align-items-center justify-content-center" href="#">
-              <div className="sidebar-brand-text text-dark mx-3">
-                <div style={{ height: "100%", width: "100%" }} className='logo'>
+            <a className="sidebar-brand d-flex align-items-center justify-content-center w-100" href="#">
+              <div className="sidebar-brand-text text-dark mx-3 w-100">
+                <div className='logo'>
                   <img
                     src={dashboardLogo.landingPageLogo
                       ? `${process.env.REACT_APP_LOCAL_URL}/uploads/settings/${dashboardLogo.landingPageLogo}`
-                      : <h4>HRM</h4>}
-                    className='w-100 h-100'
+                      : <h4>Asset Managment</h4>}
+                    style={{objectFit:"cover",width:"80%",height:"80%"}}
                     alt="LOGO"
                   />
                 </div>
@@ -256,7 +256,7 @@ function Sidebar({ handleLogout }) {
 
             {/*  <!-- Nav Item - Dashboard --> */}
             <li style={{ zIndex: "999" }} className="nav-item active">
-              <Link to="/dashboard" className="nav-link">
+              <Link to="/dashboard" className="nav-link" onClick={() => handleListClick("/dashboard")}>
                 <i className="fas fa-fw fa-tachometer-alt"></i>
                 <span>Dashboard</span>
               </Link>
@@ -290,22 +290,25 @@ function Sidebar({ handleLogout }) {
                   {/* <a className="collapse-item" href="#">Transfer Asset</a> */}
                   <h6 className="collapse-header">Asset on Maintenance:</h6>
                   <a className="collapse-item" href="#" onClick={handleAddAssetMaintenanceModal}>Add new Maintenance</a>
-                  <Link className="collapse-item" to="/assetMaintenance" ><span>Asset Maintenance</span>
+                  <Link className="collapse-item" onClick={() => handleListClick("/assetMaintenance")} to="/assetMaintenance" ><span>Asset Maintenance</span>
                   </Link>
-                  <Link className="collapse-item" to="/finishedmaintenance" ><span>Finished Maintenance</span>
+                  <Link className="collapse-item" onClick={() => handleListClick("/finishedmaintenance")} to="/finishedmaintenance" ><span>Finished Maintenance</span>
                   </Link>
-                  <Link className="collapse-item" to="/UnfinishedMaintenance" ><span>Unfinished Maintenance</span>
+                  <Link className="collapse-item" onClick={() => handleListClick("/UnfinishedMaintenance")} to="/UnfinishedMaintenance" ><span>Unfinished Maintenance</span>
                   </Link>
                   <h6 className="collapse-header">Asset on Insurance:</h6>
                   <a className="collapse-item" href="#" onClick={handleAddAssetInsuranceModal}>Add Insurance</a>
-                  <Link className="collapse-item" to="/AssetInsurance" >
+                  <Link className="collapse-item" onClick={() => handleListClick("/AssetInsurance")} to="/AssetInsurance" >
                     <span>Asset Insurance</span>
+                  </Link>
+                  <Link className="collapse-item" onClick={() => handleListClick("/assetinsurenceexpiry")} to="/assetinsurenceexpiry" >
+                    <span>Insurance Expiry</span>
                   </Link>
                   <h6 className="collapse-header">Asset Lost:</h6>
                   <a className="collapse-item" onClick={handleAddAssetLost}>
                     Add Asset Lost
                   </a>
-                  <Link className="collapse-item" to="/assetlostlist" >
+                  <Link className="collapse-item" onClick={() => handleListClick("/assetlostlist")} to="/assetlostlist" >
                     <span>Asset Lost List</span>
                   </Link>
                   {/* <a className="collapse-item" href="#">
@@ -326,10 +329,10 @@ function Sidebar({ handleLogout }) {
                   <h6 className="collapse-header">Component:</h6>
                   <a className="collapse-item" href="#" onClick={handleAddHeadComponent}>Add Head Component</a>
                   <a className="collapse-item" href="#" onClick={handleAddComponentListModal}>Add Component List</a>
-                  <Link className="collapse-item" to="/componentlist" >
+                  <Link className="collapse-item" onClick={() => handleListClick("/componentlist")} to="/componentlist" >
                     <span>Head Component List</span>
                   </Link>
-                  <Link className="collapse-item" to="/fullcomponentList">
+                  <Link className="collapse-item" onClick={() => handleListClick("/fullcomponentList")} to="/fullcomponentList">
                     <span>Full Component List</span>
                   </Link>
                 </div>
@@ -349,7 +352,7 @@ function Sidebar({ handleLogout }) {
                   <Link to="/assetlist" className="collapse-item"><span>Asset List</span></Link> */}
                   <h6 className="collapse-header">Employees:</h6>
                   <a className="collapse-item" href="#" onClick={handleAddEmployee} >Add new Employee </a>
-                  {/* <Link className="collapse-item" to="/Employeelist" >
+                  {/* <Link className="collapse-item" onClick={() => handleListClick("/requestleavelist")} to="/Employeelist" >
                     <span>Employee List</span>
                   </Link> */}
                   <Link to="/Employeelist" className="collapse-item" onClick={() => handleListClick("/Employeelist")}>
@@ -357,7 +360,7 @@ function Sidebar({ handleLogout }) {
                   </Link>
                   <h6 className="collapse-header">Category Master:</h6>
                   <a className="collapse-item" href="#" onClick={handleAddCategory}>Add new category</a>
-                  <Link className="collapse-item" to="/categoryList" >
+                  <Link className="collapse-item" onClick={() => handleListClick("/categoryList")} to="/categoryList" >
                     <span>Category List</span>
                   </Link>
                   <h6 className="collapse-header">Vendor Master:</h6>
@@ -365,17 +368,17 @@ function Sidebar({ handleLogout }) {
                   <Link to="/vendorlist" className="collapse-item" onClick={() => handleListClick("/vendorlist")}>
                     <span>Vendor List</span>
                   </Link>
-                  {/* <Link className="collapse-item" to="/vendorlist">
+                  {/* <Link className="collapse-item" onClick={() => handleListClick("/requestleavelist")} to="/vendorlist">
                     <span>Vendor List</span>
                   </Link> */}
                   <h6 className="collapse-header">Brand Master:</h6>
                   <a className="collapse-item" href="#" onClick={handleAddBrand}>Add new Brand</a>
-                  <Link className="collapse-item" to="/brandlist">
+                  <Link className="collapse-item" onClick={() => handleListClick("/brandlist")} to="/brandlist">
                     <span>Brand List</span>
                   </Link>
                   <h6 className="collapse-header">site Master:</h6>
                   <a className="collapse-item" href="#" onClick={handleAddSite}>Add new Site </a>
-                  {/* <Link className="collapse-item" to="/sitelist">
+                  {/* <Link className="collapse-item" onClick={() => handleListClick("/requestleavelist")} to="/sitelist">
                     <span>Site List</span>
                   </Link> */}
                   <Link to="/sitelist" className="collapse-item" onClick={() => handleListClick("/sitelist")}>
@@ -383,79 +386,12 @@ function Sidebar({ handleLogout }) {
                   </Link>
                   <h6 className="collapse-header">Transporter Master:</h6>
                   <a className="collapse-item" href="#" onClick={handleAddTransporterModal}>Add Transporter</a>
-                  <Link className="collapse-item" to="/transporterlist">
+                  <Link className="collapse-item" onClick={() => handleListClick("/requestleavelist")} to="/transporterlist">
                     <span>Transporter List</span>
                   </Link>
-                  {/* <h6  className="collapse-header">Employee Master:</h6>
-                  <a className="collapse-item" href="#" onClick={handleAddEmployee} >Add new Employee </a>
-                  <Link className="collapse-item" to="/Employeelist" >
-                    <span>Employee List</span>
-                  </Link>
-                  <h6  className="collapse-header">Client Master:</h6>
-                  <a className="collapse-item" onClick={handleAddClient}>Add new Client </a>
-                  <Link className="collapse-item" to="/clientList" >
-                    <span>Client List</span>
-                  </Link>
-                  <h6  className="collapse-header">Component Master:</h6>
-                  <a className="collapse-item" href="#" onClick={handleAddHeadComponent}>Add Head Component</a>
-                  <a className="collapse-item" href="#" onClick={handleAddComponentListModal}>Add Component List</a>
-                  <Link className="collapse-item" to="/componentlist" >
-                    <span>Component List</span>
-                  </Link>
-                  <Link className="collapse-item" to="/fullcomponentList">
-                    <span>Full Component List</span>
-                  </Link>
-                  <h6  className="collapse-header">Asset Insurence:</h6>
-                  <a className="collapse-item" href="#" onClick={handleAddAssetInsuranceModal}>Add Insurance</a>
-                  <Link className="collapse-item" to="/AssetInsurance" >
-                    <span>Asset Insurance</span>
-                  </Link>
-                  <h6  className="collapse-header">Asset Maintenance:</h6>
-                  <a className="collapse-item" href="#" onClick={handleAddAssetMaintenanceModal}>Add new Maintenance</a>
-                  <Link className="collapse-item" to="/assetMaintenance" ><span>Asset Maintenance</span>
-                  </Link>
-                  <Link className="collapse-item" to="/finishedmaintenance" ><span>Finished Maintenance</span>
-                  </Link>
-                  <Link className="collapse-item" to="/UnfinishedMaintenance" ><span>Unfinished Maintenance</span>
-                  </Link> */}
                 </div>
               </div>
             </li>
-            {/* <!-- Nav Item - Employee --> */}
-            {/* <li className="nav-item">
-              <a className="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseEmployee"
-                aria-expanded="true" aria-controls="collapseEmployee">
-
-                <i className="fas fa-users"></i>
-                <span>Employee</span>
-              </a>
-              <div id="collapseEmployee" className="collapse" aria-labelledby="headingEmployee" data-parent="#accordionSidebar">
-                <div className="bg-white py-2 collapse-inner rounded">
-                  <h6  className="collapse-header">Employees:</h6>
-                  <a className="collapse-item" href="#" onClick={handleAddEmployee} >Add new Employee </a>
-                  <Link className="collapse-item" to="/Employeelist" >
-                    <span>Employee List</span>
-                  </Link>
-                </div>
-              </div>
-            </li> */}
-            {/* Nav Item - vendor Master */}
-            {/* <li className="nav-item">
-              <a className="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsevendor"
-                aria-expanded="true" aria-controls="collapsevendor">
-                <i className="fa fa-industry"></i>
-                <span>vendor master</span>
-              </a>
-              <div id="collapsevendor" className="collapse" aria-labelledby="headingvendor" data-parent="#accordionSidebar">
-                <div className="bg-white py-2 collapse-inner rounded">
-                  <h6  className="collapse-header">vendors:</h6>
-                  <a className="collapse-item" href="#" onClick={handleAddVendor}>Add new vendor </a>
-                  <Link className="collapse-item" to="/vendorlist">
-                    <span>Vendor List</span>
-                  </Link>
-                </div>
-              </div>
-            </li> */}
             {/* <!-- Nav Item - Client Master --> */}
             <li className="nav-item">
               <a className="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseClient"
@@ -467,7 +403,7 @@ function Sidebar({ handleLogout }) {
                 <div className="bg-white py-2 collapse-inner rounded">
                   <h6 className="collapse-header">Clients:</h6>
                   <a className="collapse-item" onClick={handleAddClient}>Add new Client </a>
-                  {/* <Link className="collapse-item" to="/clientList" >
+                  {/* <Link className="collapse-item" onClick={() => handleListClick("/requestleavelist")} to="/clientList" >
                     <span>Client List</span>
                   </Link> */}
                   <Link to="/clientList" className="collapse-item" onClick={() => handleListClick("/clientList")}>
@@ -477,58 +413,6 @@ function Sidebar({ handleLogout }) {
                 </div>
               </div>
             </li>
-            {/*  <!-- Nav Item - Site Master --> */}
-            {/* <li className="nav-item">
-              <a className="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseSite"
-                aria-expanded="true" aria-controls="collapseSite">
-                <i className="fas fa-users"></i>
-                <span>Site Master</span>
-              </a>
-              <div id="collapseSite" className="collapse" aria-labelledby="headingSite" data-parent="#accordionSidebar">
-                <div className="bg-white py-2 collapse-inner rounded">
-                  <h6  className="collapse-header">Sites:</h6>
-                  <a className="collapse-item" onClick={handleAddSite}>Add new Site </a>
-                  <Link className="collapse-item" to="/sitelist">
-                    <span>Site List</span>
-                  </Link>
-
-                </div>
-              </div>
-            </li> */}
-            {/* Nav Item - Brand Master */}
-            {/* <li className="nav-item">
-              <a className="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsebrand"
-                aria-expanded="true" aria-controls="collapsebrand">
-                <i className="fa fa-industry"></i>
-                <span>Brand master</span>
-              </a>
-              <div id="collapsebrand" className="collapse" aria-labelledby="headingvendor" data-parent="#accordionSidebar">
-                <div className="bg-white py-2 collapse-inner rounded">
-                  <h6  className="collapse-header">Brand:</h6>
-                  <a className="collapse-item" href="#" onClick={handleAddBrand}>Add new Brand</a>
-                  <Link className="collapse-item" to="/brandlist">
-                    <span>Brand List</span>
-                  </Link>
-                </div>
-              </div>
-            </li> */}
-            {/* Nav Item - Category Master */}
-            {/* <li className="nav-item">
-              <a className="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsecategory"
-                aria-expanded="true" aria-controls="collapsecategory">
-                <i className="fa fa-list-alt"></i>
-                <span>Category master</span>
-              </a>
-              <div id="collapsecategory" className="collapse" aria-labelledby="headingcategory" data-parent="#accordionSidebar">
-                <div className="bg-white py-2 collapse-inner rounded">
-                  <h6  className="collapse-header">Category:</h6>
-                  <a className="collapse-item" href="#" onClick={handleAddCategory}>Add new category</a>
-                  <Link className="collapse-item" to="/categoryList" >
-                    <span>Category List</span>
-                  </Link>
-                </div>
-              </div>
-            </li> */}
             {/* Nav Item - Total Setting */}
             <li className="nav-item">
               <a className="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsesetting"
@@ -539,15 +423,58 @@ function Sidebar({ handleLogout }) {
               <div id="collapsesetting" className="collapse" aria-labelledby="headingcategory" data-parent="#accordionSidebar">
                 <div className="bg-white py-2 collapse-inner rounded">
                   <h6 className="collapse-header">Setting:</h6>
-                  <Link className="collapse-item" to="/applicationsetting" >
+                  <Link className="collapse-item" onClick={() => handleListClick("/applicationsetting")} to="/applicationsetting" >
                     <span>Application Setting</span>
+                  </Link>
+                </div>
+              </div>
+            </li>
+            {/* Nav Item - Total Setting */}
+            <li className="nav-item">
+              <a className="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseReport"
+                aria-expanded="true" aria-controls="collapseReport">
+                <i className="fa fa-cog"></i>
+                <span>Report Master</span>
+              </a>
+              <div id="collapseReport" className="collapse" aria-labelledby="headingcategory" data-parent="#accordionSidebar">
+                <div className="bg-white py-2 collapse-inner rounded">
+                  <h6 className="collapse-header">Report:</h6>
+                  <Link className="collapse-item" onClick={() => handleListClick("/allassetreport")} to="/allassetreport" >
+                    <span>All Asset Report</span>
+                  </Link>
+                  <Link className="collapse-item" onClick={() => handleListClick("/categoryreport")} to="/categoryreport" >
+                    <span>Category Report</span>
+                  </Link>
+                  <Link className="collapse-item" onClick={() => handleListClick("/vendorreport")} to="/vendorreport" >
+                    <span>Vendor Report</span>
+                  </Link>
+                  <Link className="collapse-item" onClick={() => handleListClick("/sitereport")} to="/sitereport" >
+                    <span>Site Report</span>
+                  </Link>
+                  <Link className="collapse-item" onClick={() => handleListClick("/employeereport")} to="/employeereport" >
+                    <span>Employee Report</span>
+                  </Link>
+                  <Link className="collapse-item" onClick={() => handleListClick("/clientreport")} to="/clientreport" >
+                    <span>Client Report</span>
+                  </Link>
+                  <Link className="collapse-item" onClick={() => handleListClick("/assetlostreport")} to="/assetlostreport" >
+                    <span>Asset Lost Report</span>
+                  </Link>
+                  <Link className="collapse-item" onClick={() => handleListClick("/insurancereport")} to="/insurancereport" >
+                    <span>Insurance Report</span>
+                  </Link>
+                  <Link className="collapse-item" onClick={() => handleListClick("/insuranceexpiryreport")} to="/insuranceexpiryreport" >
+                    <span>Insurance Expiry Report</span>
+                  </Link>
+                  <Link className="collapse-item" onClick={() => handleListClick("/maintenancereport")} to="/maintenancereport" >
+                    <span>Maintenance Report</span>
                   </Link>
                 </div>
               </div>
             </li>
             {/* Nav Item - Total Delete */}
             <li className="nav-item">
-              <Link className="nav-link" to="/deletelist" >
+              <Link className="nav-link" to="/deletelist" onClick={() => handleListClick("/deletelist")}>
                 <i className="fa fa-trash"></i>
                 <span>Delete List</span>
               </Link>

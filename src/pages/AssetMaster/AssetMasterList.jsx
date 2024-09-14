@@ -81,19 +81,7 @@ function AssetMasterList({ handleLogout, username }) {
                     Asset Master List
                   </h6>
                   <div className="d-flex align-items-center justify-content-center gap-4">
-                    <button
-                      onClick={handleAssetMaster}
-                      style={{
-                        padding: "5px 10px",
-                        backgroundColor: "#4E73DF",
-                        color: "white",
-                        borderRadius: "30px",
-                        cursor: "pointer",
-                        border: "none",
-                      }}
-                      onMouseEnter={(e) => (e.target.style.backgroundColor = "red")}
-                      onMouseLeave={(e) => (e.target.style.backgroundColor = "#4E73DF")}
-                    >
+                    <button className="btn btn-primary" onClick={handleAssetMaster}>
                       Add Asset Master
                     </button>
                   </div>

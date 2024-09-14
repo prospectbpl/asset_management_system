@@ -448,7 +448,7 @@ function EditAssetModal({ asset, onUpdate, onClose }) {
                 formDataToSend.append(key, updatedAsset[key]);
             });
             const response = await axios.put(
-                `${process.env.REACT_APP_LOCAL_URL}/assets/${asset.id}`,
+                `${process.env.REACT_APP_LOCAL_URL}/assets/${asset.asset_master_id}`,
                 formDataToSend
             );
             console.log("Asset updated:", response.data);

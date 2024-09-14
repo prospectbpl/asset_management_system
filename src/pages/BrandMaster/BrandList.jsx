@@ -123,7 +123,7 @@ function BrandList({ handleLogout, username }) {
                                 <div className="card shadow mb-4">
                                     <div className="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                                         <h6 className="m-0 font-weight-bold text-primary">Brand List</h6>
-                                        <div onClick={handleAddBrand} style={{ padding: "5px 10px", backgroundColor: "#4E73DF", color: "white", borderRadius: "30px", cursor: "pointer" }} onMouseEnter={(e) => e.target.style.backgroundColor = 'red'} onMouseLeave={(e) => e.target.style.backgroundColor = '#4E73DF'}>
+                                        <div onClick={handleAddBrand} className="btn btn-primary">
                                             Add New Brand
                                         </div>
                                         {/* <div className="dropdown no-arrow">

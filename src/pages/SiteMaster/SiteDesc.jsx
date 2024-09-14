@@ -4,27 +4,40 @@ import EditSiteModal from "./EditSiteModal";
 
 const SiteDesc = ({ site, onClose }) => {
 
-    const [checkInOutHistory, setCheckInOutHistory] = useState([]);
+    const [checkInHistory, setCheckInHistory] = useState([]);
+    const [checkOutHistory, setCheckOutHistory] = useState([]);
     const [isEditModalOpen, setIsEditModalOpen] = useState(false);
     const [activeInactiveHistory, setActiveInactiveHistory] = useState(null);
     const [activeInactivelastOccurence, setActiveInactivelastOccurence] = useState(null);
     // pagination 
     const [currentPage, setCurrentPage] = useState(1);
-    const [itemsPerPage, setItemsPerPage] = useState(5);
+    const [itemsPerPage, setItemsPerPage] = useState(25);
 
 
 
     useEffect(() => {
-        const fetchCheckInOutHistory = async () => {
+        const fetchCheckInHistory = async () => {
             try {
                 const response = await axios.get(
-                    `${process.env.REACT_APP_LOCAL_URL}/api/asset/history/site/${site.id}`
+                    `${process.env.REACT_APP_LOCAL_URL}/api/asset/checkinhistory/site/${site.id}`
                 );
-                setCheckInOutHistory(response.data);
+                setCheckInHistory(response.data);
             } catch (error) {
                 console.error("Error fetching check-in/out history:", error);
             }
         };
+
+        const fetchCheckOutHistory = async () => {
+            try {
+                const response = await axios.get(
+                    `${process.env.REACT_APP_LOCAL_URL}/api/asset/checkouthistory/site/${site.id}`
+                );
+                setCheckOutHistory(response.data);
+            } catch (error) {
+                console.error("Error fetching check-in/out history:", error);
+            }
+        };
+
         const fetchActiveInactiveDetails = async () => {
             try {
                 const response = await axios.get(
@@ -53,7 +66,8 @@ const SiteDesc = ({ site, onClose }) => {
 
         fetchActiveInactiveLastDetails();
         fetchActiveInactiveDetails();
-        fetchCheckInOutHistory();
+        fetchCheckInHistory();
+        fetchCheckOutHistory();
     }, [site]);
 
     // Function to format the date from '2024-02-27T18:30:00.000Z' to '2024-02-27'
@@ -65,14 +79,6 @@ const SiteDesc = ({ site, onClose }) => {
         });
     };
 
-    // Function to render description or dash based on event type
-    const renderDescriptionOrDash = (entry) => {
-        if (entry.event_type === 'check_in') {
-            return entry.description;
-        } else {
-            return '-';
-        }
-    };
     // Function to handle opening edit modal
     const handleEditSite = () => {
         setIsEditModalOpen(true);
@@ -81,8 +87,8 @@ const SiteDesc = ({ site, onClose }) => {
     // Logic to get current items
     const indexOfLastItem = currentPage * itemsPerPage;
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-
-    const currentItemsforcheckincheckouthistory = checkInOutHistory ? checkInOutHistory.slice(indexOfFirstItem, indexOfLastItem) : [];
+    const currentItemsforcheckinhistory = checkInHistory ? checkInHistory.slice(indexOfFirstItem, indexOfLastItem) : [];
+    const currentItemsforcheckouthistory = checkOutHistory ? checkOutHistory.slice(indexOfFirstItem, indexOfLastItem) : [];
     const currentItemsforsitehistory = activeInactiveHistory ? activeInactiveHistory.slice(indexOfFirstItem, indexOfLastItem) : [];
 
     const paginate = (pageNumber) => setCurrentPage(pageNumber);
@@ -90,30 +96,42 @@ const SiteDesc = ({ site, onClose }) => {
 
 
     return (
-        <div>
+        <div className="shadow-sm bg-white rounded">
             <div className="card-body p-4">
-                <div className="row">
-                    <div className="col-md-9">
-                        <p className="title-detail font-bold">
-                            Site Name - {site.siteName}
-                        </p>
-                        <p className="assetdetail">
-                            Site Manager - {site.employeeName}
-                        </p>
+                <div className="row px-2">
+                    <div className="col-md-9 bg-light border rounded shadow-sm d-flex justify-content-between  py-3">
+                        <div>
+                            <h2 style={{ color: "#00509d" }} className="title-detail fw-bolder fw-bolder m-0">
+                                {site.siteName}
+                            </h2>
+                            <hr className="m-1" />
+                            <h6 className="title-detail m-0">
+                                Site Id : {site.siteID}
+                            </h6>
+                        </div>
+                        <div>
+                            <p className="m-0">
+                                <span> Type: {site.siteType || "N/A"}</span>
+                            </p>
+                            <p className="m-0">
+                                <span> Site Manager: {site.employeeName || "N/A"}</span>
+                            </p>
+                        </div>
                     </div>
-                    <div className="col-md-3">
-                        <div className=" p-2 barcode-inner">
-                            <div className="assetbarcode d-flex gap-2">
-                                <button onClick={onClose} className="btn btn-primary">
-                                    Back to Site List
+                    <div className="col-md-3 d-flex align-items-center justify-content-center">
+                        <div className="assetbarcode d-flex flex-column gap-2 align-items-center">
+                            <div className=" p-2 barcode-inner d-flex gap-2 align-items-center justify-content-center">
+                                <button onClick={onClose} className="btn btn-outline-primary">
+                                    <i className="fa fa-arrow-left"></i> Back
                                 </button>
-                                <button onClick={handleEditSite} className="btn btn-primary">
-                                    Edit Employee
+                                <button onClick={handleEditSite} className="btn btn-outline-primary">
+                                    <i className="fa fa-edit"></i>    Edit
                                 </button>
                             </div>
                         </div>
                     </div>
                 </div>
+                <hr />
                 <div className="row">
                     <div className="col-md-12">
                         <ul className="nav nav-tabs" id="siteTab" role="tablist">
@@ -140,7 +158,20 @@ const SiteDesc = ({ site, onClose }) => {
                                     aria-controls="checkin"
                                     aria-selected="false"
                                 >
-                                    Check In Asset
+                                    CheckIn Asset
+                                </a>
+                            </li>
+                            <li className="nav-item">
+                                <a
+                                    className="nav-link"
+                                    id="checkout-tab"
+                                    data-toggle="tab"
+                                    href="#checkout"
+                                    role="tab"
+                                    aria-controls="checkout"
+                                    aria-selected="false"
+                                >
+                                    CheckOut Asset
                                 </a>
                             </li>
                             <li className="nav-item">
@@ -166,12 +197,9 @@ const SiteDesc = ({ site, onClose }) => {
                                 aria-labelledby="details-tab"
                             >
                                 <div class="row">
-                                    <div class="col-md-9 ">
+                                    <div class="col-md-12 ">
                                         {/* Table for Asset Details */}
-                                        <table
-                                            class="table table-hover"
-                                            cellpadding="0"
-                                            cellspacing="0"
+                                        <table className="table table-bordered"
                                         >
                                             <tbody>
                                                 <tr>
@@ -179,81 +207,85 @@ const SiteDesc = ({ site, onClose }) => {
                                                         <p class="mb-0 font-bold">Site Name</p>
                                                     </td>
                                                     <td>
-                                                        <p class="mb-0 assettype2">{site.siteName}</p>
+                                                        <p class="mb-0 assettype2">: {site.siteName}</p>
                                                     </td>
                                                 </tr>
                                                 <tr>
                                                     <td bgcolor="#f2f3f4" width="200">
-                                                        <p class="mb-0 font-bold">Site ID:</p>
+                                                        <p class="mb-0 font-bold">Site ID</p>
                                                     </td>
                                                     <td>
                                                         <p class="mb-0 assetstatus">
-                                                            {site.siteID}
+                                                            : {site.siteID}
                                                         </p>
                                                     </td>
                                                 </tr>
                                                 <tr>
                                                     <td bgcolor="#f2f3f4" width="200">
-                                                        <p class="mb-0 font-bold">Site Type:</p>
+                                                        <p class="mb-0 font-bold">Site Type</p>
                                                     </td>
                                                     <td>
-                                                        <p class="mb-0 assetserial">{site.siteType}</p>
+                                                        <p class="mb-0 assetserial">: {site.siteType}</p>
                                                     </td>
                                                 </tr>
+
+                                                {!(site.siteType === 'Branch Office' || site.siteType === 'Head Office') && (
+                                                    <tr>
+                                                        <td bgcolor="#f2f3f4" width="200">
+                                                            <p class="mb-0 font-bold">Project Name</p>
+                                                        </td>
+                                                        <td>
+                                                            <p class="mb-0 assetbrand">: {site.projectName || "N/A"}</p>
+                                                        </td>
+                                                    </tr>
+                                                )}
+
                                                 <tr>
                                                     <td bgcolor="#f2f3f4" width="200">
-                                                        <p class="mb-0 font-bold">Project Name:</p>
-                                                    </td>
-                                                    <td>
-                                                        <p class="mb-0 assetbrand">{site.projectName}</p>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td bgcolor="#f2f3f4" width="200">
-                                                        <p class="mb-0 font-bold">Godown:</p>
+                                                        <p class="mb-0 font-bold">Godown</p>
                                                     </td>
                                                     <td>
                                                         <p class="mb-0 assetpurchasedate">
-                                                            {site.godown}
+                                                            : {site.godown}
                                                         </p>
                                                     </td>
                                                 </tr>
                                                 <tr>
                                                     <td bgcolor="#f2f3f4" width="200">
-                                                        <p class="mb-0 font-bold">Contact No:</p>
+                                                        <p class="mb-0 font-bold">Contact No</p>
                                                     </td>
                                                     <td>
-                                                        <p class="mb-0 assetcost">{site.contactNo}</p>
+                                                        <p class="mb-0 assetcost">: {site.contactNo}</p>
                                                     </td>
                                                 </tr>
 
                                                 <tr>
                                                     <td bgcolor="#f2f3f4" width="200">
-                                                        <p class="mb-0 font-bold">Site Manager:</p>
+                                                        <p class="mb-0 font-bold">Site Manager</p>
                                                     </td>
                                                     <td>
-                                                        <p class="mb-0 assetlocation">{site.employeeName}</p>
+                                                        <p class="mb-0 assetlocation">: {site.employeeName}</p>
                                                     </td>
                                                 </tr>
                                                 <tr>
                                                     <td bgcolor="#f2f3f4" width="200">
-                                                        <p class="mb-0 font-bold">Site Location:</p>
+                                                        <p class="mb-0 font-bold">Site Location</p>
                                                     </td>
                                                     <td>
-                                                        <p class="mb-0 assetsupplier">{site.siteLocation}</p>
+                                                        <p class="mb-0 assetsupplier">: {site.siteLocation}</p>
                                                     </td>
                                                 </tr>
                                                 <tr>
                                                     <td bgcolor="#f2f3f4" width="200">
-                                                        <p class="mb-0 font-bold">Site State:</p>
+                                                        <p class="mb-0 font-bold">Site State</p>
                                                     </td>
                                                     <td>
-                                                        <p class="mb-0 assetsupplier">{site.stateName}</p>
+                                                        <p class="mb-0 assetsupplier">: {site.stateName}</p>
                                                     </td>
                                                 </tr>
-                                                <tr>
+                                                {/* <tr>
                                                     <td bgcolor="#f2f3f4" width="200">
-                                                        <p className="mb-0 font-bold">Status:</p>
+                                                        <p className="mb-0 font-bold">Status</p>
                                                     </td>
                                                     <td>
                                                         {activeInactivelastOccurence ? (
@@ -265,7 +297,7 @@ const SiteDesc = ({ site, onClose }) => {
                                                 </tr>
                                                 <tr>
                                                     <td bgcolor="#f2f3f4" width="200">
-                                                        <p className="mb-0 font-bold"> Date of {activeInactivelastOccurence ? activeInactivelastOccurence.status : 'Loading...'}  :</p>
+                                                        <p className="mb-0 font-bold"> Date of {activeInactivelastOccurence ? activeInactivelastOccurence.status : 'Loading...'}  </p>
                                                     </td>
                                                     <td>
 
@@ -287,21 +319,21 @@ const SiteDesc = ({ site, onClose }) => {
                                                             <p className="mb-0 assetserial">Loading...</p>
                                                         )}
                                                     </td>
-                                                </tr>
+                                                </tr> */}
                                             </tbody>
                                         </table>
                                     </div>
                                 </div>
                             </div>
-                            {/* check in check out history  */}
+                            {/* check in history  */}
                             <div className="tab-pane fade" id="checkin" role="tabpanel" aria-labelledby="checkin-tab">
                                 <div className="row">
                                     <div className="col-md-12 ">
 
-                                        <table className="table table-striped">
+                                        <table className="table table-striped table-bordered">
                                             <thead>
                                                 <tr>
-                                                <th>Asset Name</th>
+                                                    <th>Asset Name</th>
                                                     <th>Transfer From</th>
                                                     <th>Transfer TO</th>
                                                     <th>Total Quantity</th>
@@ -311,17 +343,23 @@ const SiteDesc = ({ site, onClose }) => {
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                {currentItemsforcheckincheckouthistory.map((entry) => (
-                                                    <tr key={entry.event_id}>
-                                                       <td>{entry.assetName}</td>
-                                                        <td>{entry.transferFrom}</td>
-                                                        <td>{entry.location}</td>
-                                                        <td>{entry.currentQuantity}</td>
-                                                        <td>{entry.quantity}</td>
-                                                        <td>{formatDate(entry.transferDate)}</td>
-                                                        <td>{entry.selectedTransporterName}</td>
+                                                {currentItemsforcheckinhistory.length === 0 ? (
+                                                    <tr>
+                                                        <td colSpan="7" className="text-center">Thier is No CheckIn Asset .</td>
                                                     </tr>
-                                                ))}
+                                                ) : (
+                                                    currentItemsforcheckinhistory.map((entry) => (
+                                                        <tr key={entry.event_id}>
+                                                            <td>{entry.assetName}</td>
+                                                            <td>{entry.transferFrom}</td>
+                                                            <td>{entry.location}</td>
+                                                            <td>{entry.currentQuantity}</td>
+                                                            <td>{entry.quantity}</td>
+                                                            <td>{formatDate(entry.transferDate)}</td>
+                                                            <td>{entry.selectedTransporterName}</td>
+                                                        </tr>
+                                                    ))
+                                                )}
                                             </tbody>
                                         </table>
                                         {/* Pagination */}
@@ -329,24 +367,78 @@ const SiteDesc = ({ site, onClose }) => {
                                             <li className={`page-item ${currentPage === 1 && 'disabled'}`}>
                                                 <a className="page-link" href="#" onClick={() => paginate(currentPage - 1)}>Previous</a>
                                             </li>
-                                            {Array.from({ length: Math.ceil(checkInOutHistory?.length / itemsPerPage) || 1 }, (_, i) => (
+                                            {Array.from({ length: Math.ceil(checkInHistory?.length / itemsPerPage) || 1 }, (_, i) => (
                                                 <li key={i} className={`page-item ${currentPage === i + 1 && 'active'}`}>
                                                     <a className="page-link" href="#" onClick={() => paginate(i + 1)}>{i + 1}</a>
                                                 </li>
                                             ))}
-                                            <li className={`page-item ${currentPage === Math.ceil(checkInOutHistory?.length / itemsPerPage) && 'disabled'}`}>
+                                            <li className={`page-item ${currentPage === Math.ceil(checkInHistory?.length / itemsPerPage) && 'disabled'}`}>
                                                 <a className="page-link" href="#" onClick={() => paginate(currentPage + 1)}>Next</a>
                                             </li>
                                         </ul>
                                     </div>
                                 </div>
                             </div>
+                            {/* check out history  */}
+                            <div className="tab-pane fade" id="checkout" role="tabpanel" aria-labelledby="checkout-tab">
+                                <div className="row">
+                                    <div className="col-md-12 ">
+                                        <table className="table table-striped table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <th>Asset Name</th>
+                                                    <th>Transfer From</th>
+                                                    <th>Transfer TO</th>
+                                                    <th>Total Quantity</th>
+                                                    <th>Transfer Quantity</th>
+                                                    <th>Transfer Date</th>
+                                                    <th>Transporter Name</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {currentItemsforcheckouthistory.length === 0 ? (
+                                                    <tr>
+                                                        <td colSpan="7" className="text-center">Thier is No CheckOut Asset .</td>
+                                                    </tr>
+                                                ) : (
+                                                    currentItemsforcheckouthistory.map((entry) => (
+                                                        <tr key={entry.event_id}>
+                                                            <td>{entry.assetName}</td>
+                                                            <td>{entry.transferFrom}</td>
+                                                            <td>{entry.location}</td>
+                                                            <td>{entry.currentQuantity}</td>
+                                                            <td>{entry.quantity}</td>
+                                                            <td>{formatDate(entry.transferDate)}</td>
+                                                            <td>{entry.selectedTransporterName}</td>
+                                                        </tr>
+                                                    ))
+                                                )}
+                                            </tbody>
+                                        </table>
+                                        {/* Pagination */}
+                                        <ul className="pagination">
+                                            <li className={`page-item ${currentPage === 1 && 'disabled'}`}>
+                                                <a className="page-link" href="#" onClick={() => paginate(currentPage - 1)}>Previous</a>
+                                            </li>
+                                            {Array.from({ length: Math.ceil(checkInHistory?.length / itemsPerPage) || 1 }, (_, i) => (
+                                                <li key={i} className={`page-item ${currentPage === i + 1 && 'active'}`}>
+                                                    <a className="page-link" href="#" onClick={() => paginate(i + 1)}>{i + 1}</a>
+                                                </li>
+                                            ))}
+                                            <li className={`page-item ${currentPage === Math.ceil(checkInHistory?.length / itemsPerPage) && 'disabled'}`}>
+                                                <a className="page-link" href="#" onClick={() => paginate(currentPage + 1)}>Next</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+
                             {/* Add more tab panes for additional sections */}
                             {/* Employee History Tab Content */}
                             <div className="tab-pane fade" id="site_history" role="tabpanel" aria-labelledby="site-history">
                                 <div className="row">
                                     <div className="col-md-12">
-                                        <table className="table table-striped">
+                                        <table className="table table-striped table-bordered">
                                             <thead>
                                                 <tr>
                                                     <th>Status</th>
@@ -356,14 +448,20 @@ const SiteDesc = ({ site, onClose }) => {
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                {currentItemsforsitehistory.map((entry) => (
-                                                    <tr key={entry.event_id}>
-                                                        <td>{entry.status}</td>
-                                                        <td>{entry.reason}</td>
-                                                        <td>{formatDate(entry.date)}</td>
-                                                        <td>{entry.description}</td>
+                                                {currentItemsforsitehistory.length === 0 ? (
+                                                    <tr>
+                                                        <td colSpan="7" className="text-center">Thier is No CheckIn Asset .</td>
                                                     </tr>
-                                                ))}
+                                                ) : (
+                                                    currentItemsforsitehistory.map((entry) => (
+                                                        <tr key={entry.event_id}>
+                                                            <td>{entry.status}</td>
+                                                            <td>{entry.reason}</td>
+                                                            <td>{formatDate(entry.date)}</td>
+                                                            <td>{entry.description}</td>
+                                                        </tr>
+                                                    ))
+                                                )}
                                             </tbody>
                                         </table>
                                         {/* Pagination */}
@@ -387,7 +485,7 @@ const SiteDesc = ({ site, onClose }) => {
 
                     </div>
                 </div>
-            </div>\
+            </div>
             {isEditModalOpen && (
                 <EditSiteModal
                     site={site}

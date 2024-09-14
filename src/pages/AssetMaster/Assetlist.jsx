@@ -13,6 +13,7 @@ import SearchBar from "../../components/sidebar/SearchBar";
 import AddTransferAsset from "./AddTransferAsset";
 import AddQuantity from "./AddQuantity";
 import { debounce } from "lodash"; // Import debounce function
+import AssetPintPreview from "./AssetPrintPreview";
 
 
 
@@ -44,6 +45,24 @@ function Assetlist({ handleLogout, username }) {
   const [addQuantityModalOpen, setAddQuantityModalOpen] = useState(false); // State to manage delete confirmation modal
   // search term 
   const [searchTerm, setSearchTerm] = useState("");
+  // For Print the Details  
+  const [printAssetData, setPrintAssetData] = useState(null);
+  const [showAssetPrint, setShowAssetPrint] = useState(false);
+  const [showSidebar, setShowSidebar] = useState(true);
+  const [showSearchBar, setShowSearchBar] = useState(true);
+
+  const handleAssetPrint = (Asset) => {
+    setPrintAssetData(Asset)
+    setShowSidebar(false); // Set to false to hide sidebar
+    setShowSearchBar(false);
+    setShowAssetPrint(true);
+  };
+
+  const handleClosePreview = () => {
+    setShowSidebar(true); // Set to true to hide sidebar
+    setShowSearchBar(true);
+    setShowAssetPrint(false);
+  };
 
   useEffect(() => {
     fetchSites();
@@ -226,166 +245,175 @@ function Assetlist({ handleLogout, username }) {
 
   return (
     <div className='d-flex w-100% h-100 '>
-      <Sidebar />
+       {showSidebar && <Sidebar />}
       <div className='w-100'>
-        <SearchBar username={username} handleLogout={handleLogout} /> {/* Pass username and handleLogout props */}
+      {showSearchBar && <SearchBar className="searchbarr" username={username} handleLogout={handleLogout} />}
         <div className="container-fluid">
-        <ToastContainer/>
+          <ToastContainer />
           {/* Conditionally render the asset list if showDetails is false */}
-          {!showDetails && (
-            <div className="row">
-              <div className="col-xl-12">
-                <div className="card shadow mb-4">
-                  <div className="card-header py-3 d-flex flex-row align-items-center justify-content-between "  >
-                    <div className=" d-flex flex-row gap-4 align-items-center justify-center w-50" >
-                      <h6 className="m-0 font-weight-bold text-primary">
-                        Asset List
-                      </h6>
-                      <div className="input-group " style={{ width: '50%'}}>
-                        <input
-                          type="text"
-                          className="form-control bg-gray-300 border-0 small"
-                          placeholder="Search for assets..."
-                          aria-label="Search"
-                          aria-describedby="basic-addon2"
-                          onChange={handleSearchChange}
-                        />
-                        <div className="input-group-append">
-                          <button className="btn btn-primary" type="button">
-                            <i className="fas fa-search fa-sm"></i>
-                          </button>
+          {!showDetails ? (
+            showAssetPrint ? (
+              <AssetPintPreview
+                record={printAssetData}
+                onClose={handleClosePreview}
+              />
+            ) : (
+              <div className="row">
+                <div className="col-xl-12">
+                  <div className="card shadow mb-4">
+                    <div className="card-header py-3 d-flex flex-row align-items-center justify-content-between "  >
+                      <div className=" d-flex flex-row gap-4 align-items-center justify-center w-50" >
+                        <h6 className="m-0 font-weight-bold text-primary">
+                          Asset List
+                        </h6>
+                        <div className="input-group " style={{ width: '50%' }}>
+                          <input
+                            type="text"
+                            className="form-control bg-gray-300 border-0 small"
+                            placeholder="Search for assets..."
+                            aria-label="Search"
+                            aria-describedby="basic-addon2"
+                            onChange={handleSearchChange}
+                          />
+                          <div className="input-group-append">
+                            <button className="btn btn-primary" type="button">
+                              <i className="fas fa-search fa-sm"></i>
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="d-flex align-items-center justify-content-center gap-4">
+                        <button onClick={handleAddAsset} className="btn btn-primary">
+                          Add Asset
+                        </button>
+                        <div className='d-flex align-items-center'>
+                          <button className="btn btn-success" onClick={handleDownloadExcel} >Excel <span> <i className="fa fa-download" ></i></span></button>
                         </div>
                       </div>
                     </div>
-                    <div className="d-flex align-items-center justify-content-center gap-4">
-                      <button onClick={handleAddAsset} style={{ padding: "5px 10px", backgroundColor: "#4E73DF", color: "white", borderRadius: "30px", cursor: "pointer", border: "none" }} onMouseEnter={(e) => e.target.style.backgroundColor = 'red'} onMouseLeave={(e) => e.target.style.backgroundColor = '#4E73DF'}>
-                        Add Asset
-                      </button>
-                      <div className='d-flex align-items-center'>
-                        <button className="btn btn-success w-md m-b-5" onClick={handleDownloadExcel} style={{ padding: "5px 10px", borderRadius: "30px" }}>Excel <span><i className="fa fa-download" ></i></span></button>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="card-body" style={{ maxHeight: "calc(100vh - 200px)", overflowY: "auto" }}  >
-                    <table
-                      className="table table-striped table-bordered"
-                      style={{ width: "100%" }}
-                    >
-                      <thead>
-                        <tr>
-                          <th>Asset Picture</th>
-                          <th>Asset Name</th>
-                          <th>Asset Type</th>
-                          <th>Asset Quantity</th>
-                          <th>Vendor</th>
-                          <th>Category</th>
-                          <th>Action</th>
-                        </tr>
-                      </thead>
-                      {/* Table body */}
-                      <tbody style={{ maxHeight: "calc(100vh - 130px)", overflowY: "auto" }}>
-                        {currentItems.map((asset) => (
-                          <tr key={asset.id}>
-                            <td>
-                              <img
-                                src={`${process.env.REACT_APP_LOCAL_URL}/uploads/assets/${asset.picture}`}
-                                style={{ width: "90px" }}
-                                alt="Asset"
-                              />
-                            </td>
-                            <td>{asset.name}</td>
-                            <td>{asset.assetType}</td>
-                            <td>{asset.totalQuantity}</td>
-                            <td>{asset.vendorcompanyname}</td>
-                            <td>{asset.category_name}</td>
-                            {/* <td>
+                    <div className="card-body" style={{ maxHeight: "calc(100vh - 200px)", overflowY: "auto" }}  >
+                      <table
+                        className="table table-striped table-bordered"
+                        style={{ width: "100%" }}
+                      >
+                        <thead>
+                          <tr>
+                            <th>Asset Picture</th>
+                            <th>Asset Name</th>
+                            <th>Asset Type</th>
+                            <th>Asset Quantity</th>
+                            <th>Vendor</th>
+                            <th>Category</th>
+                            <th>Action</th>
+                          </tr>
+                        </thead>
+                        {/* Table body */}
+                        <style>
+                          {`.hyperlink:hover {color: blue;}`}
+                        </style>
+                        <tbody style={{ maxHeight: "calc(100vh - 130px)", overflowY: "auto" }}>
+                          {currentItems.map((asset) => (
+                            <tr key={asset.id}>
+                              <td>
+                                <img
+                                  src={`${process.env.REACT_APP_LOCAL_URL}/uploads/assets/${asset.picture}`}
+                                  style={{ width: "90px" }}
+                                  alt="Asset"
+                                />
+                              </td>
+                              <td className='hyperlink' style={{ cursor: "pointer" }} onClick={() => handleAssetDetails(asset)}>{asset.name}</td>
+                              <td>{asset.assetType}</td>
+                              <td>{asset.totalQuantity}</td>
+                              <td>{asset.vendorcompanyname}</td>
+                              <td>{asset.category_name}</td>
+                              {/* <td>
                               <ul style={{ listStyleType: "none" }}>
                                 <li key={asset.id}>
                                   {getLatestEventText(getLatestEvent(asset.id))}
                                 </li>
                               </ul>
                             </td> */}
-                            <td>
-                              <div className="btn-group">
-                                <button
-                                  className="btn btn-sm btn-primary dropdown-toggle"
-                                  type="button"
-                                  data-toggle="dropdown"
-                                  aria-haspopup="true"
-                                  aria-expanded="false"
-                                >
-                                  <i className="fa fa-ellipsis-h" aria-hidden="true"></i>
-                                </button>
-                                <div className="dropdown-menu actionmenu" x-placement="bottom-start">
-                                  
-                                  <a
-                                    className="dropdown-item"
-                                    href="#"
-                                    onClick={() => handleAddQuntity(asset)}
+                              <td>
+                                <div className="btn-group">
+                                  <button
+                                    className="btn btn-sm btn-primary dropdown-toggle"
+                                    type="button"
+                                    data-toggle="dropdown"
+                                    aria-haspopup="true"
+                                    aria-expanded="false"
                                   >
-                                    <i className="fa fa-plus"></i> Add Quantity
-                                  </a>
+                                    <i className="fa fa-ellipsis-h" aria-hidden="true"></i>
+                                  </button>
+                                  <div className="dropdown-menu actionmenu" x-placement="bottom-start">
 
-                                  <a
-                                    className="dropdown-item"
-                                    href="#"
-                                    onClick={() => handleOpenTransferAssetModal(asset)}
-                                  >
-                                    <i className="fa fa-share"></i>Transfer Asset
-                                  </a>
+                                    <a
+                                      className="dropdown-item"
+                                      href="#"
+                                      onClick={() => handleAddQuntity(asset)}
+                                    >
+                                      <i className="fa fa-plus"></i> Add Quantity
+                                    </a>
 
-                                  <div className="dropdown-divider"></div>
-                                  <a
-                                    className="dropdown-item"
-                                    href="#"
-                                    onClick={() => handleAssetDetails(asset)}
-                                  >
-                                    <i className="fa fa-file "></i>
-                                    <span> Details</span>
-                                  </a>
-                                  {/* <a
+                                    <a
+                                      className="dropdown-item"
+                                      href="#"
+                                      onClick={() => handleOpenTransferAssetModal(asset)}
+                                    >
+                                      <i className="fa fa-share"></i>Transfer Asset
+                                    </a>
+
+                                    <div className="dropdown-divider"></div>
+                                    <a
+                                      className="dropdown-item"
+                                      href="#"
+                                      onClick={() => handleAssetDetails(asset)}
+                                    >
+                                      <i className="fa fa-file "></i>
+                                      <span> Details</span>
+                                    </a>
+                                    <a className="dropdown-item" href="#" id="btnedit" customdata="386" data-toggle="modal" data-target="#" onClick={() => handleAssetPrint(asset)}><i className="fa fa-plus"></i> Print</a>
+                                    {/* <a
                                     className="dropdown-item"
                                     href="#"
                                     onClick={() => handleEditAsset(asset)}
                                   >
                                     <i className="fas fa-edit"></i> Edit
                                   </a> */}
-                                  {/* <a
+                                    {/* <a
                                     className="dropdown-item"
                                     href="#"
                                     onClick={() => handleDeleteAsset(asset)}
                                   >
                                     <i className="fa fa-trash"></i> Delete
                                   </a> */}
+                                  </div>
                                 </div>
-                              </div>
-                            </td>
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
-                    {/* Pagination */}
-                    <ul className="pagination">
-                      <li className={`page-item ${currentPage === 1 && 'disabled'}`}>
-                        <a className="page-link" href="#" onClick={() => paginate(currentPage - 1)}>Previous</a>
-                      </li>
-                      {Array.from({ length: Math.ceil(filteredAssets.length / itemsPerPage) }, (_, i) => (
-                        <li key={i} className={`page-item ${currentPage === i + 1 && 'active'}`}>
-                          <a className="page-link" href="#" onClick={() => paginate(i + 1)}>{i + 1}</a>
+                              </td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                      {/* Pagination */}
+                      <ul className="pagination">
+                        <li className={`page-item ${currentPage === 1 && 'disabled'}`}>
+                          <a className="page-link" href="#" onClick={() => paginate(currentPage - 1)}>Previous</a>
                         </li>
-                      ))}
-                      <li className={`page-item ${currentPage === Math.ceil(filteredAssets.length / itemsPerPage) && 'disabled'}`}>
-                        <a className="page-link" href="#" onClick={() => paginate(currentPage + 1)}>Next</a>
-                      </li>
-                    </ul>
+                        {Array.from({ length: Math.ceil(filteredAssets.length / itemsPerPage) }, (_, i) => (
+                          <li key={i} className={`page-item ${currentPage === i + 1 && 'active'}`}>
+                            <a className="page-link" href="#" onClick={() => paginate(i + 1)}>{i + 1}</a>
+                          </li>
+                        ))}
+                        <li className={`page-item ${currentPage === Math.ceil(filteredAssets.length / itemsPerPage) && 'disabled'}`}>
+                          <a className="page-link" href="#" onClick={() => paginate(currentPage + 1)}>Next</a>
+                        </li>
+                      </ul>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-          )}
-
+            )
+          ) : null}
           {/* Conditionally render the asset details if showDetails is true */}
-
           {showDetails && selectedAsset && (
             <AssetDesc
               asset={selectedAsset}

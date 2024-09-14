@@ -32,7 +32,7 @@ function CategoryAssetList({ onClose, assetCategory }) {
 
   const fetchCategories = async () => {
     try {
-      const response = await axios.get(`${process.env.REACT_APP_LOCAL_URL}0/categories`);
+      const response = await axios.get(`${process.env.REACT_APP_LOCAL_URL}/categories`);
       const assetCategories = response.data.filter(category => category.categoryType === 'asset');
       setCategories(assetCategories);
     } catch (error) {

@@ -129,9 +129,9 @@ function CategoryList({ handleLogout, username }) {
                         Component Category List
                       </div>
                     </div>
-                    <div onClick={handleAddCategory} style={{ padding: "5px 10px", backgroundColor: "#4E73DF", color: "white", borderRadius: "30px", cursor: "pointer" }} onMouseEnter={(e) => e.target.style.backgroundColor = 'red'} onMouseLeave={(e) => e.target.style.backgroundColor = '#4E73DF'}>
+                    <button onClick={handleAddCategory} className='btn btn-primary'>
                       Add New Category
-                    </div>
+                    </button>
                   </div>
                   <div className="card-body">
                     <table

@@ -95,12 +95,12 @@ const ApplicationSetting = ({ handleLogout, username }) => {
                 <div className="container-fluid">
                     <ToastContainer /> {/* Toast container */}
                     <div className="se-pre-con" style={{ display: 'none' }}></div>
-                    <div className="row">
+                    <div className="row shadow-sm bg-white rounded p-2 mb-4">
                         <div className="col-sm-12 col-md-12">
                             <div className="panel panel-bd">
                                 <div className="panel-heading">
                                     <div className="panel-title">
-                                        <h4>Asset Settings</h4>
+                                    <h4 className='py-2 text-black fw-bolder text-capitalize m-0'>Asset Settings</h4>
                                     </div>
                                 </div>
                                 <div className="panel-body"  style={{ maxHeight: "calc(100vh - 100px)", overflowY: "auto", overflowX:"hidden" }}>

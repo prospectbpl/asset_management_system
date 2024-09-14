@@ -24,6 +24,7 @@ const AssetLost = ({ onClose, onUpdateAssetLosts }) => {
     });
     const [isLoading, setIsLoading] = useState(false);
     const [assets, setAssets] = useState([]);
+    const [employees, setEmployees] = useState([]);
     const [locations, setLocations] = useState([]);
     const [selectedAsset, setSelectedAsset] = useState(null);
     const [error, setError] = useState("");
@@ -38,6 +39,18 @@ const AssetLost = ({ onClose, onUpdateAssetLosts }) => {
             }
         };
         fetchUniqueAssets();
+    }, []);
+
+    useEffect(() => {
+        const fetchEmployees = async () => {
+            try {
+                const response = await axios.get(`${process.env.REACT_APP_LOCAL_URL}/employees`);
+                setEmployees(response.data);
+            } catch (error) {
+                console.error("Error fetching unique assets:", error);
+            }
+        };
+        fetchEmployees();
     }, []);
 
     useEffect(() => {
@@ -61,18 +74,16 @@ const AssetLost = ({ onClose, onUpdateAssetLosts }) => {
             setFormData(prevState => ({
                 ...prevState,
                 [name]: value,
-                asset_id: selectedAsset.asset_id,
-                assetName: selectedAsset.name,
-                assetTag: selectedAsset.assettag,
-                assetPhoto: `${process.env.REACT_APP_LOCAL_URL}/uploads/assets/${selectedAsset.picture}`,
+                asset_id: selectedAsset ? selectedAsset.asset_id : '',
+                assetName: selectedAsset ? selectedAsset.name : '',
+                assetTag: selectedAsset ? selectedAsset.assettag : '',
+                assetPhoto: selectedAsset ? selectedAsset.picture : '',
             }));
         } else if (name === 'lossLocation') {
             const [selectedLocation, selectedQuantity] = value.split('-');
             const relatedLocation = locations.find(location => location.location === selectedLocation);
 
             if (relatedLocation) {
-                const selectedAsset = assets.find(asset => asset.asset_master_id === relatedLocation.asset_master_id);
-
                 setFormData(prevState => ({
                     ...prevState,
                     [name]: value,
@@ -81,8 +92,6 @@ const AssetLost = ({ onClose, onUpdateAssetLosts }) => {
                     employee_master_id: relatedLocation.employee_master_id || null,
                     quantity: relatedLocation.quantity ? relatedLocation.quantity - parseInt(formData.newquantity) : null,
                     prevquantity: selectedQuantity
-
-
                 }));
             } else {
                 // If related location data is not found, update only the lossLocation field
@@ -92,10 +101,17 @@ const AssetLost = ({ onClose, onUpdateAssetLosts }) => {
                     site_master_id: null,
                     client_master_id: null,
                     employee_master_id: null,
-                    quantity: relatedLocation.quantity ? relatedLocation.quantity - parseInt(formData.newquantity) : null,
+                    quantity: null,
                     prevquantity: selectedQuantity
                 }));
             }
+        } else if (name === "responsiblePerson") {
+            const selectedResponsiblePerson = employees.find(employee => employee.ename === value);
+            setFormData(prevState => ({
+                ...prevState,
+                [name]: value,
+                responsiblePerson_id: selectedResponsiblePerson ? selectedResponsiblePerson.id : "",
+            }));
         } else {
             // Handle other form field changes
             setFormData(prevState => ({
@@ -104,11 +120,6 @@ const AssetLost = ({ onClose, onUpdateAssetLosts }) => {
             }));
         }
     };
-
-
-
-
-
 
     const handleFileChange = (e) => {
         setFormData({
@@ -119,8 +130,14 @@ const AssetLost = ({ onClose, onUpdateAssetLosts }) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+
+        // Validate quantities
+        if (parseInt(formData.prevquantity) < parseInt(formData.newquantity)) {
+            setError('New quantity cannot exceed the previous quantity.');
+            return;
+        }
         setIsLoading(true);
-        const requiredFields = ["asset_master_id", "lossLocation", "lossDate","newquantity", "lossType", "lossCircumstances", "responsiblePerson", "contactNo"];
+        const requiredFields = ["asset_master_id", "lossLocation", "lossDate", "newquantity", "lossType", "lossCircumstances", "responsiblePerson", "contactNo"];
         for (const field of requiredFields) {
             if (!formData[field]) {
                 setError(`Please fill in the ${field.replace(/([A-Z])/g, ' $1').toLowerCase()}`);
@@ -199,24 +216,31 @@ const AssetLost = ({ onClose, onUpdateAssetLosts }) => {
                                         >
                                             <option value="">Select Current Location</option>
                                             {locations.filter(location => location.asset_master_id === (selectedAsset && selectedAsset.asset_master_id)).map(filteredLocation => (
-                                                <option key={filteredLocation.location} value={`${filteredLocation.location}-${filteredLocation.quantity}`}>{filteredLocation.location} ({filteredLocation.quantity})</option>
+                                                <option key={filteredLocation.location} value={`${filteredLocation.location}-${filteredLocation.quantity}`}>{filteredLocation.location} <span>(Qty- {filteredLocation.quantity})</span></option>
                                             ))}
                                         </select>
                                     </div>
                                 </div>
-                                <div style={{ flex: "1" }}>                                    
+                                <div style={{ flex: "1" }}>
                                     <div className="form-group">
                                         <label>Asset Photo<span style={{ color: "red" }}>*</span></label>
                                         <div style={{ border: "1px solid #ccc", padding: "10px", height: "200px", overflow: "hidden" }}>
-                                            {formData.assetPhoto && <img src={formData.assetPhoto} alt="Asset" style={{ width: "100%", height: "100%", objectFit: "cover" }} />}
+                                            {formData.assetPhoto && (
+                                                <img
+                                                    src={`${process.env.REACT_APP_LOCAL_URL}/uploads/assets/${formData.assetPhoto}`}
+                                                    alt="Asset"
+                                                    style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                                                />
+                                            )}
                                         </div>
+
                                     </div>
                                 </div>
                             </div>
                             <div className="form-group">
-                                        <label>Quantity<span style={{ color: "red" }}>*</span></label>
-                                        <input name="newquantity" placeholder='How much qunaity Loss' type="number" className="form-control" value={formData.newquantity} onChange={handleChange} />
-                                    </div>
+                                <label>Quantity<span style={{ color: "red" }}>*</span></label>
+                                <input name="newquantity" placeholder='How much qunaity Loss' type="number" className="form-control" value={formData.newquantity} onChange={handleChange} />
+                            </div>
                             <div className="form-group">
                                 <label>Date of Loss<span style={{ color: "red" }}>*</span></label>
                                 <input name="lossDate" type="date" className="form-control" value={formData.lossDate} onChange={handleChange} />
@@ -236,7 +260,22 @@ const AssetLost = ({ onClose, onUpdateAssetLosts }) => {
                             </div>
                             <div className="form-group">
                                 <label>Responsible Person<span style={{ color: "red" }}>*</span></label>
-                                <input name="responsiblePerson" type="text" className="form-control" value={formData.responsiblePerson} onChange={handleChange} required placeholder="Responsible Person" />
+                                <select
+                                    name="responsiblePerson"
+                                    id="responsiblePerson"
+                                    className="form-control"
+                                    value={formData.responsiblePerson}
+                                    onChange={handleChange}
+                                    required
+                                    placeholder="Responsible Person"
+                                >
+                                    <option value="" disabled hidden>Responsible Person</option>
+                                    {employees.map((employee) => (
+                                        <option key={employee.id} value={employee.ename}>
+                                            {employee.ename}
+                                        </option>
+                                    ))}
+                                </select>
                             </div>
                             <div className="form-group">
                                 <label>Contact No.<span style={{ color: "red" }}>*</span></label>

@@ -123,9 +123,9 @@ function TransporterList({ handleLogout, username }) {
                                         <h6 className="m-0 font-weight-bold text-primary">
                                             Transporter List
                                         </h6>
-                                        <div onClick={handleAddTransporter} style={{ padding: "5px 10px", backgroundColor: "#4E73DF", color: "white", borderRadius: "30px", cursor: "pointer" }} onMouseEnter={(e) => e.target.style.backgroundColor = 'red'} onMouseLeave={(e) => e.target.style.backgroundColor = '#4E73DF'}>
+                                        <button onClick={handleAddTransporter} className="btn btn-primary">
                                             Add New Transporter
-                                        </div>
+                                        </button>
                                     </div>
                                     <div
                                         className="card-body"

@@ -136,7 +136,7 @@ import AssetMaintenance from './pages/AssetMaster/AssetMaintenance';
 import Assetlist from './pages/AssetMaster/Assetlist';
 import FinishedMaintenance from './pages/AssetMaster/FinishedMaintenance';
 import UnfinishedMaintenance from './pages/AssetMaster/UnfinishedMaintenance';
-import AssetInsurance from './pages/AssetMaster/AssetInsurance';
+import AssetInsurance from './pages/Insurance/AssetInsurance';
 import AssetLostList from './pages/AssetMaster/AssetLostList';
 import Employeelist from './pages/EmployeeMaster/Employeelist';
 import Sitelist from './pages/SiteMaster/Sitelist';
@@ -155,6 +155,17 @@ import AssetMasterList from './pages/AssetMaster/AssetMasterList';
 import Profile from './pages/SettingMaster/Profile';
 import UserDashboard from './pages/UserDashboard';
 import PageNotFound from './pages/PageNotFound';
+import AllAssetReport from './pages/Report/AllAssetReport';
+import CategoryReport from './pages/Report/CategoryAssetReport';
+import VendorAssetReport from './pages/Report/VendorAssetReport';
+import SiteAssetReport from './pages/Report/SiteAssetReport';
+import EmployeeAssetReport from './pages/Report/EmployeeAssetReport';
+import ClientAssetReport from './pages/Report/ClientAssetReport';
+import AssetLostReport from './pages/Report/AssetLostReport';
+import InsuranceExpiry from './pages/Insurance/InsuranceExpiry';
+import InsuranceReport from './pages/Report/InsuranceReport';
+import InsuranceExpiryReport from './pages/Report/InsuranceExpiryReport';
+import MaintenanceReport from './pages/Report/MaintenanceReport';
 
 
 const App = () => {
@@ -252,6 +263,7 @@ const App = () => {
             <Route path="/fullcomponentlist" element={isAuthenticated ? <FullComponentList username={username} userType={userType} employeeId={employeeId} handleLogout={handleLogout} /> : <Navigate to="/" replace />} />
             <Route path="/assetlostlist" element={isAuthenticated ? <AssetLostList username={username} userType={userType} employeeId={employeeId} handleLogout={handleLogout} /> : <Navigate to="/" replace />} />
             <Route path="/assetinsurance" element={isAuthenticated ? <AssetInsurance username={username} userType={userType} employeeId={employeeId} handleLogout={handleLogout} /> : <Navigate to="/" replace />} />
+            <Route path="/assetinsurenceexpiry" element={isAuthenticated ? <InsuranceExpiry username={username} userType={userType} employeeId={employeeId} handleLogout={handleLogout} /> : <Navigate to="/" replace />} />
             <Route path="/assetMaintenance" element={isAuthenticated ? <AssetMaintenance username={username} userType={userType} employeeId={employeeId} handleLogout={handleLogout} /> : <Navigate to="/" replace />} />
             <Route path="/finishedmaintenance" element={isAuthenticated ? <FinishedMaintenance username={username} userType={userType} employeeId={employeeId} handleLogout={handleLogout} /> : <Navigate to="/" replace />} />
             <Route path="/unfinishedmaintenance" element={isAuthenticated ? <UnfinishedMaintenance username={username} userType={userType} employeeId={employeeId} handleLogout={handleLogout} /> : <Navigate to="/" replace />} />
@@ -265,6 +277,16 @@ const App = () => {
             <Route path="/applicationsetting" element={isAuthenticated ? <ApplicationSetting username={username} userType={userType} employeeId={employeeId} handleLogout={handleLogout} /> : <Navigate to="/" replace />} />
             <Route path="/profile" element={isAuthenticated ? <Profile username={username} userType={userType} employeeId={employeeId} handleLogout={handleLogout} /> : <Navigate to="/" replace />} />
             <Route path="/assettransfer" element={isAuthenticated ? <AssetTransferList username={username} userType={userType} employeeId={employeeId} handleLogout={handleLogout} /> : <Navigate to="/" replace />} />
+            <Route path="/allassetreport" element={isAuthenticated ? <AllAssetReport username={username} userType={userType} employeeId={employeeId} handleLogout={handleLogout} /> : <Navigate to="/" replace />} />
+            <Route path="/categoryreport" element={isAuthenticated ? <CategoryReport username={username} userType={userType} employeeId={employeeId} handleLogout={handleLogout} /> : <Navigate to="/" replace />} />
+            <Route path="/vendorreport" element={isAuthenticated ? <VendorAssetReport username={username} userType={userType} employeeId={employeeId} handleLogout={handleLogout} /> : <Navigate to="/" replace />} />
+            <Route path="/sitereport" element={isAuthenticated ? <SiteAssetReport username={username} userType={userType} employeeId={employeeId} handleLogout={handleLogout} /> : <Navigate to="/" replace />} />
+            <Route path="/employeereport" element={isAuthenticated ? <EmployeeAssetReport username={username} userType={userType} employeeId={employeeId} handleLogout={handleLogout} /> : <Navigate to="/" replace />} />
+            <Route path="/clientreport" element={isAuthenticated ? <ClientAssetReport username={username} userType={userType} employeeId={employeeId} handleLogout={handleLogout} /> : <Navigate to="/" replace />} />
+            <Route path="/assetlostreport" element={isAuthenticated ? <AssetLostReport username={username} userType={userType} employeeId={employeeId} handleLogout={handleLogout} /> : <Navigate to="/" replace />} />
+            <Route path="/insurancereport" element={isAuthenticated ? <InsuranceReport username={username} userType={userType} employeeId={employeeId} handleLogout={handleLogout} /> : <Navigate to="/" replace />} />
+            <Route path="/insuranceexpiryreport" element={isAuthenticated ? <InsuranceExpiryReport username={username} userType={userType} employeeId={employeeId} handleLogout={handleLogout} /> : <Navigate to="/" replace />} />
+            <Route path="/maintenancereport" element={isAuthenticated ? <MaintenanceReport username={username} userType={userType} employeeId={employeeId} handleLogout={handleLogout} /> : <Navigate to="/" replace />} />
           </>
         )}
         <Route path="*" element={<PageNotFound />} />

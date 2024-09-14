@@ -1,622 +1,5 @@
-// import React, { useState, useEffect } from "react";
-// import axios from "axios";
-// import SitePopUp from "../AssetMaster/SitePopUp";
-// import EmployeePopUp from "../AssetMaster/EmployeePopUp"; // Import the EmployeePopUp component
-// import ClientPopUp from "../AssetMaster/ClientPopUp"; // Import the ClientPopUp component
-// import EditAssetModal from "../AssetMaster/EditAssetModal";
-
-// // Define the AssetDesc component
-// const AssetDesc = ({ asset, onClose }) => {
-//     // State to store the check-in/check-out history of the asset
-//     const [history, setHistory] = useState([]);
-//     const [maintenance, setMaintenance] = useState([]);
-//     const [insurence, setInsurence] = useState([]);
-//     const [insurenceHistory, setInsurenceHistory] = useState([]);
-//     const [isSiteModalOpen, setIsSiteModalOpen] = useState(false);
-//     const [isEmployeeModalOpen, setIsEmployeeModalOpen] = useState(false);
-//     const [isClientModalOpen, setIsClientModalOpen] = useState(false);
-//     const [selectedAction, setSelectedAction] = useState(null);
-//     // State variables for selected site id, employee id, client id, and description
-//     const [selectedSiteId, setSelectedSiteId] = useState(null);
-//     const [selectedEmployeeId, setSelectedEmployeeId] = useState(null);
-//     const [selectedClientId, setSelectedClientId] = useState(null);
-//     const [selectedDescription, setSelectedDescription] = useState(null);
-//     // Edit Asset Modal 
-//     const [isEditModalOpen, setIsEditModalOpen] = useState(false); // State to manage opening/closing edit modal
-
-
-//     // Function to fetch the check-in/check-out history for the asset
-//     const fetchHistory = async () => {
-//         try {
-//             const response = await axios.get(`${process.env.REACT_APP_LOCAL_URL}/api/checkincheckout/history/${asset.asset_master_id}`);
-//             setHistory(response.data);
-//         } catch (error) {
-//             console.error("Error fetching history:", error);
-//         }
-//     };
-
-//     // Fetch history when the component mounts
-//     useEffect(() => {
-//         fetchHistory();
-//     }, []);
-
-//     // Function to format the date from '2024-02-29T18:30:00.000Z' to '2024-02-29'
-//     const formatDate = (dateString) => {
-//         return new Date(dateString).toLocaleDateString('en-US', {
-//             year: 'numeric',
-//             month: '2-digit',
-//             day: '2-digit'
-//         });
-//     };
-
-
-//     // Function to fetch maintenance details for the asset
-//     const fetchMaintenance = async () => {
-//         try {
-//             const response = await axios.get(`${process.env.REACT_APP_LOCAL_URL}/api/maintenance/history/${asset.id}`);
-//             setMaintenance(response.data);
-//         } catch (error) {
-//             console.error("Error fetching maintenance details:", error);
-//         }
-//     };
-
-//     // Fetch maintenance details when the component mounts
-//     useEffect(() => {
-//         fetchMaintenance();
-//     }, []);
-
-//     // Function to fetch insurence details for the asset
-//     const fetchInsurence = async () => {
-//         try {
-//             const response = await axios.get(`${process.env.REACT_APP_LOCAL_URL}/api/insurence/history/${asset.id}`);
-//             setInsurence(response.data);
-//         } catch (error) {
-//             console.error("Error fetching Insurence details:", error);
-//         }
-//     };
-//     // Fetch insurence history details when the component mounts
-//     useEffect(() => {
-//         fetchInsurence();
-//     }, []);
-
-//     // Function to fetch insurence history details for the asset
-//     const fetchInsurenceHistory = async () => {
-//         try {
-//             const response = await axios.get(`${process.env.REACT_APP_LOCAL_URL}/api/insurenceHistory/history/${asset.id}`);
-//             setInsurenceHistory(response.data);
-//         } catch (error) {
-//             console.error("Error fetching Insurence details:", error);
-//         }
-//     };
-
-//     // Fetch insurence history details when the component mounts
-//     useEffect(() => {
-//         fetchInsurenceHistory();
-//     }, []);
-
-//     const processFetchedData = (data) => {
-//         const groupedData = {};
-//         data.forEach((item) => {
-//             const assetID = item.asset_id;
-//             if (!groupedData[assetID]) {
-//                 groupedData[assetID] = { assetName: item.assetName, previousData: [], newData: [] };
-//             }
-//             if (item.previousData) {
-//                 groupedData[assetID].previousData.push(JSON.parse(item.previousData));
-//             }
-//             if (item.newData) {
-//                 groupedData[assetID].newData.push(JSON.parse(item.newData));
-//             }
-//         });
-//         return Object.values(groupedData);
-//     };
-//     console.log(processFetchedData);
-
-
-
-//     // Function to render description or dash based on event type
-//     const renderDescriptionOrDash = (event) => {
-//         if (event.event_type === 'check_in') {
-//             return event.asset_description;
-//         } else {
-//             return '-';
-//         }
-//     };
-
-//     // Function to handle opening the modal
-//     const siteOpenModal = (action, siteId, employeeId, clientId, description) => {
-//         setSelectedAction(action);
-//         setSelectedSiteId(siteId);
-//         setSelectedEmployeeId(employeeId);
-//         setSelectedClientId(clientId);
-//         setSelectedDescription(description);
-
-//         if (clientId) {
-//             setIsClientModalOpen(true);
-//         } else if (employeeId) {
-//             setIsEmployeeModalOpen(true);
-//         } else if (siteId) {
-//             setIsSiteModalOpen(true);
-//         }
-//     };
-
-//     // Function to handle closing the modal
-//     const siteCloseModal = () => {
-//         setIsSiteModalOpen(false);
-//     };
-//     const employeeCloseModal = () => {
-//         setIsEmployeeModalOpen(false);
-//     };
-//     const clientCloseModal = () => {
-//         setIsClientModalOpen(false);
-//     };
-
-//     // Function to handle opening the edit modal
-//     const handleEditAsset = () => {
-//         setIsEditModalOpen(true);
-//     };
-
-//     // Function to handle closing the edit modal
-//     const handleCloseEditModal = () => {
-//         setIsEditModalOpen(false);
-//     };
-
-//     return (
-//         <div>
-//             <div className="card-body p-4">
-//                 {/* Asset Details Section */}
-//                 <div className="row">
-//                     <div className="col-md-9 d-flex flex-column gap-3">
-//                         {/* Asset Name and Tag */}
-//                         <input type="hidden" value="1" name="id" id="id" />
-//                         <h4 className="title-detail font-bold">
-//                             <span className="assetname">Asset Name - {asset.name}</span>
-//                         </h4>
-//                         {/* Asset Type and Status */}
-//                         <h5 className="assetdetail">
-//                             <span className="assettag">Asset Tag - {asset.assettag} </span>
-//                             <span className="assetstatus"> {asset.currentStatus} </span>
-//                         </h5>
-//                     </div>
-
-//                     {/* Back Button Section */}
-//                     <div className="col-md-3">
-//                         <div className=" p-2 barcode-inner">
-//                             <div className="assetbarcode d-flex gap-2">
-//                                 <button onClick={onClose} className="btn btn-primary">
-//                                     Back to Asset List
-//                                 </button>
-//                                 <button onClick={handleEditAsset} className="btn btn-primary"> {/* Add onClick handler to open the edit modal */}
-//                                     Edit Asset
-//                                 </button>
-//                             </div>
-//                         </div>
-//                     </div>
-//                 </div>
-
-//                 {/* Tabs Section */}
-//                 <div className="row pt-4">
-//                     <div className="col-md-12">
-//                         <ul className="nav nav-tabs" id="myTab" role="tablist">
-//                             {/* Details Tab */}
-//                             <li className="nav-item">
-//                                 <a
-//                                     className="nav-link active show"
-//                                     id="details-tab"
-//                                     data-toggle="tab"
-//                                     href="#details"
-//                                     role="tab"
-//                                     aria-controls="details"
-//                                     aria-selected="true"
-//                                 >
-//                                     Details
-//                                 </a>
-//                             </li>
-//                             {/* History Tab */}
-//                             <li className="nav-item">
-//                                 <a
-//                                     className="nav-link"
-//                                     id="history-tab"
-//                                     data-toggle="tab"
-//                                     href="#history"
-//                                     role="tab"
-//                                     aria-controls="history"
-//                                     aria-selected="false"
-//                                 >
-//                                     History
-//                                 </a>
-//                             </li>
-//                             <li className="nav-item">
-//                                 <a
-//                                     className="nav-link"
-//                                     id="maintenance-tab"
-//                                     data-toggle="tab"
-//                                     href="#maintenance"
-//                                     role="tab"
-//                                     aria-controls="maintenance"
-//                                     aria-selected="false"
-//                                 >
-//                                     Maintenance
-//                                 </a>
-//                             </li>
-//                             <li className="nav-item">
-//                                 <a
-//                                     className="nav-link"
-//                                     id="insurence-tab"
-//                                     data-toggle="tab"
-//                                     href="#insurence"
-//                                     role="tab"
-//                                     aria-controls="insurence"
-//                                     aria-selected="false"
-//                                 >
-//                                     Insurence
-//                                 </a>
-//                             </li>
-//                             <li className="nav-item">
-//                                 <a
-//                                     className="nav-link"
-//                                     id="insurenceHistory-tab"
-//                                     data-toggle="tab"
-//                                     href="#insurenceHistory"
-//                                     role="tab"
-//                                     aria-controls="insurenceHistory"
-//                                     aria-selected="false"
-//                                 >
-//                                     Insurence history
-//                                 </a>
-//                             </li>
-//                         </ul>
-
-//                         {/* Tab Content Section */}
-//                         <div className="tab-content" id="myTabContent">
-//                             {/* Details Tab Content */}
-//                             <div
-//                                 className="tab-pane fade active show"
-//                                 id="details"
-//                                 role="tabpanel"
-//                                 aria-labelledby="details-tab"
-//                             >
-//                                 {/* Asset Details */}
-//                                 <div class="row">
-//                                     <div class="col-md-9 ">
-//                                         {/* Table for Asset Details */}
-//                                         <table
-//                                             class="table table-hover"
-//                                             cellpadding="0"
-//                                             cellspacing="0"
-//                                         >
-//                                             <tbody>
-//                                                 <tr>
-//                                                     <td bgcolor="#f2f3f4" width="200">
-//                                                         <p class="mb-0 font-bold">Asset Name:</p>
-//                                                     </td>
-//                                                     <td>
-//                                                         <p class="mb-0 assettype2">{asset.name}</p>
-//                                                     </td>
-//                                                 </tr>
-//                                                 <tr>
-//                                                     <td bgcolor="#f2f3f4" width="200">
-//                                                         <p class="mb-0 font-bold">Asset Tag:</p>
-//                                                     </td>
-//                                                     <td>
-//                                                         <p class="mb-0 assettype2">{asset.assettag}</p>
-//                                                     </td>
-//                                                 </tr>
-//                                                 <tr>
-//                                                     <td bgcolor="#f2f3f4" width="200">
-//                                                         <p class="mb-0 font-bold">Type:</p>
-//                                                     </td>
-//                                                     <td>
-//                                                         <p class="mb-0 assettype2">{asset.assetType}</p>
-//                                                     </td>
-//                                                 </tr>
-//                                                 <tr>
-//                                                     <td bgcolor="#f2f3f4" width="200">
-//                                                         <p class="mb-0 font-bold">Status:</p>
-//                                                     </td>
-//                                                     <td>
-//                                                         <p class="mb-0 assetstatus">
-//                                                             {asset.currentStatus}
-//                                                         </p>
-//                                                     </td>
-//                                                 </tr>
-//                                                 <tr>
-//                                                     <td bgcolor="#f2f3f4" width="200">
-//                                                         <p class="mb-0 font-bold">Serial:</p>
-//                                                     </td>
-//                                                     <td>
-//                                                         <p class="mb-0 assetserial">{asset.serial}</p>
-//                                                     </td>
-//                                                 </tr>
-//                                                 <tr>
-//                                                     <td bgcolor="#f2f3f4" width="200">
-//                                                         <p class="mb-0 font-bold">Brand:</p>
-//                                                     </td>
-//                                                     <td>
-//                                                         <p class="mb-0 assetbrand">{asset.brand}</p>
-//                                                     </td>
-//                                                 </tr>
-//                                                 <tr>
-//                                                     <td bgcolor="#f2f3f4" width="200">
-//                                                         <p class="mb-0 font-bold">Purchase date:</p>
-//                                                     </td>
-//                                                     <td>
-//                                                         <p class="mb-0 assetpurchasedate">
-//                                                         {formatDate(asset.purchaseDate)}
-//                                                         </p>
-//                                                     </td>
-//                                                 </tr>
-//                                                 <tr>
-//                                                     <td bgcolor="#f2f3f4" width="200">
-//                                                         <p class="mb-0 font-bold">Cost:</p>
-//                                                     </td>
-//                                                     <td>
-//                                                         <p class="mb-0 assetcost">{asset.cost}</p>
-//                                                     </td>
-//                                                 </tr>
-
-//                                                 <tr>
-//                                                     <td bgcolor="#f2f3f4" width="200">
-//                                                         <p class="mb-0 font-bold">Location:</p>
-//                                                     </td>
-//                                                     <td>
-//                                                         <p class="mb-0 assetlocation">{asset.location}</p>
-//                                                     </td>
-//                                                 </tr>
-//                                                 <tr>
-//                                                     <td bgcolor="#f2f3f4" width="200">
-//                                                         <p class="mb-0 font-bold">Vendor Name:</p>
-//                                                     </td>
-//                                                     <td>
-//                                                         <p class="mb-0 assetsupplier">{asset.vendorcompanyname}</p>
-//                                                     </td>
-//                                                 </tr>
-//                                                 <tr>
-//                                                     <td bgcolor="#f2f3f4" width="200">
-//                                                         <p class="mb-0 font-bold">Created at:</p>
-//                                                     </td>
-//                                                     <td>
-//                                                         <p class="mb-0 assetupdated">{formatDate(asset.created_at)}</p>
-//                                                     </td>
-//                                                 </tr>
-//                                                 <tr>
-//                                                     <td bgcolor="#f2f3f4" width="200">
-//                                                         <p class="mb-0 font-bold">RTO Name:</p>
-//                                                     </td>
-//                                                     <td>
-//                                                         <p class="mb-0 assetupdated">{asset.rtoName}</p>
-//                                                     </td>
-//                                                 </tr>
-//                                                 <tr>
-//                                                     <td bgcolor="#f2f3f4" width="200">
-//                                                         <p class="mb-0 font-bold">Registration Number:</p>
-//                                                     </td>
-//                                                     <td>
-//                                                         <p class="mb-0 assetupdated">{asset.registrationNumber}</p>
-//                                                     </td>
-//                                                 </tr>
-
-//                                                 <tr>
-//                                                     <td bgcolor="#f2f3f4" width="200">
-//                                                         <p class="mb-0 font-bold">Description:</p>
-//                                                     </td>
-//                                                     <td>
-//                                                         <p class="mb-0 assetdescription">
-//                                                             {asset.description}
-//                                                         </p>
-//                                                     </td>
-//                                                 </tr>
-//                                             </tbody>
-//                                         </table>
-//                                     </div>
-//                                     {/* Image Section */}
-//                                     <div class="col-md-3 pt-2 text-center">
-//                                         <img
-//                                             src={`${process.env.REACT_APP_LOCAL_URL}/uploads/assets/${asset.picture}`}
-//                                             style={{ width: "200px" }}
-//                                             alt="Asset"
-//                                         />
-//                                     </div>
-//                                 </div>
-//                             </div>
-
-//                             {/* History Tab Content */}
-//                             <div className="tab-pane fade" id="history" role="tabpanel" aria-labelledby="history-tab">
-//                                 <table className="table">
-//                                     <thead>
-//                                         <tr>
-//                                             <th>Asset Name</th>
-//                                             <th>Date</th>
-//                                             <th>Event Type</th>
-//                                             <th>Employee</th>
-//                                             <th>Description</th>
-//                                             <th>Action</th>
-//                                         </tr>
-//                                     </thead>
-//                                     <tbody>
-//                                         {history.map((event) => (
-//                                             <tr key={event.event_id}>
-//                                                 <td>{asset.name}</td>
-//                                                 <td>{event.event_type === 'check_in' ? formatDate(event.checkin_date) || '-' : formatDate(event.checkout_date) || '-'}</td>
-//                                                 <td>{event.event_type} </td>
-//                                                 <td>{event.event_type === 'check_in' ? event.checkin_by || '-' : event.checkout_to || '-'} {<span onClick={() => siteOpenModal(event.event_type, event.site_id, event.employee_id, event.client_id, event.asset_description)}>...</span>}</td>
-//                                                 <td>{renderDescriptionOrDash(event)}</td>
-//                                                 <td>
-//                                                     <button onClick={() => siteOpenModal(event.event_type, event.site_id, event.employee_id, event.client_id, event.asset_description)}>...</button>
-//                                                 </td>
-//                                             </tr>
-//                                         ))}
-//                                     </tbody>
-//                                 </table>
-//                             </div>
-
-//                             {/* Maintenance Tab Content */}
-//                             <div className="tab-pane fade" id="maintenance" role="tabpanel" aria-labelledby="maintenance-tab">
-//                                 <table className="table">
-//                                     <thead>
-//                                         <tr>
-//                                             <th>Asset photo</th>
-//                                             <th>Asset Name</th>
-//                                             <th>Asset Tag</th>
-//                                             <th>Service Type</th>
-//                                             <th>Provider Name</th>
-//                                             <th>Start Date</th>
-//                                             <th>End Date</th>
-//                                             <th>Remark</th>
-//                                         </tr>
-//                                     </thead>
-//                                     <tbody>
-//                                         {maintenance.map((event) => (
-//                                             <tr key={event.event_id}>
-//                                                 <td> <img
-//                                                     src={event.assetPhoto}
-//                                                     style={{ width: "90px" }}
-//                                                     alt="Asset"
-//                                                 /></td>
-//                                                 <td>{event.assetName}</td>
-//                                                 <td>{event.assetTag}</td>
-//                                                 <td>{event.serviceType}</td>
-//                                                 <td>
-//                                                     {event.serviceType === "In-house"
-//                                                         ? event.employeeName
-//                                                         : event.serviceName || event.serviceAddress}
-//                                                 </td>
-//                                                 <td>{new Date(event.startDate).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })}</td>
-//                                                 <td>{new Date(event.endDate).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })}</td>
-
-//                                                 <td>{event.remarks}</td>
-//                                             </tr>
-//                                         ))}
-//                                     </tbody>
-//                                 </table>
-//                             </div>
-
-//                             {/* Insurence Tab Content */}
-//                             <div className="tab-pane fade" id="insurence" role="tabpanel" aria-labelledby="insurence-tab">
-//                                 <table className="table">
-//                                     <thead>
-//                                         <tr>
-//                                             <th>Asset Picture</th>
-//                                             <th>Asset Name</th>
-//                                             <th>Asset Tag</th>
-//                                             <th>Insurence Company</th>
-//                                             <th>Policy Number</th>
-//                                             <th>End Date</th>
-//                                             <th>Renewal Date</th>
-//                                         </tr>
-//                                     </thead>
-//                                     <tbody>
-//                                         {insurence.map((event) => (
-//                                             <tr key={event.event_id}>
-//                                                 <td><img
-//                                                     src={event.assetPhoto}
-//                                                     style={{ width: "90px" }}
-//                                                     alt="Asset"
-//                                                 />
-//                                                 </td>
-//                                                 <td>{event.assetName}</td>
-//                                                 <td>{event.assetTag}</td>
-//                                                 <td>{event.insuranceCompanyName}</td>
-//                                                 <td>{event.policyNumber}</td>
-//                                                 <td>{new Date(event.endDate).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })}</td>
-//                                                 <td>{new Date(event.renewalDate).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })}</td>
-
-//                                             </tr>
-//                                         ))}
-//                                     </tbody>
-//                                 </table>
-//                             </div>
-
-
-//                             {/* Insurence History Tab Content */}
-//                             <div className="tab-pane fade" id="insurenceHistory" role="tabpanel" aria-labelledby="insurenceHistory-tab">
-//                                 <table className="table">
-//                                     <thead>
-//                                         <tr>
-//                                             <th>Asset Picture</th>
-//                                             <th>Asset Name</th>
-//                                             <th>Asset Tag</th>
-//                                             <th>Insurence Company</th>
-//                                             <th>Policy Number</th>
-//                                             <th>End Date</th>
-//                                             <th>Renewal Date</th>
-//                                         </tr>
-//                                     </thead>
-//                                     <tbody>
-//                                         {insurenceHistory.map((event) => (
-//                                             <tr key={event.event_id}>
-//                                                 <td><img
-//                                                     src={event.assetPhoto}
-//                                                     style={{ width: "90px" }}
-//                                                     alt="Asset"
-//                                                 />
-//                                                 </td>
-//                                                 <td>{event.assetName}</td>
-//                                                 <td>{event.assetTag}</td>
-//                                                 <td>{event.insuranceCompanyName}</td>
-//                                                 <td>{event.policyNumber}</td>
-//                                                 <td>{new Date(event.endDate).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })}</td>
-//                                                 <td>{new Date(event.renewalDate).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })}</td>
-//                                             </tr>
-//                                         ))}
-//                                     </tbody>
-//                                 </table>
-//                             </div>
-
-
-//                         </div>
-//                     </div>
-//                 </div>
-//             </div>
-
-//             {/* SitePopUp modal */}
-//             {isSiteModalOpen && (
-//                 <SitePopUp
-//                     action={selectedAction}
-//                     siteId={selectedSiteId}
-//                     description={selectedDescription}
-//                     onClose={siteCloseModal}
-//                 />
-//             )}
-
-//             {/* EmployeePopUp modal */}
-//             {isEmployeeModalOpen && (
-//                 <EmployeePopUp
-//                     action={selectedAction}
-//                     employeeId={selectedEmployeeId}
-//                     description={selectedDescription}
-//                     onClose={employeeCloseModal}
-//                 />
-//             )}
-
-//             {/* ClientPopUp modal */}
-//             {isClientModalOpen && (
-//                 <ClientPopUp
-//                     action={selectedAction}
-//                     clientId={selectedClientId}
-//                     description={selectedDescription}
-//                     onClose={clientCloseModal}
-//                 />
-//             )}
-//             {/* Edit Asset Modal */}
-//             {isEditModalOpen && (
-//                 <EditAssetModal
-//                     asset={asset}
-//                     onClose={setIsEditModalOpen}
-//                 />
-//             )}
-//         </div>
-//     );
-// };
-
-// export default AssetDesc;
-
-
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import SitePopUp from "./SitePopUp";
-import EmployeePopUp from "./EmployeePopUp"; // Import the EmployeePopUp component
-import ClientPopUp from "./ClientPopUp"; // Import the ClientPopUp component
 import EditAssetModal from "./EditAssetModal";
 import QRCode from "qrcode.react";
 
@@ -643,6 +26,8 @@ const AssetDesc = ({ asset, onClose }) => {
     const [itemsPerPage, setItemsPerPage] = useState(5);
     // purchase_history
     const [purchasehistory, setpurchasehistory] = useState([])
+
+    
     console.log(asset)
 
 
@@ -811,58 +196,65 @@ const AssetDesc = ({ asset, onClose }) => {
 
     const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
+    // Function to format the date
+    const formatDate = (dateString) => {
+        const date = new Date(dateString);
+        return `${date.getDate().toString().padStart(2, '0')}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getFullYear()} `;
+    };
 
     return (
-        <div>
+        <div className="shadow-sm bg-white rounded">
             <div className="card-body p-4">
                 {/* Asset Details Section */}
                 <div className="row">
-                    <div className="col-md-9 d-flex flex-column gap-3">
-                        {/* Asset Name and Tag */}
-                        <input type="hidden" value="1" name="id" id="id" />
-                        <h4 className="title-detail font-bold">
-                            <span className="assetname">Asset Name - {asset.name}</span>
-                        </h4>
-                        {/* Asset Type and Status */}
-                        <h5 className="assetdetail">
-                            <span className="assettag">Asset Tag - {asset.assettag} </span>
-                            <span className="assetstatus"> {asset.currentStatus} </span>
-                        </h5>
-                        <h6>Maintenance:{unfinished.length > 0 ? (
-                            unfinished.map((item, index) => (
-                                <p key={index}>Under Maintenance</p>
-                            ))
-                        ) : (
-                            <p>Maintenance Due</p>
-                        )}
-                        </h6>
+                    <div className="col-md-9 d-flex  justify-content-between px-3">
+                        <div>
+                            <h2 style={{ color: "#00509d" }} className="title-detail fw-bolder fw-bolder m-0">
+                                {asset.name}
+                            </h2>
+                            <hr className="m-1" />
+                            <h6 className="title-detail m-0">
+                                Asset Tag: {asset.assettag}
+                            </h6>
+                        </div>
+                        <div>
+                            <p className="m-0">
+                                <span> Type: {asset.assetType || "N/A"}</span>
+                            </p>
+                            <p className="m-0">
+                                <span> Serial: {asset.serial || "N/A"}</span>
+                            </p>
+                            <p className="m-0">
+                                <span>Category: {asset.category_name || "N/A"}</span>
+                            </p>
+                            <p className="m-0">
+                                <span>Purchase Date: {formatDate(asset.purchaseDate) || "N/A"}</span>
+                            </p>
+                        </div>
                     </div>
-
-                    {/* Back Button Section */}
                     <div className="col-md-3">
-                        <div className="p-2 barcode-inner">
-                            <div className="assetbarcode d-flex flex-column gap-2 align-items-center">
-                                <div className="qr-code">
-                                    {showQRCode && (
-                                        <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', backgroundColor: 'rgba(0, 0, 0, 0)', zIndex: 1 }} onClick={toggleQRCode}></div>
-                                    )}
-                                    <QRCode value={asset.qrCodeData} size={showQRCode ? 250 : 60} onClick={toggleQRCode} />
-                                </div>
-                                <div className="buttons-container d-flex gap-2">
-                                    <button onClick={onClose} className="btn btn-sm btn-primary">
-                                        Back to Asset List
-                                    </button>
-                                    <button onClick={handleEditAsset} className="btn btn-sm btn-primary">
-                                        Edit Asset
-                                    </button>
-                                </div>
+                        <div className="assetbarcode d-flex flex-column gap-2 align-items-center">
+                            <div className="qr-code">
+                                {showQRCode && (
+                                    <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', backgroundColor: 'rgba(0, 0, 0, 0)', zIndex: 1 }} onClick={toggleQRCode}></div>
+                                )}
+                                <QRCode value={asset.qrCodeData} size={showQRCode ? 250 : 60} onClick={toggleQRCode} />
+                            </div>
+                            <div className=" p-2 barcode-inner d-flex gap-2 align-items-center justify-content-center">
+                                <button onClick={onClose} className="btn btn-outline-primary">
+                                    <i className="fa fa-arrow-left"></i> Back
+                                </button>
+                                <button onClick={handleEditAsset} className="btn btn-outline-primary">
+                                    <i className="fa fa-edit"></i>    Edit
+                                </button>
                             </div>
                         </div>
                     </div>
                 </div>
+                <hr />
 
                 {/* Tabs Section */}
-                <div className="row pt-4">
+                <div className="row ">
                     <div className="col-md-12">
                         <ul className="nav nav-tabs" id="myTab" role="tablist">
                             {/* Details Tab */}
@@ -981,64 +373,64 @@ const AssetDesc = ({ asset, onClose }) => {
                                             <tbody>
                                                 <tr>
                                                     <td bgcolor="#f2f3f4" width="200">
-                                                        <p class="mb-0 font-bold">Asset Name:</p>
+                                                        <p class="mb-0 fw-bolder">Asset Name</p>
                                                     </td>
                                                     <td>
-                                                        <p class="mb-0 assettype2">{asset.name}</p>
+                                                        <p class="mb-0">: {asset.name}</p>
                                                     </td>
                                                 </tr>
                                                 <tr>
                                                     <td bgcolor="#f2f3f4" width="200">
-                                                        <p class="mb-0 font-bold">Asset Tag:</p>
+                                                        <p class="mb-0 fw-bolder">Asset Tag</p>
                                                     </td>
                                                     <td>
-                                                        <p class="mb-0 assettype2">{asset.assettag}</p>
+                                                        <p class="mb-0">: {asset.assettag}</p>
                                                     </td>
                                                 </tr>
                                                 <tr>
                                                     <td bgcolor="#f2f3f4" width="200">
-                                                        <p class="mb-0 font-bold">Type:</p>
+                                                        <p class="mb-0 fw-bolder">Type</p>
                                                     </td>
                                                     <td>
-                                                        <p class="mb-0 assettype2">{asset.assetType}</p>
+                                                        <p class="mb-0">: {asset.assetType}</p>
                                                     </td>
                                                 </tr>
 
                                                 <tr>
                                                     <td bgcolor="#f2f3f4" width="200">
-                                                        <p class="mb-0 font-bold">Serial:</p>
+                                                        <p class="mb-0 fw-bolder">Serial</p>
                                                     </td>
                                                     <td>
-                                                        <p class="mb-0 assetserial">{asset.serial}</p>
+                                                        <p class="mb-0">: {asset.serial}</p>
                                                     </td>
                                                 </tr>
                                                 <tr>
                                                     <td bgcolor="#f2f3f4" width="200">
-                                                        <p class="mb-0 font-bold">RTO Name:</p>
+                                                        <p class="mb-0 fw-bolder">RTO Name</p>
                                                     </td>
                                                     <td>
-                                                        <p class="mb-0 assetupdated">{asset.rtoName}</p>
+                                                        <p class="mb-0">: {asset.rtoName}</p>
                                                     </td>
                                                 </tr>
                                                 <tr>
                                                     <td bgcolor="#f2f3f4" width="200">
-                                                        <p class="mb-0 font-bold">Registration Number:</p>
+                                                        <p class="mb-0 fw-bolder">Registration Number</p>
                                                     </td>
                                                     <td>
-                                                        <p class="mb-0 assetupdated">{asset.registrationNumber}</p>
+                                                        <p class="mb-0">: {asset.registrationNumber}</p>
                                                     </td>
                                                 </tr>
-
-                                                <h4 style={{ width: "100%", color: "black", fontSize: "20px", fontWeight: "700", margin: "3px" }}>Total Asset Location wise :-</h4>
-
+                                                <h6 className=' m-0 text-primary fw-bolder p-2'>Asset Location wise ----</h6>
                                                 {assetDetails.map((assetDetail, index) => (
                                                     <React.Fragment key={index}>
                                                         <tr>
                                                             <td bgcolor="#f2f3f4" width="200">
-                                                                <p className="mb-0 font-bold">Location: {assetDetail.location} </p>
+                                                                <p className="mb-0 fw-bolder">Location</p>
                                                             </td>
-                                                            <td className="d-flex">
-                                                                <p className="mb-0 font-bold"><span>Quantity: {assetDetail.quantity}</span></p>
+                                                            <td bgcolor="#f2f3f4" >
+                                                                <p className="mb-0">: {assetDetail.location}</p>
+                                                                <p>&nbsp; Quantity :{assetDetail.quantity}</p>
+
                                                             </td>
                                                         </tr>
 
@@ -1061,7 +453,7 @@ const AssetDesc = ({ asset, onClose }) => {
                             {/* History Tab Content */}
                             {/* History Tab Content */}
                             <div className="tab-pane fade" id="history" role="tabpanel" aria-labelledby="history-tab">
-                                <table className="table">
+                                <table className="table table-striped table-bordered">
                                     <thead>
                                         <tr>
                                             <th>Asset Name</th>
@@ -1075,18 +467,24 @@ const AssetDesc = ({ asset, onClose }) => {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {purchasehistory.map((event) => (
-                                            <tr key={event.id}>
-                                                <td>{event.name}</td>
-                                                <td>{event.assettag}</td>
-                                                <td>{event.quantity}</td>
-                                                <td>{new Date(event.purchaseDate).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })}</td>
-                                                <td>{event.cost}</td>
-                                                <td>{event.vendorcompanyname}</td>
-                                                {/* <td>{event.category_name}</td> */}
-                                                <td>{event.brand}</td>
+                                        {purchasehistory.length === 0 ? (
+                                            <tr>
+                                                <td colSpan="7" className="text-center">No Attendance Found. First Select the Employee.</td>
                                             </tr>
-                                        ))}
+                                        ) : (
+                                            purchasehistory.map((event) => (
+                                                <tr key={event.id}>
+                                                    <td>{event.name}</td>
+                                                    <td>{event.assettag}</td>
+                                                    <td>{event.quantity}</td>
+                                                    <td>{formatDate(event.purchaseDate)}</td>
+                                                    <td>{event.cost}</td>
+                                                    <td>{event.vendorcompanyname}</td>
+                                                    {/* <td>{event.category_name}</td> */}
+                                                    <td>{event.brand}</td>
+                                                </tr>
+                                            ))
+                                        )}
                                     </tbody>
                                 </table>
                                 {/* Pagination */}
@@ -1108,7 +506,7 @@ const AssetDesc = ({ asset, onClose }) => {
 
                             {/* Maintenance Tab Content */}
                             <div className="tab-pane fade" id="maintenance" role="tabpanel" aria-labelledby="maintenance-tab">
-                                <table className="table">
+                                <table className="table table-striped table-bordered">
                                     <thead>
                                         <tr>
                                             <th>Asset photo</th>
@@ -1122,28 +520,36 @@ const AssetDesc = ({ asset, onClose }) => {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {maintenanceHistory.map((event) => (
-                                            <tr key={event.event_id}>
-                                                <td> <img
-                                                    src={event.assetPhoto}
-                                                    style={{ width: "90px" }}
-                                                    alt="Asset"
-                                                /></td>
-                                                <td>{event.assetName}</td>
-                                                <td>{event.assetTag}</td>
-                                                <td>{event.serviceType}</td>
-                                                <td>
-                                                    {event.serviceType === "In-house"
-                                                        ? event.employeeName
-                                                        : event.serviceName || event.serviceAddress}
-                                                </td>
-                                                <td>{new Date(event.startDate).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })}</td>
-                                                <td>{new Date(event.endDate).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })}</td>
-
-                                                <td>{event.remarks}</td>
+                                        {maintenanceHistory.length === 0 ? (
+                                            <tr>
+                                                <td colSpan="8" className="text-center">No Attendance Found. First Select the Employee.</td>
                                             </tr>
-                                        ))}
+                                        ) : (
+                                            maintenanceHistory.map((event) => (
+                                                <tr key={event.event_id}>
+                                                    <td>
+                                                        <img
+                                                            src={event.assetPhoto}
+                                                            style={{ width: "90px" }}
+                                                            alt="Asset"
+                                                        />
+                                                    </td>
+                                                    <td>{event.assetName}</td>
+                                                    <td>{event.assetTag}</td>
+                                                    <td>{event.serviceType}</td>
+                                                    <td>
+                                                        {event.serviceType === "In-house"
+                                                            ? event.employeeName
+                                                            : event.serviceName || event.serviceAddress}
+                                                    </td>
+                                                    <td>{formatDate(event.startDate)}</td>
+                                                    <td>{formatDate(event.endDate)}</td>
+                                                    <td>{event.remarks}</td>
+                                                </tr>
+                                            ))
+                                        )}
                                     </tbody>
+
                                 </table>
                                 {/* Pagination */}
                                 <ul className="pagination">
@@ -1163,7 +569,7 @@ const AssetDesc = ({ asset, onClose }) => {
 
                             {/* Insurence Tab Content */}
                             <div className="tab-pane fade" id="insurence" role="tabpanel" aria-labelledby="insurence-tab">
-                                <table className="table">
+                                <table className="table table-striped table-bordered">
                                     <thead>
                                         <tr>
                                             <th>Asset Picture</th>
@@ -1176,31 +582,38 @@ const AssetDesc = ({ asset, onClose }) => {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {insurence.map((event) => (
-                                            <tr key={event.event_id}>
-                                                <td><img
-                                                    src={event.assetPhoto}
-                                                    style={{ width: "90px" }}
-                                                    alt="Asset"
-                                                />
-                                                </td>
-                                                <td>{event.assetName}</td>
-                                                <td>{event.assetTag}</td>
-                                                <td>{event.insuranceCompanyName}</td>
-                                                <td>{event.policyNumber}</td>
-                                                <td>{new Date(event.endDate).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })}</td>
-                                                <td>{new Date(event.renewalDate).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })}</td>
-
+                                        {insurence.length === 0 ? (
+                                            <tr>
+                                                <td colSpan="7" className="text-center">No Attendance Found. First Select the Employee.</td>
                                             </tr>
-                                        ))}
+                                        ) : (
+                                            insurence.map((event) => (
+                                                <tr key={event.event_id}>
+                                                    <td>
+                                                        <img
+                                                            src={event.assetPhoto}
+                                                            style={{ width: "90px" }}
+                                                            alt="Asset"
+                                                        />
+                                                    </td>
+                                                    <td>{event.assetName}</td>
+                                                    <td>{event.assetTag}</td>
+                                                    <td>{event.insuranceCompanyName}</td>
+                                                    <td>{event.policyNumber}</td>
+                                                    <td>{formatDate(event.endDate)}</td>
+                                                    <td>{formatDate(event.renewalDate)}</td>
+                                                </tr>
+                                            ))
+                                        )}
                                     </tbody>
+
                                 </table>
                             </div>
 
 
                             {/* Insurence History Tab Content */}
                             <div className="tab-pane fade" id="insurenceHistory" role="tabpanel" aria-labelledby="insurenceHistory-tab">
-                                <table className="table">
+                                <table className="table table-striped table-bordered">
                                     <thead>
                                         <tr>
                                             <th>Asset Picture</th>
@@ -1213,23 +626,31 @@ const AssetDesc = ({ asset, onClose }) => {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {assetInsurenceHistory.map((event) => (
-                                            <tr key={event.event_id}>
-                                                <td><img
-                                                    src={event.assetPhoto}
-                                                    style={{ width: "90px" }}
-                                                    alt="Asset"
-                                                />
-                                                </td>
-                                                <td>{event.assetName}</td>
-                                                <td>{event.assetTag}</td>
-                                                <td>{event.insuranceCompanyName}</td>
-                                                <td>{event.policyNumber}</td>
-                                                <td>{new Date(event.endDate).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })}</td>
-                                                <td>{new Date(event.renewalDate).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })}</td>
+                                        {assetInsurenceHistory.length === 0 ? (
+                                            <tr>
+                                                <td colSpan="7" className="text-center">No Attendance Found. First Select the Employee.</td>
                                             </tr>
-                                        ))}
+                                        ) : (
+                                            assetInsurenceHistory.map((event) => (
+                                                <tr key={event.event_id}>
+                                                    <td>
+                                                        <img
+                                                            src={event.assetPhoto}
+                                                            style={{ width: "90px" }}
+                                                            alt="Asset"
+                                                        />
+                                                    </td>
+                                                    <td>{event.assetName}</td>
+                                                    <td>{event.assetTag}</td>
+                                                    <td>{event.insuranceCompanyName}</td>
+                                                    <td>{event.policyNumber}</td>
+                                                    <td>{formatDate(event.endDate)}</td>
+                                                    <td>{formatDate(event.renewalDate)}</td>
+                                                </tr>
+                                            ))
+                                        )}
                                     </tbody>
+
                                 </table>
                                 {/* Pagination */}
                                 <ul className="pagination">
@@ -1263,20 +684,27 @@ const AssetDesc = ({ asset, onClose }) => {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {assettransferhistory.map(transfer => (
-                                            <tr key={transfer.id}>
-                                                <td>{transfer.assetName}</td>
-                                                <td>{transfer.currentQuantity}</td>
-                                                <td>{transfer.transferFrom}</td>
-                                                <td>{transfer.location}</td>
-                                                <td>{transfer.quantity}</td>
-                                                <td>{new Date(transfer.transferDate).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })}</td>
-                                                <td>{transfer.selectedTransporterName}</td>
-                                                <td>{transfer.description}</td>
-                                                {/* Render more columns as needed */}
+                                        {assettransferhistory.length === 0 ? (
+                                            <tr>
+                                                <td colSpan="8" className="text-center">No Attendance Found. First Select the Employee.</td>
                                             </tr>
-                                        ))}
+                                        ) : (
+                                            assettransferhistory.map((transfer) => (
+                                                <tr key={transfer.id}>
+                                                    <td>{transfer.assetName}</td>
+                                                    <td>{transfer.currentQuantity}</td>
+                                                    <td>{transfer.transferFrom}</td>
+                                                    <td>{transfer.location}</td>
+                                                    <td>{transfer.quantity}</td>
+                                                    <td>{formatDate(transfer.transferDate)}</td>
+                                                    <td>{transfer.selectedTransporterName}</td>
+                                                    <td>{transfer.description}</td>
+                                                    {/* Render more columns as needed */}
+                                                </tr>
+                                            ))
+                                        )}
                                     </tbody>
+
                                 </table>
                                 {/* Pagination */}
                                 <ul className="pagination">
@@ -1312,20 +740,27 @@ const AssetDesc = ({ asset, onClose }) => {
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            {assetlosthistory.map(lost => (
-                                                <tr key={lost.id}>
-                                                    <td>{lost.assetName}</td>
-                                                    <td>{new Date(lost.lossDate).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })}</td>
-                                                    <td>{lost.lossLocation}</td>
-                                                    <td>{lost.lossType}</td>
-                                                    <td>{lost.newquantity}</td>
-                                                    <td>{lost.responsiblePerson}</td>
-                                                    <td>{lost.contactNo}</td>
-                                                    <td>{lost.lossCircumstances}</td>
-                                                    {/* Render more columns as needed */}
+                                            {assetlosthistory.length === 0 ? (
+                                                <tr>
+                                                    <td colSpan="8" className="text-center">No Attendance Found. First Select the Employee.</td>
                                                 </tr>
-                                            ))}
+                                            ) : (
+                                                assetlosthistory.map((lost) => (
+                                                    <tr key={lost.id}>
+                                                        <td>{lost.assetName}</td>
+                                                        <td>{formatDate(lost.lossDate)}</td>
+                                                        <td>{lost.lossLocation}</td>
+                                                        <td>{lost.lossType}</td>
+                                                        <td>{lost.newquantity}</td>
+                                                        <td>{lost.responsiblePerson}</td>
+                                                        <td>{lost.contactNo}</td>
+                                                        <td>{lost.lossCircumstances}</td>
+                                                        {/* Render more columns as needed */}
+                                                    </tr>
+                                                ))
+                                            )}
                                         </tbody>
+
                                     </table>
                                     {/* Pagination */}
                                     <ul className="pagination">

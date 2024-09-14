@@ -3,7 +3,8 @@ import axios from "axios";
 import EditEmployeeModal from "./EditEmployeeModal";
 
 const EmployeeDetails = ({ employee, onClose }) => {
-    const [checkInOutHistory, setCheckInOutHistory] = useState([]);
+    const [checkInHistory, setCheckInHistory] = useState([]);
+    const [checkOutHistory, setCheckOutHistory] = useState([]);
     const [isEditModalOpen, setIsEditModalOpen] = useState(false); // State to manage opening/closing edit modal
     const [siteDetails, setSiteDetails] = useState(null);
     const [activeInactiveHistory, setActiveInactiveHistory] = useState(null);
@@ -14,12 +15,23 @@ const EmployeeDetails = ({ employee, onClose }) => {
 
 
     useEffect(() => {
-        const fetchCheckInOutHistory = async () => {
+        const fetchCheckInHistory = async () => {
             try {
                 const response = await axios.get(
-                    `${process.env.REACT_APP_LOCAL_URL}/api/asset/history/employee/${employee.id}`
+                    `${process.env.REACT_APP_LOCAL_URL}/api/asset/checkinhistory/employee/${employee.id}`
                 );
-                setCheckInOutHistory(response.data);
+                setCheckInHistory(response.data);
+            } catch (error) {
+                console.error("Error fetching check-in/out history:", error);
+            }
+        };
+
+        const fetchCheckOutHistory = async () => {
+            try {
+                const response = await axios.get(
+                    `${process.env.REACT_APP_LOCAL_URL}/api/asset/checkouthistory/employee/${employee.id}`
+                );
+                setCheckOutHistory(response.data);
             } catch (error) {
                 console.error("Error fetching check-in/out history:", error);
             }
@@ -64,7 +76,8 @@ const EmployeeDetails = ({ employee, onClose }) => {
 
         fetchActiveInactiveLastDetails();
         fetchActiveInactiveDetails();
-        fetchCheckInOutHistory();
+        fetchCheckOutHistory();
+        fetchCheckInHistory();
         fetchSiteDetails();
     }, [employee]);
 
@@ -92,39 +105,50 @@ const EmployeeDetails = ({ employee, onClose }) => {
     // Logic to get current items
     const indexOfLastItem = currentPage * itemsPerPage;
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-
-    const currentItemsforcheckincheckouthistory = checkInOutHistory ? checkInOutHistory.slice(indexOfFirstItem, indexOfLastItem) : [];
+    const currentItemsforcheckinhistory = checkInHistory ? checkInHistory.slice(indexOfFirstItem, indexOfLastItem) : [];
+    const currentItemsforcheckOuthistory = checkOutHistory ? checkOutHistory.slice(indexOfFirstItem, indexOfLastItem) : [];
     const currentItemsforemployeehistory = activeInactiveHistory ? activeInactiveHistory.slice(indexOfFirstItem, indexOfLastItem) : [];
-
     const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
 
     return (
-        <div>
+        <div className="shadow-sm bg-white rounded">
             <div className="card-body p-4">
-                <div className="row">
-                    <div className="col-md-9 d-flex flex-column gap-3">
-                        <h4 className="title-detail font-bold">
-                            Employee Name - {employee.ename}
-                        </h4>
-                        <p className="assetdetail">
-                            <span className="assettype"> Designation - {employee.edesignation}</span> -{" "}
-                        </p>
+                <div className="row px-2">
+                    <div className="col-md-9 bg-light border rounded shadow-sm d-flex justify-content-between  py-3">
+                        <div>
+                            <h2 style={{ color: "#00509d" }} className="title-detail fw-bolder fw-bolder m-0">
+                            {employee.ename}
+                            </h2>
+                            <hr className="m-1" />
+                            <h6 className="title-detail m-0">
+                                Employee Id : {employee.ecode}
+                            </h6>
+                        </div>
+                        <div>
+                            <p className="m-0">
+                                <span> Phone: {employee.employeePhone || "N/A"}</span>
+                            </p>
+                            <p className="m-0">
+                                <span> Emial: {employee.eemail || "N/A"}</span>
+                            </p>
+                        </div>
                     </div>
-
-                    <div className="col-md-3">
-                        <div className=" p-2 barcode-inner">
-                            <div className="assetbarcode d-flex gap-2">
-                                <button onClick={onClose} className="btn btn-primary">
-                                    Back to Employee List
+                    <div className="col-md-3 d-flex align-items-center justify-content-center">
+                        <div className="assetbarcode d-flex flex-column gap-2 align-items-center">
+                            <div className=" p-2 barcode-inner d-flex gap-2 align-items-center justify-content-center">
+                                <button onClick={onClose} className="btn btn-outline-primary">
+                                    <i className="fa fa-arrow-left"></i> Back
                                 </button>
-                                <button onClick={handleEditEmployee} className="btn btn-primary">
-                                    Edit Employee
+                                <button onClick={handleEditEmployee} className="btn btn-outline-primary">
+                                    <i className="fa fa-edit"></i>    Edit
                                 </button>
                             </div>
                         </div>
                     </div>
                 </div>
+                <hr />
+
                 <div className="row">
                     <div className="col-md-12">
                         <ul className="nav nav-tabs" id="myTab" role="tablist">
@@ -151,7 +175,20 @@ const EmployeeDetails = ({ employee, onClose }) => {
                                     aria-controls="checkin"
                                     aria-selected="false"
                                 >
-                                    Transfer Asset
+                                    CheckIn Asset
+                                </a>
+                            </li>
+                            <li className="nav-item">
+                                <a
+                                    className="nav-link"
+                                    id="checkout-tab"
+                                    data-toggle="tab"
+                                    href="#checkout"
+                                    role="tab"
+                                    aria-controls="checkout"
+                                    aria-selected="false"
+                                >
+                                    CheckOut Asset
                                 </a>
                             </li>
                             <li className="nav-item">
@@ -177,74 +214,82 @@ const EmployeeDetails = ({ employee, onClose }) => {
                             >
                                 <div className="row">
                                     <div className="col-md-9 ">
-                                        <table className="table table-hover" cellPadding="0" cellSpacing="0">
+                                        <table className="table table-striped table-bordered">
                                             <tbody>
                                                 <tr>
                                                     <td bgcolor="#f2f3f4" width="200">
-                                                        <p className="mb-0 font-bold">Employee Name:</p>
+                                                        <p className="mb-0 font-bold">Employee Name</p>
                                                     </td>
                                                     <td>
-                                                        <p className="mb-0 assettype2">{employee.ename}</p>
+                                                        <p className="mb-0 ">: {employee.ename}</p>
                                                     </td>
                                                 </tr>
                                                 <tr>
                                                     <td bgcolor="#f2f3f4" width="200">
-                                                        <p className="mb-0 font-bold">Employee Code:</p>
+                                                        <p className="mb-0 font-bold">Employee Code</p>
                                                     </td>
                                                     <td>
-                                                        <p className="mb-0 assetstatus">{employee.ecode}</p>
+                                                        <p className="mb-0 ">: {employee.ecode}</p>
                                                     </td>
                                                 </tr>
                                                 <tr>
                                                     <td bgcolor="#f2f3f4" width="200">
-                                                        <p className="mb-0 font-bold">Designation:</p>
+                                                        <p className="mb-0 font-bold">Designation</p>
                                                     </td>
                                                     <td>
-                                                        <p className="mb-0 assetserial">{employee.edesignation}</p>
+                                                        <p className="mb-0 ">: {employee.edesignation}</p>
                                                     </td>
                                                 </tr>
                                                 <tr>
                                                     <td bgcolor="#f2f3f4" width="200">
-                                                        <p className="mb-0 font-bold">Email:</p>
+                                                        <p className="mb-0 font-bold">Email</p>
                                                     </td>
                                                     <td>
-                                                        <p className="mb-0 assetserial">{employee.eemail}</p>
+                                                        <p className="mb-0 ">: {employee.eemail}</p>
                                                     </td>
                                                 </tr>
                                                 <tr>
                                                     <td bgcolor="#f2f3f4" width="200">
-                                                        <p className="mb-0 font-bold">Location:</p>
+                                                        <p className="mb-0 font-bold">Phone No.</p>
+                                                    </td>
+                                                    <td>
+                                                        <p className="mb-0 ">: {employee.employeePhone}</p>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td bgcolor="#f2f3f4" width="200">
+                                                        <p className="mb-0 font-bold">Location</p>
                                                     </td>
                                                     <td>
                                                         {siteDetails ? (
-                                                            <p className="mb-0 assetbrand">{siteDetails.siteName}</p>
+                                                            <p className="mb-0 assetbrand">: {siteDetails.siteName}</p>
                                                         ) : (
                                                             <p className="mb-0 assetbrand"> - </p>
                                                         )}
                                                     </td>
                                                 </tr>
-                                                <tr>
+                                                {/* <tr>
                                                     <td bgcolor="#f2f3f4" width="200">
-                                                        <p className="mb-0 font-bold">Status:</p>
+                                                        <p className="mb-0 font-bold">Status</p>
                                                     </td>
                                                     <td>
                                                         {activeInactivelastOccurence ? (
-                                                            <p className="mb-0 assetserial">{activeInactivelastOccurence.status}</p>
+                                                            <p className="mb-0 ">: {activeInactivelastOccurence.status}</p>
                                                         ) : (
-                                                            <p className="mb-0 assetserial">Loading...</p>
+                                                            <p className="mb-0 ">Loading...</p>
                                                         )}
                                                     </td>
                                                 </tr>
                                                 <tr>
                                                     <td bgcolor="#f2f3f4" width="200">
-                                                        <p className="mb-0 font-bold"> Date of {activeInactivelastOccurence ? activeInactivelastOccurence.status : 'Loading...'}  :</p>
+                                                        <p className="mb-0 font-bold"> Date of {activeInactivelastOccurence ? activeInactivelastOccurence.status : 'Loading...'}  </p>
                                                     </td>
                                                     <td>
 
                                                         {activeInactivelastOccurence ? (
-                                                            <p className="mb-0 assetserial">{formatDate(activeInactivelastOccurence.date)}</p>
+                                                            <p className="mb-0 ">: {formatDate(activeInactivelastOccurence.date)}</p>
                                                         ) : (
-                                                            <p className="mb-0 assetserial">Loading...</p>
+                                                            <p className="mb-0 ">Loading...</p>
                                                         )}
                                                     </td>
                                                 </tr>
@@ -254,12 +299,12 @@ const EmployeeDetails = ({ employee, onClose }) => {
                                                     </td>
                                                     <td>
                                                         {activeInactivelastOccurence ? (
-                                                            <p className="mb-0 assetserial">{activeInactivelastOccurence.reason}</p>
+                                                            <p className="mb-0 ">: {activeInactivelastOccurence.reason}</p>
                                                         ) : (
-                                                            <p className="mb-0 assetserial">Loading...</p>
+                                                            <p className="mb-0 ">Loading...</p>
                                                         )}
                                                     </td>
-                                                </tr>
+                                                </tr> */}
 
                                             </tbody>
                                         </table>
@@ -278,7 +323,7 @@ const EmployeeDetails = ({ employee, onClose }) => {
                             <div className="tab-pane fade" id="checkin" role="tabpanel" aria-labelledby="checkin-tab">
                                 <div className="row">
                                     <div className="col-md-12">
-                                        <table className="table table-striped">
+                                        <table className="table table-striped table-bordered">
                                             <thead>
                                                 <tr>
                                                     <th>Asset Name</th>
@@ -291,17 +336,23 @@ const EmployeeDetails = ({ employee, onClose }) => {
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                {currentItemsforcheckincheckouthistory.map((entry) => (
-                                                    <tr key={entry.event_id}>
-                                                        <td>{entry.assetName}</td>
-                                                        <td>{entry.transferFrom}</td>
-                                                        <td>{entry.location}</td>
-                                                        <td>{entry.currentQuantity}</td>
-                                                        <td>{entry.quantity}</td>
-                                                        <td>{formatDate(entry.transferDate)}</td>
-                                                        <td>{entry.selectedTransporterName}</td>
+                                                {currentItemsforcheckinhistory.length === 0 ? (
+                                                    <tr>
+                                                        <td colSpan="7" className="text-center">Thier is No CheckIn Asset .</td>
                                                     </tr>
-                                                ))}
+                                                ) : (
+                                                    currentItemsforcheckinhistory.map((entry) => (
+                                                        <tr key={entry.event_id}>
+                                                            <td>{entry.assetName}</td>
+                                                            <td>{entry.transferFrom}</td>
+                                                            <td>{entry.location}</td>
+                                                            <td>{entry.currentQuantity}</td>
+                                                            <td>{entry.quantity}</td>
+                                                            <td>{formatDate(entry.transferDate)}</td>
+                                                            <td>{entry.selectedTransporterName}</td>
+                                                        </tr>
+                                                    ))
+                                                )}
                                             </tbody>
                                         </table>
                                         {/* Pagination */}
@@ -309,12 +360,66 @@ const EmployeeDetails = ({ employee, onClose }) => {
                                             <li className={`page-item ${currentPage === 1 && 'disabled'}`}>
                                                 <a className="page-link" href="#" onClick={() => paginate(currentPage - 1)}>Previous</a>
                                             </li>
-                                            {Array.from({ length: Math.ceil(checkInOutHistory?.length / itemsPerPage) || 1 }, (_, i) => (
+                                            {Array.from({ length: Math.ceil(checkInHistory?.length / itemsPerPage) || 1 }, (_, i) => (
                                                 <li key={i} className={`page-item ${currentPage === i + 1 && 'active'}`}>
                                                     <a className="page-link" href="#" onClick={() => paginate(i + 1)}>{i + 1}</a>
                                                 </li>
                                             ))}
-                                            <li className={`page-item ${currentPage === Math.ceil(checkInOutHistory?.length / itemsPerPage) && 'disabled'}`}>
+                                            <li className={`page-item ${currentPage === Math.ceil(checkInHistory?.length / itemsPerPage) && 'disabled'}`}>
+                                                <a className="page-link" href="#" onClick={() => paginate(currentPage + 1)}>Next</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/* History Tab Content */}
+                            <div className="tab-pane fade" id="checkout" role="tabpanel" aria-labelledby="checkout-tab">
+                                <div className="row">
+                                    <div className="col-md-12">
+                                        <table className="table table-striped table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <th>Asset Name</th>
+                                                    <th>Transfer From</th>
+                                                    <th>Transfer TO</th>
+                                                    <th>Total Quantity</th>
+                                                    <th>Transfer Quantity</th>
+                                                    <th>Transfer Date</th>
+                                                    <th>Transporter Name</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {currentItemsforcheckOuthistory.length === 0 ? (
+                                                    <tr>
+                                                        <td colSpan="7" className="text-center">Thier is No CheckOut Asset .</td>
+                                                    </tr>
+                                                ) : (
+                                                    currentItemsforcheckOuthistory.map((entry) => (
+                                                        <tr key={entry.event_id}>
+                                                            <td>{entry.assetName}</td>
+                                                            <td>{entry.transferFrom}</td>
+                                                            <td>{entry.location}</td>
+                                                            <td>{entry.currentQuantity}</td>
+                                                            <td>{entry.quantity}</td>
+                                                            <td>{formatDate(entry.transferDate)}</td>
+                                                            <td>{entry.selectedTransporterName}</td>
+                                                        </tr>
+                                                    ))
+                                                )}
+                                            </tbody>
+                                        </table>
+                                        {/* Pagination */}
+                                        <ul className="pagination">
+                                            <li className={`page-item ${currentPage === 1 && 'disabled'}`}>
+                                                <a className="page-link" href="#" onClick={() => paginate(currentPage - 1)}>Previous</a>
+                                            </li>
+                                            {Array.from({ length: Math.ceil(checkOutHistory?.length / itemsPerPage) || 1 }, (_, i) => (
+                                                <li key={i} className={`page-item ${currentPage === i + 1 && 'active'}`}>
+                                                    <a className="page-link" href="#" onClick={() => paginate(i + 1)}>{i + 1}</a>
+                                                </li>
+                                            ))}
+                                            <li className={`page-item ${currentPage === Math.ceil(checkOutHistory?.length / itemsPerPage) && 'disabled'}`}>
                                                 <a className="page-link" href="#" onClick={() => paginate(currentPage + 1)}>Next</a>
                                             </li>
                                         </ul>
@@ -325,7 +430,7 @@ const EmployeeDetails = ({ employee, onClose }) => {
                             <div className="tab-pane fade" id="employee_history" role="tabpanel" aria-labelledby="employee-history">
                                 <div className="row">
                                     <div className="col-md-12">
-                                        <table className="table table-striped">
+                                        <table className="table table-striped table-bordered">
                                             <thead>
                                                 <tr>
                                                     <th>Status</th>
@@ -335,14 +440,20 @@ const EmployeeDetails = ({ employee, onClose }) => {
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                {currentItemsforemployeehistory.map((entry) => (
-                                                    <tr key={entry.event_id}>
-                                                        <td>{entry.status}</td>
-                                                        <td>{entry.reason}</td>
-                                                        <td>{formatDate(entry.date)}</td>
-                                                        <td>{entry.description}</td>
+                                                {currentItemsforemployeehistory.length === 0 ? (
+                                                    <tr>
+                                                        <td colSpan="7" className="text-center">Thier is No ActiveInactive Details .</td>
                                                     </tr>
-                                                ))}
+                                                ) : (
+                                                    currentItemsforemployeehistory.map((entry) => (
+                                                        <tr key={entry.event_id}>
+                                                            <td>{entry.status}</td>
+                                                            <td>{entry.reason}</td>
+                                                            <td>{formatDate(entry.date)}</td>
+                                                            <td>{entry.description}</td>
+                                                        </tr>
+                                                    ))
+                                                )}
                                             </tbody>
                                         </table>
                                         {/* Pagination */}

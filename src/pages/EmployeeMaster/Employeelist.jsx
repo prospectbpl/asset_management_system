@@ -154,9 +154,9 @@ import 'react-toastify/dist/ReactToastify.css';
                       <h6 className="m-0 font-weight-bold text-primary">
                         Employee List
                       </h6>
-                      <div onClick={handleAddEmployee} style={{ padding: "5px 10px", backgroundColor: "#4E73DF", color: "white", borderRadius: "30px", cursor: "pointer" }} onMouseEnter={(e) => e.target.style.backgroundColor = 'red'} onMouseLeave={(e) => e.target.style.backgroundColor = '#4E73DF'}>
+                      <button onClick={handleAddEmployee} className="btn btn-primary">
                         Add New Employee
-                      </div>
+                      </button>
                     </div>
                     <div className="card-body">
                       <table
