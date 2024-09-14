@@ -52,26 +52,41 @@ const MaintenanceDetails = ({ MaintenanceDetailsModal, onClose }) => {
     return (
         <div>
             <div className="card-body p-4">
-                <div className="row">
-                    <div className="col-md-9">
-                        <h1 className="title-detail font-bold">
-                            Maintenance Details
-                        </h1>
-                        <p className="assetdetail">
-                            <span className="assettype">Asset Name: {MaintenanceDetailsModal.assetName}</span> -{" "}
-                            <span className="assetstatus">Asset Tag: {MaintenanceDetailsModal.assetTag}</span>
-                        </p>
+
+
+                <div className="row px-2">
+                    <div className="col-md-9 bg-light border rounded shadow-sm d-flex justify-content-between  py-3">
+                        <div>
+                            <h2 style={{ color: "#00509d" }} className="title-detail fw-bolder fw-bolder m-0">
+                                {MaintenanceDetailsModal.assetName}
+                            </h2>
+                            <hr className="m-1" />
+                            <h6 className="title-detail m-0">
+                                Asset Tag : {MaintenanceDetailsModal.assetTag}
+                            </h6>
+                        </div>
+                        <div>
+                            <p className="m-0">
+                                <span> Service Type: {MaintenanceDetailsModal.serviceType}</span>
+                            </p>
+                            <p className="m-0">
+                                <span> Service: {MaintenanceDetailsModal.repairMaintenanceService}</span>
+                            </p>
+                        </div>
                     </div>
-                    <div className="col-md-3">
-                        <div className=" p-2 barcode-inner">
-                            <div className="assetbarcode">
-                                <button onClick={onClose} className="btn btn-primary">
-                                    Back to Maintenance List
+                    <div className="col-md-3 d-flex align-items-center justify-content-center">
+                        <div className="assetbarcode d-flex flex-column gap-2 align-items-center">
+                            <div className=" p-2 barcode-inner d-flex gap-2 align-items-center justify-content-center">
+                                <button onClick={onClose} className="btn btn-outline-primary">
+                                    <i className="fa fa-arrow-left"></i> Back
                                 </button>
+
                             </div>
                         </div>
                     </div>
                 </div>
+                <hr />
+
                 <div className="row">
                     <div className="col-md-12">
                         <ul className="nav nav-tabs" id="siteTab" role="tablist">
