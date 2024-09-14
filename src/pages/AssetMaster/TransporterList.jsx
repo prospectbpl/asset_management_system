@@ -114,7 +114,7 @@ function TransporterList({ handleLogout, username }) {
             <div className='w-100'>
                 <SearchBar username={username} handleLogout={handleLogout} />
                 <div className="container-fluid">
-                <ToastContainer/>
+                    <ToastContainer />
                     {!showTransporterDetails && (
                         <div className="row">
                             <div className="col-xl-12">
@@ -128,35 +128,32 @@ function TransporterList({ handleLogout, username }) {
                                         </button>
                                     </div>
                                     <div
-                                        className="card-body"
-                                        style={{ height: "calc(100% - 40px)" }}
-                                    >
-                                        <table
-                                            id="data"
-                                            className="table table-striped table-bordered"
-                                            style={{ width: "100%" }}
-                                        >
-                                            <thead>
-                                                <tr>
-                                                    <th>Company Name</th>
-                                                    <th>Company Address</th>
-                                                    <th>Person Name</th>
-                                                    <th>Phone No.</th>
-                                                    <th>City</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                {currentItems.map((transporter, index) => (
-                                                    <tr key={index}>
-                                                        <td>{transporter.transporterCompanyName}</td>
-                                                        <td>{transporter.transporterCompanyAddress}</td>
-                                                        <td>{transporter.transporterPersonName}</td>
-                                                        <td>{transporter.transporterPersonPhone}</td>
-                                                        <td>{transporter.transporterCityName}</td>
+                                        className="card-body" >
+                                        <div style={{ maxHeight: "450px", overflowY: "auto" }}>
+                                            <table className="table table-striped table-bordered" style={{ width: "100%" }}>
+                                                <thead style={{ position: "sticky", top: "0", zIndex: "1", backgroundColor: "#fff" }}>
+                                                    <tr>
+                                                        <th>Company Name</th>
+                                                        <th>Company Address</th>
+                                                        <th>Person Name</th>
+                                                        <th>Phone No.</th>
+                                                        <th>City</th>
                                                     </tr>
-                                                ))}
-                                            </tbody>
-                                        </table>
+                                                </thead>
+                                                <tbody>
+                                                    {currentItems.map((transporter, index) => (
+                                                        <tr key={index}>
+                                                            <td>{transporter.transporterCompanyName}</td>
+                                                            <td>{transporter.transporterCompanyAddress}</td>
+                                                            <td>{transporter.transporterPersonName}</td>
+                                                            <td>{transporter.transporterPersonPhone}</td>
+                                                            <td>{transporter.transporterCityName}</td>
+                                                        </tr>
+                                                    ))}
+                                                </tbody>
+                                            </table>
+                                        </div>
+
                                         <ul className="pagination">
                                             <li className={`page-item ${currentPage === 1 && 'disabled'}`}>
                                                 <a className="page-link" href="#" onClick={() => paginate(currentPage - 1)}>Previous</a>

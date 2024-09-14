@@ -50,10 +50,6 @@ function AssetPintPreview({ record, onClose }) {
     // purchase_history
     const [purchasehistory, setpurchasehistory] = useState([])
 
-
-
-
-
     useEffect(() => {
         fetchunfinishedMaintenance();
     }, [record]);
@@ -217,9 +213,9 @@ function AssetPintPreview({ record, onClose }) {
     return (
         <div className="container-fluid p-1" >
             <div className="row py-3 px-0 bg-white rounded shadow-sm ">
-                <div className="d-flex gap-1 m-1 ">
-                    <div style={{ width: "80%", border: "1px dotted #D3D4D6", borderRadius: "20px", boxShadow: "1px 1px 4px black" }} className=' d-flex align-items-center  justify-content-start gap-2 p-2'>
-                        <div className=' d-flex align-items-center justify-content-center ' style={{ width: "20%" }}>
+                <div style={{width:"100%"}} className="d-flex gap-1">
+                    <div style={{ width: "100%", border: "1px dotted #D3D4D6", borderRadius: "20px", boxShadow: "1px 1px 4px black" }} className=' d-flex align-items-center  justify-content-start gap-2 p-2'>
+                        <div className=' d-flex align-items-center justify-content-center ' style={{ width: "15%" }}>
                             <div style={{ height: "70%", width: "70%", maxWidth: "250px", backgroundColor: "white" }} className='d-flex align-items-center justify-content-center'>
                                 <img
                                     src={record.picture
@@ -231,36 +227,33 @@ function AssetPintPreview({ record, onClose }) {
 
                             </div>
                         </div>
-                        <div style={{ width: "80%" }} >
-                            <div className="col-md-9 d-flex  justify-content-between px-3">
-                                <div>
-                                    <h4 style={{ color: "#7C0000" }} className="title-detail p-2 fw-bolder fw-bolder m-0">
-                                        {record.name}
-                                    </h4>
-                                    <hr className="m-1" />
-                                    <h6 className="title-detail m-0">
-                                        Asset Tag: {record.assettag}
-                                    </h6>
-                                </div>
-                                <div>
-                                    <p className="m-0">
-                                        <span> Type: {record.assetType || "N/A"}</span>
-                                    </p>
-                                    <p className="m-0">
-                                        <span> Serial: {record.serial || "N/A"}</span>
-                                    </p>
-                                    <p className="m-0">
-                                        <span>Category: {record.category_name || "N/A"}</span>
-                                    </p>
-                                    <p className="m-0">
-                                        <span>Purchase Date: {formatDate(record.purchaseDate) || "N/A"}</span>
-                                    </p>
-                                </div>
+                        <div style={{width:"85%"}} className="col-md-9  d-flex  justify-content-between px-3">
+                            <div style={{ width: "80%" }}>
+                                <h4 style={{ color: "#7C0000" }} className="title-detail  fw-bolder fw-bolder m-0 asset-title">
+                                    {record.name}
+                                </h4>
+                                <hr className="m-1" />
+                                <h6 className="title-detail m-0">
+                                    Asset Tag: {record.assettag}
+                                </h6>
+                            </div>
+                            <div className='' style={{ width: "30%" }}>
+                                <p className="m-0">
+                                    <span> Type: {record.assetType || "N/A"}</span>
+                                </p>
+                                <p className="m-0">
+                                    <span> Serial: {record.serial || "N/A"}</span>
+                                </p>
+                                <p className="m-0">
+                                    <span>Category: {record.category_name || "N/A"}</span>
+                                </p>
+                                <p className="m-0">
+                                    <span>Purchase Date: {formatDate(record.purchaseDate) || "N/A"}</span>
+                                </p>
                             </div>
                         </div>
-
                     </div>
-                    <div style={{ width: "20%" }} className=' d-flex align-item-center justify-content-center  p-2'>
+                    <div style={{ width: "10%" }} className=' d-flex align-item-center justify-content-center  p-2'>
                         <div className=' d-flex flex-column align-items-center justify-content-center '>
                             <div style={{ display: 'flex', alignItems: "center", justifyContent: "center" }} className='logo p-1 '>
                                 <img
@@ -284,8 +277,8 @@ function AssetPintPreview({ record, onClose }) {
                         <hr />
                         <div>
                             {/* Table for Asset Details */}
-                            <div className='d-flex align-items-center justify-content-between' style={{width:"100%"}}>
-                                <div style={{width:"50%"}}>
+                            <div className='d-flex align-items-center justify-content-between' style={{ width: "100%" }}>
+                                <div style={{ width: "50%" }}>
                                     <table
                                         class=""
                                         cellpadding="3"
@@ -343,7 +336,7 @@ function AssetPintPreview({ record, onClose }) {
                                         </tbody>
                                     </table>
                                 </div>
-                                <div style={{width:"50%"}}>
+                                <div style={{ width: "50%" }}>
                                     <table
                                         class=""
                                         cellpadding="3"

@@ -104,7 +104,7 @@ function CategoryAssetReport({ handleLogout, username }) {
                             <div className="col-xl-12">
                                 <div className="card shadow mb-4">
                                     <div className="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                        <h6 className="m-0 font-weight-bold text-primary">Asset Category List</h6>
+                                        <h6 className="m-0 font-weight-bold text-primary">Asset Category Report</h6>
                                         <div className='d-flex align-items-center gap-2'>
                                             <label className='pt-2 text-black fw-bolder'>Category:</label>
                                             <select
@@ -123,41 +123,44 @@ function CategoryAssetReport({ handleLogout, username }) {
                                             <button className='btn btn-success' onClick={handleCategoryPrint}>PDF</button>
                                         </div>
                                     </div>
-                                    <div className="card-body" style={{ maxHeight: "calc(100vh - 200px)", overflowY: "auto" }}>
-                                        <table className="table table-striped table-bordered" style={{ width: "100%" }}>
-                                            <thead>
-                                                <tr>
-                                                    <th>Asset Picture</th>
-                                                    <th>Asset Name</th>
-                                                    <th>Asset Tag</th>
-                                                    <th>Purchase Date</th>
-                                                    <th>Category</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                {filteredAssets.length > 0 ? (
-                                                    filteredAssets.map((asset) => (
-                                                        <tr key={asset.id}>
-                                                            <td>
-                                                                <img
-                                                                    src={`${process.env.REACT_APP_LOCAL_URL}/uploads/assets/${asset.picture}`}
-                                                                    style={{ width: "90px" }}
-                                                                    alt="Asset"
-                                                                />
-                                                            </td>
-                                                            <td>{asset.name}</td>
-                                                            <td>{asset.assettag}</td>
-                                                            <td>{formatDate(asset.purchaseDate)}</td>
-                                                            <td>{asset.category_name}</td>
-                                                        </tr>
-                                                    ))
-                                                ) : (
+                                    <div className="card-body" >
+                                        <div style={{ maxHeight: "450px", overflowY: "auto" }}>
+                                            <table className="table table-striped table-bordered" style={{ width: "100%" }}>
+                                                <thead style={{ position: "sticky", top: "0", zIndex: "1", backgroundColor: "#fff" }}>
                                                     <tr>
-                                                        <td colSpan="5" className="text-center">No assets found</td>
+                                                        <th>Asset Picture</th>
+                                                        <th>Asset Name</th>
+                                                        <th>Asset Tag</th>
+                                                        <th>Purchase Date</th>
+                                                        <th>Category</th>
                                                     </tr>
-                                                )}
-                                            </tbody>
-                                        </table>
+                                                </thead>
+                                                <tbody>
+                                                    {filteredAssets.length > 0 ? (
+                                                        filteredAssets.map((asset) => (
+                                                            <tr key={asset.id}>
+                                                                <td>
+                                                                    <img
+                                                                        src={`${process.env.REACT_APP_LOCAL_URL}/uploads/assets/${asset.picture}`}
+                                                                        style={{ width: "90px" }}
+                                                                        alt="Asset"
+                                                                    />
+                                                                </td>
+                                                                <td>{asset.name}</td>
+                                                                <td>{asset.assettag}</td>
+                                                                <td>{formatDate(asset.purchaseDate)}</td>
+                                                                <td>{asset.category_name}</td>
+                                                            </tr>
+                                                        ))
+                                                    ) : (
+                                                        <tr>
+                                                            <td colSpan="5" className="text-center">No assets found</td>
+                                                        </tr>
+                                                    )}
+                                                </tbody>
+                                            </table>
+                                        </div>
+
                                     </div>
                                 </div>
                             </div>

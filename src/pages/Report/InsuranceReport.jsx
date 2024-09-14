@@ -95,7 +95,7 @@ function InsuranceReport({ handleLogout, username }) {
                                     <div className="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                                         <div className="d-flex flex-row gap-4 align-items-center justify-center w-50">
                                             <h6 className="m-0 font-weight-bold text-primary">
-                                                Insurance Report List
+                                                Asset Insurance Report
                                             </h6>
                                         </div>
                                         <div className="d-flex align-items-center justify-content-center gap-4">
@@ -127,46 +127,49 @@ function InsuranceReport({ handleLogout, username }) {
                                             </div>
                                         </div>
                                     </div>
-                                    <div className="card-body" style={{ maxHeight: "calc(100vh - 200px)", overflowY: "auto" }}>
-                                        <table className="table table-striped table-bordered" style={{ width: "100%" }}>
-                                            <thead>
-                                                <tr>
-                                                    <th>Asset Picture</th>
-                                                    <th>Asset Name</th>
-                                                    <th>Asset Tag</th>
-                                                    <th>company Name</th>
-                                                    <th>Policy Number</th>
-                                                    <th>Start Date</th>
-                                                    <th>End Date</th>
-                                                 
-                                                </tr>
-                                            </thead>
-                                            <tbody style={{ maxHeight: "calc(100vh - 130px)", overflowY: "auto" }}>
-                                                {filteredInsurance.length === 0 ? (
+                                    <div className="card-body" >
+                                        <div style={{ maxHeight: "450px", overflowY: "auto" }}>
+                                            <table className="table table-striped table-bordered" style={{ width: "100%" }}>
+                                                <thead style={{ position: "sticky", top: "0", zIndex: "1", backgroundColor: "#fff" }}>
                                                     <tr>
-                                                        <td colSpan="7" className="text-center">Thier is No Insurance .</td>
+                                                        <th>Asset Picture</th>
+                                                        <th>Asset Name</th>
+                                                        <th>Asset Tag</th>
+                                                        <th>company Name</th>
+                                                        <th>Policy Number</th>
+                                                        <th>Start Date</th>
+                                                        <th>End Date</th>
+
                                                     </tr>
-                                                ) : (
-                                                    filteredInsurance.map((insurance) => (
-                                                        <tr key={insurance.id}>
-                                                            <td>
-                                                                <img
-                                                                    src={`${process.env.REACT_APP_LOCAL_URL}/uploads/assets/${insurance.assetPhoto}`}
-                                                                    style={{ width: "90px" }}
-                                                                    alt="Asset Picture"
-                                                                />
-                                                            </td>
-                                                            <td>{insurance.assetName}</td>
-                                                            <td>{insurance.assetTag}</td>
-                                                            <td>{insurance.insuranceCompanyName}</td>
-                                                            <td>{insurance.policyNumber}</td>
-                                                            <td style={{whiteSpace:"nowrap"}}>{formatDate(insurance.startDate)}</td>
-                                                            <td style={{whiteSpace:"nowrap"}}>{formatDate(insurance.endDate)}</td>
-                                                            
+                                                </thead>
+                                                <tbody>
+                                                    {filteredInsurance.length === 0 ? (
+                                                        <tr>
+                                                            <td colSpan="7" className="text-center">Thier is No Insurance .</td>
                                                         </tr>
-                                                    )))}
-                                            </tbody>
-                                        </table>
+                                                    ) : (
+                                                        filteredInsurance.map((insurance) => (
+                                                            <tr key={insurance.id}>
+                                                                <td>
+                                                                    <img
+                                                                        src={`${process.env.REACT_APP_LOCAL_URL}/uploads/assets/${insurance.assetPhoto}`}
+                                                                        style={{ width: "90px" }}
+                                                                        alt="Asset Picture"
+                                                                    />
+                                                                </td>
+                                                                <td>{insurance.assetName}</td>
+                                                                <td>{insurance.assetTag}</td>
+                                                                <td>{insurance.insuranceCompanyName}</td>
+                                                                <td>{insurance.policyNumber}</td>
+                                                                <td style={{ whiteSpace: "nowrap" }}>{formatDate(insurance.startDate)}</td>
+                                                                <td style={{ whiteSpace: "nowrap" }}>{formatDate(insurance.endDate)}</td>
+
+                                                            </tr>
+                                                        )))}
+                                                </tbody>
+                                            </table>
+                                        </div>
+
                                     </div>
                                 </div>
                             </div>

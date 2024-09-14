@@ -102,7 +102,7 @@ function Vendorlist({ handleLogout, username }) {
         }
     };
 
-    const handleUpdateVendors =() => {
+    const handleUpdateVendors = () => {
         toast.success("successfully uploaded");
         fetchVendors();
     };
@@ -117,9 +117,9 @@ function Vendorlist({ handleLogout, username }) {
         <div className='d-flex w-100 h-100 '>
             <Sidebar />
             <div className='w-100'>
-            <SearchBar username={username} handleLogout={handleLogout} /> {/* Pass username and handleLogout props */}
+                <SearchBar username={username} handleLogout={handleLogout} /> {/* Pass username and handleLogout props */}
                 <div className="container-fluid">
-                <ToastContainer/>
+                    <ToastContainer />
                     {!showVendorDetails && (
                         <div className="row">
                             <div className="col-xl-12">
@@ -133,44 +133,41 @@ function Vendorlist({ handleLogout, username }) {
                                         </div>
                                     </div>
                                     <div
-                                        className="card-body"
-                                        style={{ height: "calc(100% - 40px)" }}
-                                    >
-                                        <table
-                                            id="data"
-                                            className="table table-striped table-bordered"
-                                            style={{ width: "100%" }}
-                                        >
-                                            <thead>
-                                                <tr>
-                                                    <th>Company Name</th>
-                                                    <th>Company Address</th>
-                                                    <th>Mobile No.</th>
-                                                    <th>Action</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                {currentItems.map((vendor, index) => (
-                                                    <tr key={index}>
-                                                        <td>{vendor.vendorCompanyName}</td>
-                                                        <td>{vendor.vendorAddress}</td>
-                                                        <td>{vendor.contactPersonMobile}</td>
-                                                        <td>
-                                                            <div className="btn-group">
-                                                                <button className="btn btn-sm btn-primary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                                    <i className="fa fa-ellipsis-h" aria-hidden="true"></i>
-                                                                </button>
-                                                                <div className="dropdown-menu actionmenu" x-placement="bottom-start">
-                                                                    <a className="dropdown-item" href="#" onClick={() => handleVendorDetails(vendor)}><i className="fa fa-file"></i> Detail</a>
-                                                                    <a className="dropdown-item" href="#" onClick={() => handleEditVendorClick(vendor)}><i className="fas fa-edit"></i> Edit</a>
-                                                                    {/* <a className="dropdown-item" href="#" onClick={() => handleDeleteVendor(vendor)}><i className="fa fa-trash"></i> Delete</a> */}
-                                                                </div>
-                                                            </div>
-                                                        </td>
+                                        className="card-body">
+                                        <div style={{ maxHeight: "450px", overflowY: "auto" }}>
+                                            <table className="table table-striped table-bordered" style={{ width: "100%" }}>
+                                                <thead style={{ position: "sticky", top: "0", zIndex: "1", backgroundColor: "#fff" }}>
+                                                    <tr>
+                                                        <th>Company Name</th>
+                                                        <th>Company Address</th>
+                                                        <th>Mobile No.</th>
+                                                        <th>Action</th>
                                                     </tr>
-                                                ))}
-                                            </tbody>
-                                        </table>
+                                                </thead>
+                                                <tbody>
+                                                    {currentItems.map((vendor, index) => (
+                                                        <tr key={index}>
+                                                            <td>{vendor.vendorCompanyName}</td>
+                                                            <td>{vendor.vendorAddress}</td>
+                                                            <td>{vendor.contactPersonMobile}</td>
+                                                            <td>
+                                                                <div className="btn-group">
+                                                                    <button className="btn btn-sm btn-primary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                                        <i className="fa fa-ellipsis-h" aria-hidden="true"></i>
+                                                                    </button>
+                                                                    <div className="dropdown-menu actionmenu" x-placement="bottom-start">
+                                                                        <a className="dropdown-item" href="#" onClick={() => handleVendorDetails(vendor)}><i className="fa fa-file"></i> Detail</a>
+                                                                        <a className="dropdown-item" href="#" onClick={() => handleEditVendorClick(vendor)}><i className="fas fa-edit"></i> Edit</a>
+                                                                        {/* <a className="dropdown-item" href="#" onClick={() => handleDeleteVendor(vendor)}><i className="fa fa-trash"></i> Delete</a> */}
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    ))}
+                                                </tbody>
+                                            </table>
+                                        </div>
+
                                         <ul className="pagination">
                                             <li className={`page-item ${currentPage === 1 && 'disabled'}`}>
                                                 <a className="page-link" href="#" onClick={() => paginate(currentPage - 1)}>Previous</a>

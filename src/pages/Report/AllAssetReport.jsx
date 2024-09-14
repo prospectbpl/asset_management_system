@@ -130,35 +130,38 @@ function AllAssetReport({ handleLogout, username }) {
                                             </div>
                                         </div>
                                     </div>
-                                    <div className="card-body" style={{ maxHeight: "calc(100vh - 200px)", overflowY: "auto" }}>
-                                        <table className="table table-striped table-bordered" style={{ width: "100%" }}>
-                                            <thead>
-                                                <tr>
-                                                    <th>Asset Picture</th>
-                                                    <th>Asset Name</th>
-                                                    <th>Asset Tag</th>
-                                                    <th>Purchase Date</th>
-                                                    <th>Category</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody style={{ maxHeight: "calc(100vh - 130px)", overflowY: "auto" }}>
-                                                {filteredAsset.map((asset) => (
-                                                    <tr key={asset.id}>
-                                                        <td>
-                                                            <img
-                                                                src={`${process.env.REACT_APP_LOCAL_URL}/uploads/assets/${asset.picture}`}
-                                                                style={{ width: "90px" }}
-                                                                alt="Asset"
-                                                            />
-                                                        </td>
-                                                        <td>{asset.name}</td>
-                                                        <td>{asset.assettag}</td>
-                                                        <td>{formatDate(asset.purchaseDate)}</td>
-                                                        <td>{asset.category_name}</td>
+                                    <div className="card-body">
+                                        <div style={{ maxHeight: "450px", overflowY: "auto" }}>
+                                            <table className="table table-striped table-bordered" style={{ width: "100%" }}>
+                                                <thead style={{ position: "sticky", top: "0", zIndex: "1", backgroundColor: "#fff" }}>
+                                                    <tr>
+                                                        <th>Asset Picture</th>
+                                                        <th>Asset Name</th>
+                                                        <th>Asset Tag</th>
+                                                        <th>Purchase Date</th>
+                                                        <th>Category</th>
                                                     </tr>
-                                                ))}
-                                            </tbody>
-                                        </table>
+                                                </thead>
+                                                <tbody style={{ maxHeight: "calc(100vh - 130px)", overflowY: "auto" }}>
+                                                    {filteredAsset.map((asset) => (
+                                                        <tr key={asset.id}>
+                                                            <td>
+                                                                <img
+                                                                    src={`${process.env.REACT_APP_LOCAL_URL}/uploads/assets/${asset.picture}`}
+                                                                    style={{ width: "90px" }}
+                                                                    alt="Asset"
+                                                                />
+                                                            </td>
+                                                            <td>{asset.name}</td>
+                                                            <td>{asset.assettag}</td>
+                                                            <td>{formatDate(asset.purchaseDate)}</td>
+                                                            <td>{asset.category_name}</td>
+                                                        </tr>
+                                                    ))}
+                                                </tbody>
+                                            </table>
+                                        </div>
+
                                     </div>
                                 </div>
                             </div>

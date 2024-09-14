@@ -699,3 +699,15 @@ const AddDataModal = ({ onClose, onUpdateAssets }) => {
 };
 
 export default AddDataModal;
+
+
+
+
+
+
+
+
+
+
+
+

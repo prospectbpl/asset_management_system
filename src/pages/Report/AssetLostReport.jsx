@@ -97,7 +97,7 @@ function AssetLostReport({ handleLogout, username }) {
                                     <div className="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                                         <div className="d-flex flex-row gap-4 align-items-center justify-center w-50">
                                             <h6 className="m-0 font-weight-bold text-primary">
-                                                Asset Lost Report List
+                                                Asset Lost Report
                                             </h6>
                                         </div>
                                         <div className="d-flex align-items-center justify-content-center gap-4">
@@ -129,46 +129,49 @@ function AssetLostReport({ handleLogout, username }) {
                                             </div>
                                         </div>
                                     </div>
-                                    <div className="card-body" style={{ maxHeight: "calc(100vh - 200px)", overflowY: "auto" }}>
-                                        <table className="table table-bordered" style={{ width: "100%" }}>
-                                            <thead>
-                                                <tr>
-                                                    <th>Asset Picture</th>
-                                                    <th>Asset Name</th>
-                                                    <th>Asset Tag</th>
-                                                    <th>Loss Date</th>
-                                                    <th>Quantity</th>
-                                                    <th>Loss Type</th>
-                                                    <th>Location</th>
-                                                    <th>Responsible Person</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody style={{ maxHeight: "calc(100vh - 130px)", overflowY: "auto" }}>
-                                                {filteredAssetLost.length === 0 ? (
+                                    <div className="card-body" >
+                                        <div style={{ maxHeight: "450px", overflowY: "auto" }}>
+                                            <table className="table table-striped table-bordered" style={{ width: "100%" }}>
+                                                <thead style={{ position: "sticky", top: "0", zIndex: "1", backgroundColor: "#fff" }}>
                                                     <tr>
-                                                        <td colSpan="8" className="text-center">Thier is No Asset Lost Data .</td>
+                                                        <th>Asset Picture</th>
+                                                        <th>Asset Name</th>
+                                                        <th>Asset Tag</th>
+                                                        <th>Loss Date</th>
+                                                        <th>Quantity</th>
+                                                        <th>Loss Type</th>
+                                                        <th>Location</th>
+                                                        <th>Responsible Person</th>
                                                     </tr>
-                                                ) : (
-                                                    filteredAssetLost.map((assetLost) => (
-                                                        <tr key={assetLost.id}>
-                                                            <td>
-                                                                <img
-                                                                    src={`${process.env.REACT_APP_LOCAL_URL}/uploads/assets/${assetLost.assetPhoto}`}
-                                                                    style={{ width: "90px" }}
-                                                                    alt="Asset"
-                                                                />
-                                                            </td>
-                                                            <td>{assetLost.assetName}</td>
-                                                            <td>{assetLost.assetTag}</td>
-                                                            <td className="" style={{ whiteSpace: 'nowrap' }}>{formatDate(assetLost.lossDate)}</td>
-                                                            <td>{assetLost.newquantity}</td>
-                                                            <td>{assetLost.lossType}</td>
-                                                            <td>{assetLost.lossLocation}</td>
-                                                            <td>{assetLost.responsiblePerson}</td>
+                                                </thead>
+                                                <tbody >
+                                                    {filteredAssetLost.length === 0 ? (
+                                                        <tr>
+                                                            <td colSpan="8" className="text-center">Thier is No Asset Lost Data .</td>
                                                         </tr>
-                                                    )))}
-                                            </tbody>
-                                        </table>
+                                                    ) : (
+                                                        filteredAssetLost.map((assetLost) => (
+                                                            <tr key={assetLost.id}>
+                                                                <td>
+                                                                    <img
+                                                                        src={`${process.env.REACT_APP_LOCAL_URL}/uploads/assets/${assetLost.assetPhoto}`}
+                                                                        style={{ width: "90px" }}
+                                                                        alt="Asset"
+                                                                    />
+                                                                </td>
+                                                                <td>{assetLost.assetName}</td>
+                                                                <td>{assetLost.assetTag}</td>
+                                                                <td className="" style={{ whiteSpace: 'nowrap' }}>{formatDate(assetLost.lossDate)}</td>
+                                                                <td>{assetLost.newquantity}</td>
+                                                                <td>{assetLost.lossType}</td>
+                                                                <td>{assetLost.lossLocation}</td>
+                                                                <td>{assetLost.responsiblePerson}</td>
+                                                            </tr>
+                                                        )))}
+                                                </tbody>
+                                            </table>
+                                        </div>
+
                                     </div>
                                 </div>
                             </div>

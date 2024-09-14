@@ -177,90 +177,90 @@ function Sitelist({ handleLogout, username }) {
                     </div> */}
                   </div>
                   <div className="card-body">
-                    <table
-                      className="table table-striped table-bordered"
-                      style={{ width: "100%" }}
-                    >
-                      <thead>
-                        <tr>
-                          <th>Site Name</th>
-                          <th>Site Location</th>
-                          <th>Site Manager</th>
-                          <th>Contact No.</th>
-                          <th>Action</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {currentItems.map((site) => (
-                          <tr key={site.id}>
-                            <td>{site.siteName}</td>
-                            <td>{site.siteLocation}</td>
-                            <td>{site.employeeName}</td>
-                            <td>{site.contactNo}</td>
-                            <td>
-                              <div className="d-flex align-item-center justify-content-start gap-3">
-                                <div className="btn-group">
-                                  <button
-                                    className="btn btn-sm btn-primary dropdown-toggle"
-                                    type="button"
-                                    data-toggle="dropdown"
-                                    aria-haspopup="true"
-                                    aria-expanded="false"
-                                  >
-                                    <i
-                                      className="fa fa-ellipsis-h"
-                                      aria-hidden="true"
-                                    ></i>
-                                  </button>
-                                  <div
-                                    className="dropdown-menu actionmenu"
-                                    x-placement="bottom-start"
-                                  >
-                                    <a
-                                      className="dropdown-item"
-                                      href="javascript:void(0);"
-                                      onClick={() => handleSiteDetails(site)}
+                    <div style={{ maxHeight: "450px", overflowY: "auto" }}>
+                      <table className="table table-striped table-bordered" style={{ width: "100%" }}>
+                        <thead style={{ position: "sticky", top: "0", zIndex: "1", backgroundColor: "#fff" }}>
+                          <tr>
+                            <th>Site Name</th>
+                            <th>Site Location</th>
+                            <th>Site Manager</th>
+                            <th>Contact No.</th>
+                            <th>Action</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {currentItems.map((site) => (
+                            <tr key={site.id}>
+                              <td>{site.siteName}</td>
+                              <td>{site.siteLocation}</td>
+                              <td>{site.employeeName}</td>
+                              <td>{site.contactNo}</td>
+                              <td>
+                                <div className="d-flex align-item-center justify-content-start gap-3">
+                                  <div className="btn-group">
+                                    <button
+                                      className="btn btn-sm btn-primary dropdown-toggle"
+                                      type="button"
+                                      data-toggle="dropdown"
+                                      aria-haspopup="true"
+                                      aria-expanded="false"
                                     >
-                                      <i className="fa fa-file "></i>
-                                      <span> Details</span>
-                                    </a>
-                                    <a
-                                      className="dropdown-item"
-                                      href="#"
-                                      onClick={() => handleEditSite(site)}
+                                      <i
+                                        className="fa fa-ellipsis-h"
+                                        aria-hidden="true"
+                                      ></i>
+                                    </button>
+                                    <div
+                                      className="dropdown-menu actionmenu"
+                                      x-placement="bottom-start"
                                     >
-                                      <i className="fas fa-edit"></i> Edit
-                                    </a>
-                                    {/* <a
+                                      <a
+                                        className="dropdown-item"
+                                        href="javascript:void(0);"
+                                        onClick={() => handleSiteDetails(site)}
+                                      >
+                                        <i className="fa fa-file "></i>
+                                        <span> Details</span>
+                                      </a>
+                                      <a
+                                        className="dropdown-item"
+                                        href="#"
+                                        onClick={() => handleEditSite(site)}
+                                      >
+                                        <i className="fas fa-edit"></i> Edit
+                                      </a>
+                                      {/* <a
                                       className="dropdown-item"
                                       href="#"
                                       onClick={() => handleDeleteSite(site)}
                                     >
                                       <i className="fa fa-trash"></i> Delete
                                     </a> */}
+                                    </div>
                                   </div>
-                                </div>
-                                <div
-                                  className={getToggleClass(site.status)}
-                                  onClick={() => handleStatusModalOpen(site)}
-                                >
                                   <div
-                                    className="ball"
-                                    style={{
-                                      backgroundColor:
-                                        site.status === 'active'
-                                          ? 'green'
-                                          : 'red',
-                                    }}
+                                    className={getToggleClass(site.status)}
+                                    onClick={() => handleStatusModalOpen(site)}
                                   >
+                                    <div
+                                      className="ball"
+                                      style={{
+                                        backgroundColor:
+                                          site.status === 'active'
+                                            ? 'green'
+                                            : 'red',
+                                      }}
+                                    >
+                                    </div>
                                   </div>
                                 </div>
-                              </div>
-                            </td>
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
+                              </td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+
                     {/* Pagination */}
                     <ul className="pagination">
                       <li className={`page-item ${currentPage === 1 && 'disabled'}`}>

@@ -72,7 +72,7 @@ function AssetMasterList({ handleLogout, username }) {
       <div className="w-100">
         <SearchBar username={username} handleLogout={handleLogout} />
         <div className="container-fluid">
-        <ToastContainer/>
+          <ToastContainer />
           <div className="row">
             <div className="col-xl-12">
               <div className="card shadow mb-4">
@@ -87,32 +87,35 @@ function AssetMasterList({ handleLogout, username }) {
                   </div>
                 </div>
                 <div className="card-body">
-                  <table className="table table-striped table-bordered">
-                    <thead>
-                      <tr>
-                        <th>Asset Picture</th>
-                        <th>Asset Name</th>
-                        <th>Asset Type</th>
-                        <th>Serial Number</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {filteredAssets.map((asset) => (
-                        <tr key={asset.id}>
-                          <td>
-                            <img
-                              src={`${process.env.REACT_APP_LOCAL_URL}/uploads/assets/${asset.asset_image}`}
-                              style={{ width: "90px" }}
-                              alt="Asset"
-                            />
-                          </td>
-                          <td>{asset.assetmaster_name}</td>
-                          <td>{asset.asset_type}</td>
-                          <td>{asset.serial_number}</td>
+                  <div style={{ maxHeight: "450px", overflowY: "auto" }}>
+                    <table className="table table-striped table-bordered" style={{ width: "100%" }}>
+                      <thead style={{ position: "sticky", top: "0", zIndex: "1", backgroundColor: "#fff" }}>
+                        <tr>
+                          <th>Asset Picture</th>
+                          <th>Asset Name</th>
+                          <th>Asset Type</th>
+                          <th>Serial Number</th>
                         </tr>
-                      ))}
-                    </tbody>
-                  </table>
+                      </thead>
+                      <tbody>
+                        {filteredAssets.map((asset) => (
+                          <tr key={asset.id}>
+                            <td>
+                              <img
+                                src={`${process.env.REACT_APP_LOCAL_URL}/uploads/assets/${asset.asset_image}`}
+                                style={{ width: "90px" }}
+                                alt="Asset"
+                              />
+                            </td>
+                            <td>{asset.assetmaster_name}</td>
+                            <td>{asset.asset_type}</td>
+                            <td>{asset.serial_number}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+
                 </div>
               </div>
             </div>

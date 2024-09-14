@@ -159,11 +159,9 @@ import 'react-toastify/dist/ReactToastify.css';
                       </button>
                     </div>
                     <div className="card-body">
-                      <table
-                        className="table table-striped table-bordered"
-                        style={{ width: "100%" }}
-                      >
-                        <thead>
+                    <div style={{ maxHeight: "450px", overflowY: "auto" }}>
+                        <table className="table table-striped table-bordered" style={{ width: "100%" }}>
+                          <thead style={{ position: "sticky", top: "0", zIndex: "1", backgroundColor: "#fff" }}>
                           <tr>
                             <th>Employee Picture</th>
                             <th>Employee Name</th>
@@ -263,6 +261,8 @@ import 'react-toastify/dist/ReactToastify.css';
                             ))}
                         </tbody>
                       </table>
+                      </div>
+                    
                       {/* Pagination */}
                       <ul className="pagination">
                         <li className={`page-item ${currentPage === 1 && "disabled"}`}>

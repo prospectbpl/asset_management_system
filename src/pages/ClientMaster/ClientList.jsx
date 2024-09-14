@@ -105,7 +105,7 @@ function ClientList({ handleLogout, username }) {
     <div className='d-flex w-100 h-100 '>
       <Sidebar />
       <div className='w-100'>
-      <SearchBar username={username} handleLogout={handleLogout} /> {/* Pass username and handleLogout props */}
+        <SearchBar username={username} handleLogout={handleLogout} /> {/* Pass username and handleLogout props */}
         <div className="container-fluid">
           <ToastContainer />
           {showClientDetails ? (
@@ -124,50 +124,53 @@ function ClientList({ handleLogout, username }) {
                     </div>
                   </div>
                   <div className="card-body">
-                    <table className="table table-striped table-bordered" style={{ width: "100%" }}>
-                      <thead>
-                        <tr>
-                          <th>Client Name</th>
-                          <th>Client Address</th>
-                          <th>Mobile No.</th>
-                          <th>Email ID.</th>
-                          <th>Action</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {currentItems.map((client) => (
-                          <tr key={client.id}>
-                            <td>{client.clientName}</td>
-                            <td>{client.clientAddress}</td>
-                            <td>{client.clientMobile}</td>
-                            <td>{client.clientEmail}</td>
-                            <td>
-                              <div className="d-flex align-item-center justify-content-start gap-3">
-                                <div className="btn-group">
-                                  <button className="btn btn-sm btn-primary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <i className="fa fa-ellipsis-h" aria-hidden="true"></i>
-                                  </button>
-                                  <div className="dropdown-menu actionmenu" x-placement="bottom-start">
-                                    <a className="dropdown-item" href="javascript:void(0);" onClick={() => handleClientDetails(client)}>
-                                      <i className="fa fa-file "></i> Detailss
-                                    </a>
-                                    <a className="dropdown-item" href="#" onClick={() => handleEditClient(client)}>
-                                      <i className="fas fa-edit"></i> Edit
-                                    </a>
-                                    {/* <a className="dropdown-item" href="#" onClick={() => handleDeleteClient(client)}>
+                    <div style={{ maxHeight: "450px", overflowY: "auto" }}>
+                      <table className="table table-striped table-bordered" style={{ width: "100%" }}>
+                        <thead style={{ position: "sticky", top: "0", zIndex: "1", backgroundColor: "#fff" }}>
+                          <tr>
+                            <th>Client Name</th>
+                            <th>Client Address</th>
+                            <th>Mobile No.</th>
+                            <th>Email ID.</th>
+                            <th>Action</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {currentItems.map((client) => (
+                            <tr key={client.id}>
+                              <td>{client.clientName}</td>
+                              <td>{client.clientAddress}</td>
+                              <td>{client.clientMobile}</td>
+                              <td>{client.clientEmail}</td>
+                              <td>
+                                <div className="d-flex align-item-center justify-content-start gap-3">
+                                  <div className="btn-group">
+                                    <button className="btn btn-sm btn-primary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                      <i className="fa fa-ellipsis-h" aria-hidden="true"></i>
+                                    </button>
+                                    <div className="dropdown-menu actionmenu" x-placement="bottom-start">
+                                      <a className="dropdown-item" href="javascript:void(0);" onClick={() => handleClientDetails(client)}>
+                                        <i className="fa fa-file "></i> Detailss
+                                      </a>
+                                      <a className="dropdown-item" href="#" onClick={() => handleEditClient(client)}>
+                                        <i className="fas fa-edit"></i> Edit
+                                      </a>
+                                      {/* <a className="dropdown-item" href="#" onClick={() => handleDeleteClient(client)}>
                                       <i className="fa fa-trash"></i> Delete
                                     </a> */}
+                                    </div>
                                   </div>
-                                </div>
-                                {/* <div className={getToggleClass(client.status)} onClick={() => handleStatusModalOpen(client)}>
+                                  {/* <div className={getToggleClass(client.status)} onClick={() => handleStatusModalOpen(client)}>
                                   <div className="ball" style={{ backgroundColor: client.status === 'active' ? 'green' : 'red' }}></div>
                                 </div> */}
-                              </div>
-                            </td>
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
+                                </div>
+                              </td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+
                     {/* Pagination */}
                     <ul className="pagination">
                       <li className={`page-item ${currentPage === 1 && 'disabled'}`}>

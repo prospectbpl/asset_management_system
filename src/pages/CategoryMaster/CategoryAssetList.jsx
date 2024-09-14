@@ -79,7 +79,7 @@ function CategoryAssetList({ onClose, assetCategory }) {
   const handleBackToCategoryList = () => {
     onClose();
   }
-  const handleUpdateAssets =()=>{
+  const handleUpdateAssets = () => {
     toast.success("successfully uploaded");
     fetchAssets();
   }
@@ -91,7 +91,7 @@ function CategoryAssetList({ onClose, assetCategory }) {
 
   return (
     <div className="container-fluid">
-       <ToastContainer/>
+      <ToastContainer />
       {showAssetDetails ? (
         <AssetDesc
           asset={selectedAsset}
@@ -121,44 +121,47 @@ function CategoryAssetList({ onClose, assetCategory }) {
                 </div>
               </div>
               <div className="card-body">
-                <table className="table table-striped table-bordered" style={{ width: "100%" }}>
-                  <thead>
-                    <tr>
-                      <th>Asset Name</th>
-                      <th>Asset Type</th>
-                      <th>Action</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {filteredAssets.map((asset) => (
-                      <tr key={asset.id}>
-                        <td>{asset.name}</td>
-                        <td>{asset.assetType}</td>
-                        <td>
-                          <div className="btn-group">
-                            <button className="btn btn-sm btn-primary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                              <i className="fa fa-ellipsis-h" aria-hidden="true"></i>
-                            </button>
-                            <div className="dropdown-menu actionmenu" x-placement="bottom-start">
-                              <a
-                                className="dropdown-item"
-                                href="javascript:void(0);"
-                                onClick={() =>
-                                  handleAssetDetails(asset)
-                                }
-                              >
-                                <i className="fa fa-file "></i>
-                                <span> Details</span>
-                              </a>
-                              <a className="dropdown-item" href="#" id="btnedit" customdata="386" data-toggle="modal" data-target="#edit" onClick={() => handleEditAsset(asset)}><i className="fa fa-pencil"></i> Edit</a>
-                              {/* <a className="dropdown-item" href="#" id="btnedit" customdata="386" data-toggle="modal" data-target="#delete" onClick={() => handleDeleteAsset(asset.id)}><i className="fa fa-trash"></i> Delete</a> */}
-                            </div>
-                          </div>
-                        </td>
+                <div style={{ maxHeight: "450px", overflowY: "auto" }}>
+                  <table className="table table-striped table-bordered" style={{ width: "100%" }}>
+                    <thead style={{ position: "sticky", top: "0", zIndex: "1", backgroundColor: "#fff" }}>
+                      <tr>
+                        <th>Asset Name</th>
+                        <th>Asset Type</th>
+                        <th>Action</th>
                       </tr>
-                    ))}
-                  </tbody>
-                </table>
+                    </thead>
+                    <tbody>
+                      {filteredAssets.map((asset) => (
+                        <tr key={asset.id}>
+                          <td>{asset.name}</td>
+                          <td>{asset.assetType}</td>
+                          <td>
+                            <div className="btn-group">
+                              <button className="btn btn-sm btn-primary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i className="fa fa-ellipsis-h" aria-hidden="true"></i>
+                              </button>
+                              <div className="dropdown-menu actionmenu" x-placement="bottom-start">
+                                <a
+                                  className="dropdown-item"
+                                  href="javascript:void(0);"
+                                  onClick={() =>
+                                    handleAssetDetails(asset)
+                                  }
+                                >
+                                  <i className="fa fa-file "></i>
+                                  <span> Details</span>
+                                </a>
+                                <a className="dropdown-item" href="#" id="btnedit" customdata="386" data-toggle="modal" data-target="#edit" onClick={() => handleEditAsset(asset)}><i className="fa fa-pencil"></i> Edit</a>
+                                {/* <a className="dropdown-item" href="#" id="btnedit" customdata="386" data-toggle="modal" data-target="#delete" onClick={() => handleDeleteAsset(asset.id)}><i className="fa fa-trash"></i> Delete</a> */}
+                              </div>
+                            </div>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+
               </div>
             </div>
           </div>

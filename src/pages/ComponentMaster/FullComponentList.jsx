@@ -101,7 +101,7 @@ function FullComponentList({ handleLogout, username }) {
       <div className='w-100'>
         <SearchBar username={username} handleLogout={handleLogout} />
         <div className="container-fluid">
-        <ToastContainer/>
+          <ToastContainer />
           {showFullComponentDetails ? (
             <FullComponentDetails
               component={selectedFullComponent}
@@ -143,49 +143,49 @@ function FullComponentList({ handleLogout, username }) {
                     </div>
                   </div>
                   <div className="card-body">
-                    <table
-                      className="table table-striped table-bordered"
-                      style={{ width: "100%" }}
-                    >
-                      <thead>
-                        <tr>
-                          <th>Component Name</th>
-                          <th>Size</th>
-                          <th>Category</th>
-                          <th>Action</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {currentItems.map((component) => (
-                          <tr key={component.id}>
-                            <td>{component.componentName}</td>
-                            <td>{component.size}</td>
-                            <td>{component.category}</td>
-                            <td>
-                              <div className="btn-group">
-                                <button className="btn btn-sm btn-primary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                  <i className="fa fa-ellipsis-h" aria-hidden="true"></i>
-                                </button>
-                                <div className="dropdown-menu actionmenu" x-placement="bottom-start">
-                                  <a
-                                    className="dropdown-item"
-                                    href="#"
-                                    onClick={() =>
-                                      handleFullComponentDetails(component)
-                                    }
-                                  >
-                                    <i className="fa fa-file "></i>
-                                    <span> Details</span>
-                                  </a>
-                                  <a className="dropdown-item" href="#" onClick={() => handleEditFullComponent(component)}><i className="fas fa-edit"></i> Edit</a>
-                                  {/* <a className="dropdown-item" href="#" onClick={() => handleDeleteComponentList(component.id)}><i className="fa fa-trash"></i> Delete</a> */}
-                                </div>
-                              </div>
-                            </td>
+                    <div style={{ maxHeight: "450px", overflowY: "auto" }}>
+                      <table className="table table-striped table-bordered" style={{ width: "100%" }}>
+                        <thead style={{ position: "sticky", top: "0", zIndex: "1", backgroundColor: "#fff" }}>
+                          <tr>
+                            <th>Component Name</th>
+                            <th>Size</th>
+                            <th>Category</th>
+                            <th>Action</th>
                           </tr>
-                        ))}
-                      </tbody>
-                    </table>
+                        </thead>
+                        <tbody>
+                          {currentItems.map((component) => (
+                            <tr key={component.id}>
+                              <td>{component.componentName}</td>
+                              <td>{component.size}</td>
+                              <td>{component.category}</td>
+                              <td>
+                                <div className="btn-group">
+                                  <button className="btn btn-sm btn-primary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <i className="fa fa-ellipsis-h" aria-hidden="true"></i>
+                                  </button>
+                                  <div className="dropdown-menu actionmenu" x-placement="bottom-start">
+                                    <a
+                                      className="dropdown-item"
+                                      href="#"
+                                      onClick={() =>
+                                        handleFullComponentDetails(component)
+                                      }
+                                    >
+                                      <i className="fa fa-file "></i>
+                                      <span> Details</span>
+                                    </a>
+                                    <a className="dropdown-item" href="#" onClick={() => handleEditFullComponent(component)}><i className="fas fa-edit"></i> Edit</a>
+                                    {/* <a className="dropdown-item" href="#" onClick={() => handleDeleteComponentList(component.id)}><i className="fa fa-trash"></i> Delete</a> */}
+                                  </div>
+                                </div>
+                              </td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+
                     {/* Pagination */}
                     <ul className="pagination">
                       <li className={`page-item ${currentPage === 1 && 'disabled'}`}>

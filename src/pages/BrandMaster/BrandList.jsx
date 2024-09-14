@@ -97,7 +97,7 @@ function BrandList({ handleLogout, username }) {
             console.error("Error deleting brand:", error);
         }
     };
-    const handleupdate =() =>{
+    const handleupdate = () => {
         toast.success("successfully uploaded");
         fetchBrands();
 
@@ -154,79 +154,79 @@ function BrandList({ handleLogout, username }) {
                                             </div> */}
                                     </div>
                                     <div className="card-body">
-                                        <table
-                                            className="table table-striped table-bordered"
-                                            style={{ width: "100%" }}
-                                        >
-                                            <thead>
-                                                <tr>
-                                                    <th>Brand Logo</th>
-                                                    <th>Brand Name</th>
-                                                    <th>Company Name</th>
-                                                    <th>Total Assets</th>
-                                                    <th>Action</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                {currentItems.map((brand) => (
-                                                    <tr key={brand.id}>
-                                                        <td>
-                                                            {brand.brandLogo ? (
-                                                                <img
-                                                                    src={`${process.env.REACT_APP_LOCAL_URL}/uploads/brandLogos/${brand.brandLogo}`}
-                                                                    alt={brand.brandName}
-                                                                    style={{ width: "90px", height: "90px" }}
-                                                                />
-                                                            ) : (
-                                                                <img
-                                                                    src={defaultBrandLogo}
-                                                                    alt={brand.brandName}
-                                                                    style={{ width: "90px", height: "90px" }}
-                                                                />
-                                                            )}
-                                                        </td>
-                                                        <td onClick={() => handleBrandAssetsClick(brand)} style={{ cursor: 'pointer' }} >{brand.brandName}</td>
-                                                        <td>{brand.companyName}</td>
-                                                        <td>{brand.totalAssets}</td>
-                                                        <td>
-                                                            <div className="btn-group">
-                                                                <button
-                                                                    className="btn btn-sm btn-primary dropdown-toggle"
-                                                                    type="button"
-                                                                    data-toggle="dropdown"
-                                                                    aria-haspopup="true"
-                                                                    aria-expanded="false"
-                                                                >
-                                                                    <i
-                                                                        className="fa fa-ellipsis-h"
-                                                                        aria-hidden="true"
-                                                                    ></i>
-                                                                </button>
-                                                                <div
-                                                                    className="dropdown-menu actionmenu"
-                                                                    x-placement="bottom-start"
-                                                                >
-                                                                    {/* <a
+                                        <div style={{ maxHeight: "450px", overflowY: "auto" }}>
+                                            <table className="table table-striped table-bordered" style={{ width: "100%" }}>
+                                                <thead style={{ position: "sticky", top: "0", zIndex: "1", backgroundColor: "#fff" }}>
+                                                    <tr>
+                                                        <th>Brand Logo</th>
+                                                        <th>Brand Name</th>
+                                                        <th>Company Name</th>
+                                                        <th>Total Assets</th>
+                                                        <th>Action</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    {currentItems.map((brand) => (
+                                                        <tr key={brand.id}>
+                                                            <td>
+                                                                {brand.brandLogo ? (
+                                                                    <img
+                                                                        src={`${process.env.REACT_APP_LOCAL_URL}/uploads/brandLogos/${brand.brandLogo}`}
+                                                                        alt={brand.brandName}
+                                                                        style={{ width: "90px", height: "90px" }}
+                                                                    />
+                                                                ) : (
+                                                                    <img
+                                                                        src={defaultBrandLogo}
+                                                                        alt={brand.brandName}
+                                                                        style={{ width: "90px", height: "90px" }}
+                                                                    />
+                                                                )}
+                                                            </td>
+                                                            <td onClick={() => handleBrandAssetsClick(brand)} style={{ cursor: 'pointer' }} >{brand.brandName}</td>
+                                                            <td>{brand.companyName}</td>
+                                                            <td>{brand.totalAssets}</td>
+                                                            <td>
+                                                                <div className="btn-group">
+                                                                    <button
+                                                                        className="btn btn-sm btn-primary dropdown-toggle"
+                                                                        type="button"
+                                                                        data-toggle="dropdown"
+                                                                        aria-haspopup="true"
+                                                                        aria-expanded="false"
+                                                                    >
+                                                                        <i
+                                                                            className="fa fa-ellipsis-h"
+                                                                            aria-hidden="true"
+                                                                        ></i>
+                                                                    </button>
+                                                                    <div
+                                                                        className="dropdown-menu actionmenu"
+                                                                        x-placement="bottom-start"
+                                                                    >
+                                                                        {/* <a
                                                                             className="dropdown-item"
                                                                             href="#"
                                                                             onClick={() => handleEditBrand(brand)}
                                                                         >
                                                                             <i className="fas fa-edit"></i> Edit
                                                                         </a> */}
-                                                                    {/* <a
+                                                                        {/* <a
                                                                         className="dropdown-item"
                                                                         href="#"
                                                                         onClick={() => handleDeleteBrand(brand.id)}
                                                                     >
                                                                         <i className="fa fa-trash"></i> Delete
                                                                     </a> */}
+                                                                    </div>
                                                                 </div>
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                ))}
-                                            </tbody>
-                                        </table>
+                                                            </td>
+                                                        </tr>
+                                                    ))}
+                                                </tbody>
+                                            </table>
+                                        </div>
+
                                         {/* Pagination */}
                                         <ul className="pagination">
                                             <li className={`page-item ${currentPage === 1 && 'disabled'}`}>
@@ -246,7 +246,7 @@ function BrandList({ handleLogout, username }) {
                             )}
                         </div>
                     </div>
-                    {isAddBrandModalOpen && <AddBrandModal onClose={handleCloseBrandModal} onUpdateBrands={handleupdate}  />}
+                    {isAddBrandModalOpen && <AddBrandModal onClose={handleCloseBrandModal} onUpdateBrands={handleupdate} />}
                     {isEditModalOpen && (
                         <EditBrandModal
                             brand={editBrand}

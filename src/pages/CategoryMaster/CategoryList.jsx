@@ -85,7 +85,7 @@ function CategoryList({ handleLogout, username }) {
   const handleShowAssetList = () => {
     setShowAssetList(true);
   };
-  const handlecategory=()=>{
+  const handlecategory = () => {
     toast.success("successfully uploaded");
   }
 
@@ -101,9 +101,9 @@ function CategoryList({ handleLogout, username }) {
     <div className='d-flex w-100 h-100 '>
       <Sidebar />
       <div className='w-100'>
-      <SearchBar username={username} handleLogout={handleLogout} /> {/* Pass username and handleLogout props */}
+        <SearchBar username={username} handleLogout={handleLogout} /> {/* Pass username and handleLogout props */}
         <div className="container-fluid">
-        <ToastContainer/>
+          <ToastContainer />
           {showCategoryDetails ? (
             <CategoryDetails
               category={selectedCategory}
@@ -134,37 +134,37 @@ function CategoryList({ handleLogout, username }) {
                     </button>
                   </div>
                   <div className="card-body">
-                    <table
-                      className="table table-striped table-bordered"
-                      style={{ width: "100%" }}
-                    >
-                      <thead>
-                        <tr>
-                          <th>Category Name</th>
-                          <th>Category Type</th>
-                          <th>Action</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {currentItems.map((category) => (
-                          <tr key={category.id}>
-                            <td>{category.categoryName}</td>
-                            <td>{category.categoryType}</td>
-                            <td>
-                              <div className="btn-group">
-                                <button className="btn btn-sm btn-primary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                  <i className="fa fa-ellipsis-h" aria-hidden="true"></i>
-                                </button>
-                                <div className="dropdown-menu actionmenu" x-placement="bottom-start">
-                                  <button className="dropdown-item" id="btnedit" customdata="386" data-toggle="modal" data-target="#edit" onClick={() => handleEditCategory(category)}><i className="fas fa-edit"></i> Edit</button>
-                                  {/* <button className="dropdown-item" id="btnedit" customdata="386" data-toggle="modal" data-target="#delete" onClick={() => handleDeleteCategory(category.id)}><i className="fa fa-trash"></i> Delete</button> */}
-                                </div>
-                              </div>
-                            </td>
+                    <div style={{ maxHeight: "450px", overflowY: "auto" }}>
+                      <table className="table table-striped table-bordered" style={{ width: "100%" }}>
+                        <thead style={{ position: "sticky", top: "0", zIndex: "1", backgroundColor: "#fff" }}>
+                          <tr>
+                            <th>Category Name</th>
+                            <th>Category Type</th>
+                            <th>Action</th>
                           </tr>
-                        ))}
-                      </tbody>
-                    </table>
+                        </thead>
+                        <tbody>
+                          {currentItems.map((category) => (
+                            <tr key={category.id}>
+                              <td>{category.categoryName}</td>
+                              <td>{category.categoryType}</td>
+                              <td>
+                                <div className="btn-group">
+                                  <button className="btn btn-sm btn-primary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <i className="fa fa-ellipsis-h" aria-hidden="true"></i>
+                                  </button>
+                                  <div className="dropdown-menu actionmenu" x-placement="bottom-start">
+                                    <button className="dropdown-item" id="btnedit" customdata="386" data-toggle="modal" data-target="#edit" onClick={() => handleEditCategory(category)}><i className="fas fa-edit"></i> Edit</button>
+                                    {/* <button className="dropdown-item" id="btnedit" customdata="386" data-toggle="modal" data-target="#delete" onClick={() => handleDeleteCategory(category.id)}><i className="fa fa-trash"></i> Delete</button> */}
+                                  </div>
+                                </div>
+                              </td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+
                     {/* Pagination */}
                     <ul className="pagination">
                       <li className={`page-item ${currentPage === 1 && 'disabled'}`}>

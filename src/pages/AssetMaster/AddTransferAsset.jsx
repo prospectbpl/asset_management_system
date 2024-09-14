@@ -582,7 +582,9 @@ const AddTransferAsset = ({ asset, onClose, onUpdateAssets }) => {
                 units: asset.units,
                 vendor_id: asset.vendor_id,
                 vendorcompanyname: asset.vendorcompanyname,
-                width: asset.width
+                width: asset.width,
+                takeInsurance: asset.takeInsurance,
+                username: asset.username,
             });
         }
 

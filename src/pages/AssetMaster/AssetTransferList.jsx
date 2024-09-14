@@ -276,17 +276,17 @@
 //         const response = await axios.get(`${process.env.REACT_APP_LOCAL_URL}/download-assets-excel/asset-transfer`, {
 //           responseType: 'blob' // Set response type to blob to handle binary data
 //         });
-  
+
 //         // Create a URL for the blob
 //         const url = window.URL.createObjectURL(new Blob([response.data]));
-  
+
 //         // Create a link element and trigger a click event to start the download
 //         const link = document.createElement('a');
 //         link.href = url;
 //         link.setAttribute('download', 'assets.xlsx');
 //         document.body.appendChild(link);
 //         link.click();
-  
+
 //         // Remove the link from the DOM
 //         document.body.removeChild(link);
 //       } catch (error) {
@@ -295,7 +295,7 @@
 //       }
 //     };
 
-    
+
 //   // pagination logic
 //   // Logic to get current items
 //   const indexOfLastItem = currentPage * itemsPerPage;
@@ -593,39 +593,39 @@ function AssetTransferList({ handleLogout, username }) {
     setSelectedClient('');
     setSelectedEmployee('');
   };
-  
+
   const handleClientChange = (event) => {
     setSelectedClient(event.target.value);
     // Reset selected site and employee
     setSelectedSite('');
     setSelectedEmployee('');
   };
-  
+
   const handleEmployeeChange = (event) => {
     setSelectedEmployee(event.target.value);
     // Reset selected site and client
     setSelectedSite('');
     setSelectedClient('');
   };
-  
+
   const filteredAssets = assets.filter((asset) => {
     let isMatched = true;
-  
+
     if (selectedSite && parseInt(asset.site_master_id) !== parseInt(selectedSite)) {
       isMatched = false;
     }
-  
+
     if (selectedClient && parseInt(asset.client_master_id) !== parseInt(selectedClient)) {
       isMatched = false;
     }
-  
+
     if (selectedEmployee && parseInt(asset.employee_master_id) !== parseInt(selectedEmployee)) {
       isMatched = false;
     }
-  
+
     return isMatched;
   });
-  
+
 
   const handleDownloadExcel = async () => {
     try {
@@ -683,7 +683,7 @@ function AssetTransferList({ handleLogout, username }) {
       <div className='w-100'>
         <SearchBar username={username} handleLogout={handleLogout} />
         <div className="container-fluid">
-        <ToastContainer/>
+          <ToastContainer />
           {!showDetails && (
             <div className="row">
               <div className="col-xl-12">
@@ -743,61 +743,61 @@ function AssetTransferList({ handleLogout, username }) {
                       </div>
                     </div>
                   </div>
-                  <div className="card-body" style={{ maxHeight: "calc(100vh - 200px)", overflowY: "auto" }}>
-                    <table
-                      className="table table-striped table-bordered"
-                      style={{ width: "100%" }}
-                    >
-                      <thead>
-                        <tr>
-                          <th>Asset Picture</th>
-                          <th>Asset Name</th>
-                          <th>Asset Type</th>
-                          <th>Asset Quantity</th>
-                          <th>Current Location</th>
-                          <th>Action</th>
-                        </tr>
-                      </thead>
-                      <tbody style={{ maxHeight: "calc(100vh - 130px)", overflowY: "auto" }}>
-                        {currentItems.map((asset) => (
-                          <tr key={asset.id}>
-                            <td>
-                              <img
-                                src={`${process.env.REACT_APP_LOCAL_URL}/uploads/assets/${asset.picture}`}
-                                style={{ width: "90px" }}
-                                alt="Asset"
-                              />
-                            </td>
-                            <td>{asset.name}</td>
-                            <td>{asset.assetType}</td>
-                            <td>{asset.quantity}</td>
-                            <td>{asset.location}</td>
-                            <td>
-                              <div className="btn-group">
-                                <button
-                                  className="btn btn-sm btn-primary dropdown-toggle"
-                                  type="button"
-                                  data-toggle="dropdown"
-                                  aria-haspopup="true"
-                                  aria-expanded="false"
-                                >
-                                  <i className="fa fa-ellipsis-h" aria-hidden="true"></i>
-                                </button>
-                                <div className="dropdown-menu actionmenu" x-placement="bottom-start">
-                                  <a
-                                    className="dropdown-item"
-                                    href="#"
-                                    onClick={() => handleOpenTransferAssetModal(asset)}
-                                  >
-                                    <i className="fa fa-check"></i>Transfer Asset
-                                  </a>
-                                </div>
-                              </div>
-                            </td>
+                  <div className="card-body" >
+                    <div style={{ maxHeight: "450px", overflowY: "auto" }}>
+                      <table className="table table-striped table-bordered" style={{ width: "100%" }}>
+                        <thead style={{ position: "sticky", top: "0", zIndex: "1", backgroundColor: "#fff" }}>
+                          <tr>
+                            <th>Asset Picture</th>
+                            <th>Asset Name</th>
+                            <th>Asset Type</th>
+                            <th>Asset Quantity</th>
+                            <th>Current Location</th>
+                            <th>Action</th>
                           </tr>
-                        ))}
-                      </tbody>
-                    </table>
+                        </thead>
+                        <tbody style={{ maxHeight: "calc(100vh - 130px)", overflowY: "auto" }}>
+                          {currentItems.map((asset) => (
+                            <tr key={asset.id}>
+                              <td>
+                                <img
+                                  src={`${process.env.REACT_APP_LOCAL_URL}/uploads/assets/${asset.picture}`}
+                                  style={{ width: "90px" }}
+                                  alt="Asset"
+                                />
+                              </td>
+                              <td>{asset.name}</td>
+                              <td>{asset.assetType}</td>
+                              <td>{asset.quantity}</td>
+                              <td>{asset.location}</td>
+                              <td>
+                                <div className="btn-group">
+                                  <button
+                                    className="btn btn-sm btn-primary dropdown-toggle"
+                                    type="button"
+                                    data-toggle="dropdown"
+                                    aria-haspopup="true"
+                                    aria-expanded="false"
+                                  >
+                                    <i className="fa fa-ellipsis-h" aria-hidden="true"></i>
+                                  </button>
+                                  <div className="dropdown-menu actionmenu" x-placement="bottom-start">
+                                    <a
+                                      className="dropdown-item"
+                                      href="#"
+                                      onClick={() => handleOpenTransferAssetModal(asset)}
+                                    >
+                                      <i className="fa fa-check"></i>Transfer Asset
+                                    </a>
+                                  </div>
+                                </div>
+                              </td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+
                     <ul className="pagination">
                       <li className={`page-item ${currentPage === 1 && 'disabled'}`}>
                         <a className="page-link" href="#" onClick={() => paginate(currentPage - 1)}>Previous</a>

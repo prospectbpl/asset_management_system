@@ -141,90 +141,90 @@ function AssetMaintenance({ handleLogout, username }) {
 
                   </div>
                   <div className="card-body">
-                    <table
-                      className="table table-striped table-bordered"
-                      style={{ width: "100%" }}
-                    >
-                      <thead>
-                        <tr>
-                          <th>Asset Picture</th>
-                          <th>Asset Name</th>
-                          <th>Asset Tag</th>
-                          <th>Service Type</th>
-                          <th>Provider Name</th>
-                          <th>Issue in Asset</th>
-                          <th>Action</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {currentItems.map((maintenanceItem) => (
-                          <tr key={maintenanceItem.id}>
-                            <td>
-                              <img
-                                src={maintenanceItem.assetPhoto}
-                                style={{ width: "90px" }}
-                                alt="Asset"
-                              />
-                            </td>
-                            <td>{maintenanceItem.assetName}</td>
-                            <td>{maintenanceItem.assetTag}</td>
-                            <td>{maintenanceItem.serviceType}</td>
-                            <td>
-                              {maintenanceItem.serviceType === "In-house"
-                                ? maintenanceItem.employeeName
-                                : maintenanceItem.serviceName || maintenanceItem.serviceAddress}
-                            </td>
-                            <td>{maintenanceItem.issueInAsset}</td>
-                            <td >
-                              <div className="btn-group ">
-                                <button
-                                  className="btn btn-sm btn-primary dropdown-toggle"
-                                  type="button"
-                                  data-toggle="dropdown"
-                                  aria-haspopup="true"
-                                  aria-expanded="false"
-                                >
-                                  <i
-                                    className="fa fa-ellipsis-h"
-                                    aria-hidden="true"
-                                  ></i>
-                                </button>
-                                <div
-                                  className="dropdown-menu actionmenu"
-                                  x-placement="bottom-start"
-                                >
-                                  <a
-                                    className="dropdown-item"
-                                    href="#"
-                                    onClick={() => handleShowMaintenanceDetails(maintenanceItem)}
+                    <div style={{ maxHeight: "450px", overflowY: "auto" }}>
+                      <table className="table table-striped table-bordered" style={{ width: "100%" }}>
+                        <thead style={{ position: "sticky", top: "0", zIndex: "1", backgroundColor: "#fff" }}>
+                          <tr>
+                            <th>Asset Picture</th>
+                            <th>Asset Name</th>
+                            <th>Asset Tag</th>
+                            <th>Service Type</th>
+                            <th>Provider Name</th>
+                            <th>Issue in Asset</th>
+                            <th>Action</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {currentItems.map((maintenanceItem) => (
+                            <tr key={maintenanceItem.id}>
+                              <td>
+                                <img
+                                  src={maintenanceItem.assetPhoto}
+                                  style={{ width: "90px" }}
+                                  alt="Asset"
+                                />
+                              </td>
+                              <td>{maintenanceItem.assetName}</td>
+                              <td>{maintenanceItem.assetTag}</td>
+                              <td>{maintenanceItem.serviceType}</td>
+                              <td>
+                                {maintenanceItem.serviceType === "In-house"
+                                  ? maintenanceItem.employeeName
+                                  : maintenanceItem.serviceName || maintenanceItem.serviceAddress}
+                              </td>
+                              <td>{maintenanceItem.issueInAsset}</td>
+                              <td >
+                                <div className="btn-group ">
+                                  <button
+                                    className="btn btn-sm btn-primary dropdown-toggle"
+                                    type="button"
+                                    data-toggle="dropdown"
+                                    aria-haspopup="true"
+                                    aria-expanded="false"
                                   >
-                                    <i className="fas fa-info-circle"></i> Details
-                                  </a>
-                                  <a
-                                    className="dropdown-item"
-                                    href="#"
-                                    onClick={() => handleEditMaintenance(maintenanceItem)}
+                                    <i
+                                      className="fa fa-ellipsis-h"
+                                      aria-hidden="true"
+                                    ></i>
+                                  </button>
+                                  <div
+                                    className="dropdown-menu actionmenu"
+                                    x-placement="bottom-start"
                                   >
-                                    <i className="fas fa-edit"></i> Edit
-                                  </a>
-                                  
-                                  {maintenanceItem.task === 'unfinished' && (
                                     <a
                                       className="dropdown-item"
                                       href="#"
-                                      onClick={() => handleFinishTask(maintenanceItem.id)}
+                                      onClick={() => handleShowMaintenanceDetails(maintenanceItem)}
                                     >
-                                      Finish Task
+                                      <i className="fas fa-info-circle"></i> Details
                                     </a>
-                                  )}
+                                    <a
+                                      className="dropdown-item"
+                                      href="#"
+                                      onClick={() => handleEditMaintenance(maintenanceItem)}
+                                    >
+                                      <i className="fas fa-edit"></i> Edit
+                                    </a>
+
+                                    {maintenanceItem.task === 'unfinished' && (
+                                      <a
+                                        className="dropdown-item"
+                                        href="#"
+                                        onClick={() => handleFinishTask(maintenanceItem.id)}
+                                      >
+                                        Finish Task
+                                      </a>
+                                    )}
+                                  </div>
+                                  <div style={{ marginTop: "10px", marginLeft: "3px", width: '10px', height: '10px', borderRadius: '50%', backgroundColor: maintenanceItem.task === 'finished' ? 'blue' : 'red' }}></div>
                                 </div>
-                                <div style={{ marginTop: "10px", marginLeft: "3px", width: '10px', height: '10px', borderRadius: '50%', backgroundColor: maintenanceItem.task === 'finished' ? 'blue' : 'red' }}></div>
-                              </div>
-                            </td>
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
+                              </td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+
                     {/* Pagination */}
                     <ul className="pagination">
                       <li className={`page-item ${currentPage === 1 && 'disabled'}`}>

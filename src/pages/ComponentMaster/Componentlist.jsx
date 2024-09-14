@@ -956,11 +956,11 @@ function ComponentList({ handleLogout, username }) {
       console.error("Error updating component:", error);
     }
   };
-  const handleOnAddComponent=()=>{
+  const handleOnAddComponent = () => {
     toast.success("successfully uploaded");
     fetchComponents()
   }
-  const handleEditUpdateComponent=()=>{
+  const handleEditUpdateComponent = () => {
     fetchComponents()
   }
 
@@ -979,7 +979,7 @@ function ComponentList({ handleLogout, username }) {
       <div className='w-100'>
         <SearchBar username={username} handleLogout={handleLogout} />
         <div className="container-fluid">
-        <ToastContainer/>
+          <ToastContainer />
           <div className="row">
             <div className="col-xl-12">
               <div className="card shadow mb-4">
@@ -992,57 +992,57 @@ function ComponentList({ handleLogout, username }) {
                   </div>
                 </div>
                 <div className="card-body">
-                  <table
-                    className="table table-striped table-bordered"
-                    style={{ width: "100%" }}
-                  >
-                    <thead>
-                      <tr>
-                        <th>Component Image</th>
-                        <th>Component Name</th>
-                        <th>Size</th>
-                        <th>Category</th>
-                        <th>Action</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {currentItems.map((component) => (
-                        <tr key={component.id}>
-                          <td>
-                                  <img
-                                    src={`${process.env.REACT_APP_LOCAL_URL}/uploads/components/${component.componentImage}`}
-                                    style={{ width: "90px" }}
-                                    alt="component"
-                                  />
-                                </td>
-                          <td>{component.componentName}</td>
-                          <td>{component.size}</td>
-                          <td>{component.category}</td>
-                          <td>
-                            <div className="btn-group">
-                              <button className="btn btn-sm btn-primary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i className="fa fa-ellipsis-h" aria-hidden="true"></i>
-                              </button>
-                              <div className="dropdown-menu actionmenu" x-placement="bottom-start">
-                                <a
-                                  className="dropdown-item"
-                                  href="#"
-                                  onClick={() =>
-                                    handleComponentDetails(component)
-                                  }
-                                >
-                                  <i className="fa fa-file "></i>
-                                  <span> Details</span>
-                                </a>
-                                <a className="dropdown-item" href="#" id="btnedit" customdata="386" data-toggle="modal" data-target="#edit" onClick={() => handleEditComponent(component)}><i className="fa fa-pencil"></i> Edit</a>
-                                {/* <a className="dropdown-item" href="#" id="btnedit" customdata="386" data-toggle="modal" data-target="#delete" onClick={() => handleDeleteComponent(component.id)}><i className="fa fa-trash"></i> Delete</a> */}
-                              </div>
-                            </div>
-                          </td>
+                  <div style={{ maxHeight: "450px", overflowY: "auto" }}>
+                    <table className="table table-striped table-bordered" style={{ width: "100%" }}>
+                      <thead style={{ position: "sticky", top: "0", zIndex: "1", backgroundColor: "#fff" }}>
+                        <tr>
+                          <th>Component Image</th>
+                          <th>Component Name</th>
+                          <th>Size</th>
+                          <th>Category</th>
+                          <th>Action</th>
                         </tr>
-                      ))}
-                    </tbody>
-                  </table>
+                      </thead>
+                      <tbody>
+                        {currentItems.map((component) => (
+                          <tr key={component.id}>
+                            <td>
+                              <img
+                                src={`${process.env.REACT_APP_LOCAL_URL}/uploads/components/${component.componentImage}`}
+                                style={{ width: "90px" }}
+                                alt="component"
+                              />
+                            </td>
+                            <td>{component.componentName}</td>
+                            <td>{component.size}</td>
+                            <td>{component.category}</td>
+                            <td>
+                              <div className="btn-group">
+                                <button className="btn btn-sm btn-primary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                  <i className="fa fa-ellipsis-h" aria-hidden="true"></i>
+                                </button>
+                                <div className="dropdown-menu actionmenu" x-placement="bottom-start">
+                                  <a
+                                    className="dropdown-item"
+                                    href="#"
+                                    onClick={() =>
+                                      handleComponentDetails(component)
+                                    }
+                                  >
+                                    <i className="fa fa-file "></i>
+                                    <span> Details</span>
+                                  </a>
+                                  <a className="dropdown-item" href="#" id="btnedit" customdata="386" data-toggle="modal" data-target="#edit" onClick={() => handleEditComponent(component)}><i className="fa fa-pencil"></i> Edit</a>
+                                  {/* <a className="dropdown-item" href="#" id="btnedit" customdata="386" data-toggle="modal" data-target="#delete" onClick={() => handleDeleteComponent(component.id)}><i className="fa fa-trash"></i> Delete</a> */}
+                                </div>
+                              </div>
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+
                   {/* Pagination */}
                   <ul className="pagination">
                     <li className={`page-item ${currentPage === 1 && 'disabled'}`}>

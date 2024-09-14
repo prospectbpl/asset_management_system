@@ -1781,7 +1781,7 @@ pre code {
 
 .table td,
 .table th {
-    padding: .75rem;
+    padding: .375rem;
     vertical-align: top;
     border-top: 1px solid #e3e6f0
 }
@@ -5033,7 +5033,7 @@ input[type=submit].btn-block {
 .card-body {
     flex: 1 1 auto;
     min-height: 1px;
-    padding: 1.25rem
+    padding: 0.75rem
 }
 
 .card-title {
@@ -12694,6 +12694,15 @@ body.sidebar-toggled footer.sticky-footer {
     padding: 1px 20px !important;
     background-color: #F3F3F3 !important;
 }
+.asset-title {
+    color: #00509d;
+    font-size: clamp(1rem, 2.5vw, 2rem); /* Ensures text scales between min and max sizes */
+    white-space: nowrap; /* Prevents the text from wrapping */
+    overflow: hidden; /* Hides overflow */
+    text-overflow: ellipsis; /* Adds "..." if text is too long */
+    width: 100%;
+}
+
 
 
 

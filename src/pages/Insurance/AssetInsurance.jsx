@@ -145,76 +145,79 @@ function AssetInsurance({ handleLogout, username }) {
                     </button>
                   </div>
                   <div className="card-body">
-                    <table className="table table-striped table-bordered" style={{ width: "100%" }}>
-                      <thead>
-                        <tr>
-                          <th>Asset Picture</th>
-                          <th>Asset Name</th>
-                          <th>Asset Tag</th>
-                          <th>Insurance Company</th>
-                          <th>Policy Number</th>
-                          <th>End Date</th>
-                          <th>Renewal Date</th>
-                          <th>Action</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {currentItems.map((assetInsurance) => (
-                          <tr key={assetInsurance.asset_master_id}> {/* Change key to asset_master_id */}
-                            <td>
-                              <img
-                                src={`${process.env.REACT_APP_LOCAL_URL}/uploads/assets/${assetInsurance.assetPhoto}`}
-                                style={{ width: "90px" }}
-                                alt="Asset"
-                              />
-                            </td>
-                            <td>{assetInsurance.assetName}</td>
-                            <td>{assetInsurance.assetTag}</td>
-                            <td>{assetInsurance.insuranceCompanyName}</td>
-                            <td>{assetInsurance.policyNumber}</td>
-                            <td style={{whiteSpace:"nowrap"}}>{formatDate(assetInsurance.endDate)}</td>
-                            <td style={{whiteSpace:"nowrap"}}>{formatDate(assetInsurance.renewalDate)}</td>
+                    <div style={{ maxHeight: "450px", overflowY: "auto" }}>
+                      <table className="table table-striped table-bordered" style={{ width: "100%" }}>
+                        <thead style={{ position: "sticky", top: "0", zIndex: "1", backgroundColor: "#fff" }}>
+                          <tr>
+                            <th>Asset Picture</th>
+                            <th>Asset Name</th>
+                            <th>Asset Tag</th>
+                            <th>Insurance Company</th>
+                            <th>Policy Number</th>
+                            <th>End Date</th>
+                            <th>Renewal Date</th>
+                            <th>Action</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {currentItems.map((assetInsurance) => (
+                            <tr key={assetInsurance.asset_master_id}> {/* Change key to asset_master_id */}
+                              <td>
+                                <img
+                                  src={`${process.env.REACT_APP_LOCAL_URL}/uploads/assets/${assetInsurance.assetPhoto}`}
+                                  style={{ width: "90px" }}
+                                  alt="Asset"
+                                />
+                              </td>
+                              <td>{assetInsurance.assetName}</td>
+                              <td>{assetInsurance.assetTag}</td>
+                              <td>{assetInsurance.insuranceCompanyName}</td>
+                              <td>{assetInsurance.policyNumber}</td>
+                              <td style={{ whiteSpace: "nowrap" }}>{formatDate(assetInsurance.endDate)}</td>
+                              <td style={{ whiteSpace: "nowrap" }}>{formatDate(assetInsurance.renewalDate)}</td>
 
-                            <td>
-                              <div className="btn-group">
-                                <button
-                                  className="btn btn-sm btn-primary dropdown-toggle"
-                                  type="button"
-                                  data-toggle="dropdown"
-                                  aria-haspopup="true"
-                                  aria-expanded="false"
-                                >
-                                  <i className="fa fa-ellipsis-h" aria-hidden="true"></i>
-                                </button>
-                                <div className="dropdown-menu actionmenu" x-placement="bottom-start">
-                                  <a
-                                    className="dropdown-item"
-                                    href="#"
-                                    onClick={() => handleShowInsuranceDetails(assetInsurance)}
+                              <td>
+                                <div className="btn-group">
+                                  <button
+                                    className="btn btn-sm btn-primary dropdown-toggle"
+                                    type="button"
+                                    data-toggle="dropdown"
+                                    aria-haspopup="true"
+                                    aria-expanded="false"
                                   >
-                                    <i className="fas fa-info-circle"></i> Details
-                                  </a>
-                                  <a
-                                    className="dropdown-item"
-                                    href="#"
-                                    onClick={() => handleEditAssetInsurance(assetInsurance)}
-                                  >
-                                    <i className="fas fa-edit"></i> Edit
-                                  </a>
-                                  {/* <a
+                                    <i className="fa fa-ellipsis-h" aria-hidden="true"></i>
+                                  </button>
+                                  <div className="dropdown-menu actionmenu" x-placement="bottom-start">
+                                    <a
+                                      className="dropdown-item"
+                                      href="#"
+                                      onClick={() => handleShowInsuranceDetails(assetInsurance)}
+                                    >
+                                      <i className="fas fa-info-circle"></i> Details
+                                    </a>
+                                    <a
+                                      className="dropdown-item"
+                                      href="#"
+                                      onClick={() => handleEditAssetInsurance(assetInsurance)}
+                                    >
+                                      <i className="fas fa-edit"></i> Edit
+                                    </a>
+                                    {/* <a
                                     className="dropdown-item"
                                     href="#"
                                     onClick={() => handleDeleteAssetInsurance(assetInsurance.asset_master_id)}
                                   >
                                     <i className="fa fa-trash"></i> Delete
                                   </a> */}
+                                  </div>
                                 </div>
-                              </div>
-                            </td>
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
+                              </td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+
                     {/* Pagination */}
                     <ul className="pagination">
                       <li className={`page-item ${currentPage === 1 && 'disabled'}`}>

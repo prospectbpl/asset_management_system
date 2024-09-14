@@ -130,43 +130,47 @@ function InsuranceExpiry({ handleLogout, username }) {
                                     </div>
                                 </div>
                                 <div className="card-body">
-                                    <table className="table table-striped table-bordered" style={{ width: "100%" }}>
-                                        <thead>
-                                            <tr>
-                                                <th>Asset Picture</th>
-                                                <th>Asset Name</th>
-                                                <th>Asset Tag</th>
-                                                <th>Insurance Company</th>
-                                                <th>Policy Number</th>
-                                                <th>End Date</th>
-                                                <th>Renewal Date</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            {currentItems.length === 0 ? (
+                                    <div style={{ maxHeight: "450px", overflowY: "auto" }}>
+                                        <table className="table table-striped table-bordered" style={{ width: "100%" }}>
+                                            <thead style={{ position: "sticky", top: "0", zIndex: "1", backgroundColor: "#fff" }}>
                                                 <tr>
-                                                    <td colSpan="7" className="text-center">Thier is No CheckIn Asset .</td>
+                                                    <th>Asset Picture</th>
+                                                    <th>Asset Name</th>
+                                                    <th>Asset Tag</th>
+                                                    <th>Insurance Company</th>
+                                                    <th>Policy Number</th>
+                                                    <th>End Date</th>
+                                                    <th>Renewal Date</th>
                                                 </tr>
-                                            ) : (
-                                                currentItems.map((assetInsurance) => (
-                                                    <tr key={assetInsurance.asset_master_id}> {/* Change key to asset_master_id */}
-                                                        <td>
-                                                            <img
-                                                                src={`${process.env.REACT_APP_LOCAL_URL}/uploads/assets/${assetInsurance.assetPhoto}`}
-                                                                style={{ width: "90px" }}
-                                                                alt="Asset"
-                                                            />
-                                                        </td>
-                                                        <td>{assetInsurance.assetName}</td>
-                                                        <td>{assetInsurance.assetTag}</td>
-                                                        <td>{assetInsurance.insuranceCompanyName}</td>
-                                                        <td>{assetInsurance.policyNumber}</td>
-                                                        <td style={{whiteSpace:"nowrap"}}>{formatDate(assetInsurance.endDate)}</td>
-                                                        <td style={{whiteSpace:"nowrap"}}>{formatDate(assetInsurance.renewalDate)}</td>
+                                            </thead>
+                                            <tbody>
+                                                {currentItems.length === 0 ? (
+                                                    <tr>
+                                                        <td colSpan="7" className="text-center">Thier is No CheckIn Asset .</td>
                                                     </tr>
-                                                )))}
-                                        </tbody>
-                                    </table>
+                                                ) : (
+                                                    currentItems.map((assetInsurance) => (
+                                                        <tr key={assetInsurance.asset_master_id}> {/* Change key to asset_master_id */}
+                                                            <td>
+                                                                <img
+                                                                    src={`${process.env.REACT_APP_LOCAL_URL}/uploads/assets/${assetInsurance.assetPhoto}`}
+                                                                    style={{ width: "90px" }}
+                                                                    alt="Asset"
+                                                                />
+                                                            </td>
+                                                            <td>{assetInsurance.assetName}</td>
+                                                            <td>{assetInsurance.assetTag}</td>
+                                                            <td>{assetInsurance.insuranceCompanyName}</td>
+                                                            <td>{assetInsurance.policyNumber}</td>
+                                                            <td style={{ whiteSpace: "nowrap" }}>{formatDate(assetInsurance.endDate)}</td>
+                                                            <td style={{ whiteSpace: "nowrap" }}>{formatDate(assetInsurance.renewalDate)}</td>
+                                                        </tr>
+                                                    )))}
+                                            </tbody>
+                                        </table>
+
+                                    </div>
+
                                     {/* Pagination */}
                                     <ul className="pagination">
                                         <li className={`page-item ${currentPage === 1 && 'disabled'}`}>

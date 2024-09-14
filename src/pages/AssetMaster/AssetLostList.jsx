@@ -91,11 +91,12 @@ function AssetLostList({ handleLogout, username }) {
         toast.success("successfully uploaded");
         fetchAssetLosts();
     };
-    
+
     const formatDate = (dateString) => {
-        const options = { day: 'numeric', month: 'short', year: 'numeric' };
-        return new Date(dateString).toLocaleDateString('en-US', options);
+        const date = new Date(dateString);
+        return `${date.getDate().toString().padStart(2, '0')}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getFullYear()}`;
     };
+
 
 
     return (
@@ -104,7 +105,7 @@ function AssetLostList({ handleLogout, username }) {
             <div className='w-100'>
                 <SearchBar username={username} handleLogout={handleLogout} /> {/* Pass username and handleLogout props */}
                 <div className="container-fluid">
-                <ToastContainer/>
+                    <ToastContainer />
                     {showAssetLostDetails ? (
                         <AssetLostDesc
                             assetLost={selectedAssetLost}
@@ -123,34 +124,34 @@ function AssetLostList({ handleLogout, username }) {
                                         </button>
                                     </div>
                                     <div className="card-body">
-                                        <table
-                                            className="table table-striped table-bordered"
-                                            style={{ width: "100%" }}
-                                        >
-                                            <thead>
-                                                <tr>
-                                                    <th>Asset Name</th>
-                                                    <th>Loss Date</th>
-                                                    <th>Loss Location</th>
-                                                    <th>prev quantity</th>
-                                                    <th>loss quantity</th>
+                                        <div style={{ maxHeight: "450px", overflowY: "auto" }}>
+                                            <table className="table table-striped table-bordered" style={{ width: "100%" }}>
+                                                <thead style={{ position: "sticky", top: "0", zIndex: "1", backgroundColor: "#fff" }}>
+                                                    <tr>
+                                                        <th>Asset Name</th>
+                                                        <th>Loss Date</th>
+                                                        <th>Loss Location</th>
+                                                        <th>prev quantity</th>
+                                                        <th>loss quantity</th>
 
 
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                {assetLosts.map((assetLost) => (
-                                                    <tr key={assetLost.id}>
-                                                        <td>{assetLost.assetName}</td>
-                                                        <td>{formatDate(assetLost.lossDate)}</td>
-                                                        {/* <td>{assetLost.lossDate}</td> */}
-                                                        <td>{assetLost.lossLocation}</td>
-                                                        <td>{assetLost.prevquantity}</td>
-                                                        <td>{assetLost.newquantity}</td>
                                                     </tr>
-                                                ))}
-                                            </tbody>
-                                        </table>
+                                                </thead>
+                                                <tbody>
+                                                    {assetLosts.map((assetLost) => (
+                                                        <tr key={assetLost.id}>
+                                                            <td>{assetLost.assetName}</td>
+                                                            <td>{formatDate(assetLost.lossDate)}</td>
+                                                            {/* <td>{assetLost.lossDate}</td> */}
+                                                            <td>{assetLost.lossLocation}</td>
+                                                            <td>{assetLost.prevquantity}</td>
+                                                            <td>{assetLost.newquantity}</td>
+                                                        </tr>
+                                                    ))}
+                                                </tbody>
+                                            </table>
+                                        </div>
+
                                     </div>
                                 </div>
                             </div>

@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import EditAssetModal from "./EditAssetModal";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import QRCode from "qrcode.react";
 
 // Define the AssetDesc component
@@ -26,14 +28,7 @@ const AssetDesc = ({ asset, onClose }) => {
     const [itemsPerPage, setItemsPerPage] = useState(5);
     // purchase_history
     const [purchasehistory, setpurchasehistory] = useState([])
-
-    
     console.log(asset)
-
-
-
-
-
     useEffect(() => {
         fetchunfinishedMaintenance();
     }, [asset]);
@@ -202,14 +197,19 @@ const AssetDesc = ({ asset, onClose }) => {
         return `${date.getDate().toString().padStart(2, '0')}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getFullYear()} `;
     };
 
+    const handleAssetUpdate = () => {
+        toast.success('Data uploaded successfully')
+    }
+
     return (
         <div className="shadow-sm bg-white rounded">
+            <ToastContainer />
             <div className="card-body p-4">
                 {/* Asset Details Section */}
-                <div className="row">
-                    <div className="col-md-9 d-flex  justify-content-between px-3">
-                        <div>
-                            <h2 style={{ color: "#00509d" }} className="title-detail fw-bolder fw-bolder m-0">
+                <div className="row px-2">
+                    <div className="col-md-9 bg-light border rounded shadow-sm d-flex gap-2 justify-content-between  py-3" style={{width:"100%"}}>
+                        <div style={{width:"80%"}}>
+                            <h2  className="title-detail fw-bolder fw-bolder m-0 asset-title">
                                 {asset.name}
                             </h2>
                             <hr className="m-1" />
@@ -217,7 +217,7 @@ const AssetDesc = ({ asset, onClose }) => {
                                 Asset Tag: {asset.assettag}
                             </h6>
                         </div>
-                        <div>
+                        <div style={{width:"30%"}}>
                             <p className="m-0">
                                 <span> Type: {asset.assetType || "N/A"}</span>
                             </p>
@@ -418,6 +418,14 @@ const AssetDesc = ({ asset, onClose }) => {
                                                     </td>
                                                     <td>
                                                         <p class="mb-0">: {asset.registrationNumber}</p>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td bgcolor="#f2f3f4" width="200">
+                                                        <p class="mb-0 fw-bolder">Insurance</p>
+                                                    </td>
+                                                    <td>
+                                                        <p class="mb-0">: {asset.takeInsurance}</p>
                                                     </td>
                                                 </tr>
                                                 <h6 className=' m-0 text-primary fw-bolder p-2'>Asset Location wise ----</h6>
@@ -787,6 +795,7 @@ const AssetDesc = ({ asset, onClose }) => {
             {isEditModalOpen && (
                 <EditAssetModal
                     asset={asset}
+                    onUpdate={handleAssetUpdate}
                     onClose={setIsEditModalOpen}
                 />
             )}

@@ -291,12 +291,10 @@ function Assetlist({ handleLogout, username }) {
                         </div>
                       </div>
                     </div>
-                    <div className="card-body" style={{ maxHeight: "calc(100vh - 200px)", overflowY: "auto" }}  >
-                      <table
-                        className="table table-striped table-bordered"
-                        style={{ width: "100%" }}
-                      >
-                        <thead>
+                    <div className="card-body" >
+                    <div style={{ maxHeight: "450px", overflowY: "auto" }}>
+                        <table className="table table-striped table-bordered" style={{ width: "100%" }}>
+                          <thead style={{ position: "sticky", top: "0", zIndex: "1", backgroundColor: "#fff" }}>
                           <tr>
                             <th>Asset Picture</th>
                             <th>Asset Name</th>
@@ -311,7 +309,7 @@ function Assetlist({ handleLogout, username }) {
                         <style>
                           {`.hyperlink:hover {color: blue;}`}
                         </style>
-                        <tbody style={{ maxHeight: "calc(100vh - 130px)", overflowY: "auto" }}>
+                        <tbody>
                           {currentItems.map((asset) => (
                             <tr key={asset.id}>
                               <td>
@@ -393,6 +391,8 @@ function Assetlist({ handleLogout, username }) {
                           ))}
                         </tbody>
                       </table>
+                      </div>
+                     
                       {/* Pagination */}
                       <ul className="pagination">
                         <li className={`page-item ${currentPage === 1 && 'disabled'}`}>
@@ -426,7 +426,7 @@ function Assetlist({ handleLogout, username }) {
           {isEditModalOpen && (
             <EditAssetModal
               asset={editedAsset}
-              onUpdate={handleUpdateAsset}
+              onUpdate={handleUpdateAssets}
               onClose={handleCloseEditAsset}
             />
           )}
