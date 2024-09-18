@@ -76,9 +76,9 @@ function MaintenanceReport({ handleLogout, username }) {
     return (
         <div className='d-flex w-100% h-100'>
             {showSidebar && <Sidebar />}
-            <div className='w-100'>
+            <div className='w-100 bg-white'>
                 {showSearchBar && <SearchBar className="searchbarr" username={username} handleLogout={handleLogout} />}
-                <div className="container-fluid">
+                <div className="container-fluid bg-white">
                     <ToastContainer />
                     {showAssetPrint ? (
                         <MaintenanceReportPreview

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
-const AddDataModal = ({ onClose, onUpdateAssets }) => {
+const AddDataModal = ({ onClose, onUpdate }) => {
   const [formData, setFormData] = useState({
     name: "",
     assetMaster_id: "",
@@ -305,9 +305,11 @@ const AddDataModal = ({ onClose, onUpdateAssets }) => {
         // width:formData.dimensions[width]
       });
       console.log("Transfer history data uploaded successfully:", transferHistoryResponse.data);
-
-      onClose();
-      onUpdateAssets();
+      onUpdate();
+      setTimeout(() => {
+        onClose();
+        window.location.reload();
+    }, 1000); // 1 second delay
     } catch (error) {
       console.error("Error uploading data:", error);
     }

@@ -102,9 +102,9 @@ function AssetLostList({ handleLogout, username }) {
     return (
         <div className='d-flex w-100 h-100 '>
             <Sidebar />
-            <div className='w-100'>
+            <div className='w-100 bg-white'>
                 <SearchBar username={username} handleLogout={handleLogout} /> {/* Pass username and handleLogout props */}
-                <div className="container-fluid">
+                <div className="container-fluid bg-white">
                     <ToastContainer />
                     {showAssetLostDetails ? (
                         <AssetLostDesc
@@ -133,21 +133,27 @@ function AssetLostList({ handleLogout, username }) {
                                                         <th>Loss Location</th>
                                                         <th>prev quantity</th>
                                                         <th>loss quantity</th>
-
-
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    {assetLosts.map((assetLost) => (
-                                                        <tr key={assetLost.id}>
-                                                            <td>{assetLost.assetName}</td>
-                                                            <td>{formatDate(assetLost.lossDate)}</td>
-                                                            {/* <td>{assetLost.lossDate}</td> */}
-                                                            <td>{assetLost.lossLocation}</td>
-                                                            <td>{assetLost.prevquantity}</td>
-                                                            <td>{assetLost.newquantity}</td>
+                                                    <style>
+                                                        {`.hyperlink:hover {color: blue;}`}
+                                                    </style>
+                                                    {assetLosts.length === 0 ? (
+                                                        <tr>
+                                                            <td colSpan="7" className="text-center">Thier is No Asset.</td>
                                                         </tr>
-                                                    ))}
+                                                    ) : (
+                                                        assetLosts.map((assetLost) => (
+                                                            <tr key={assetLost.id}>
+                                                                <td className='hyperlink' style={{ cursor: "pointer" }} onClick={() => handleAssetLostDetails(assetLost)}>{assetLost.assetName}</td>
+                                                                <td>{formatDate(assetLost.lossDate)}</td>
+                                                                <td>{assetLost.lossLocation}</td>
+                                                                <td>{assetLost.prevquantity}</td>
+                                                                <td>{assetLost.newquantity}</td>
+                                                            </tr>
+                                                        ))
+                                                    )}
                                                 </tbody>
                                             </table>
                                         </div>
@@ -157,7 +163,7 @@ function AssetLostList({ handleLogout, username }) {
                             </div>
                         </div>
                     )}
-                    {isAddAssetLostModalOpen && <AssetLost onClose={handleCloseAssetLostModal} onUpdateAssetLosts={handleUpdateAssetLosts} />}
+                    {isAddAssetLostModalOpen && <AssetLost onClose={handleCloseAssetLostModal} onUpdate={handleUpdateAssetLosts} />}
                     {/* {isEditModalOpen && <EditAssetLostModal assetLost={editAssetLost} onClose={handleCloseAssetLostModal} onUpdate={handleUpdateAssetLost} />} Pass onUpdate function */}
                 </div>
             </div>

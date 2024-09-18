@@ -6,14 +6,14 @@ const VendorDesc = ({ vendor, onClose }) => {
     const [loading, setLoading] = useState(true);
     // pagination 
     const [currentPage, setCurrentPage] = useState(1);
-    const [itemsPerPage, setItemsPerPage] = useState(5);
+    const [itemsPerPage, setItemsPerPage] = useState(25);
 
 
     useEffect(() => {
         const fetchAssetData = async () => {
             try {
                 const response = await axios.get(
-                    `${process.env.REACT_APP_LOCAL_URL}/assetdata_vendor?vendor_id=${vendor.id}`
+                    `${process.env.REACT_APP_LOCAL_URL}/assetdata_vendor/${vendor.id}`
                 );
                 setAssetData(response.data);
                 setLoading(false);
@@ -47,31 +47,40 @@ const VendorDesc = ({ vendor, onClose }) => {
 
 
     return (
-        <div>
+        <div className="shadow-sm bg-white rounded">
             <div className="card-body p-4">
-                <div className="row">
-                    <div className="col-md-9 d-flex flex-column gap-3">
-                        <h4 className="title-detail font-bold">
-                            Vendor Name - {vendor.vendorCompanyName}
-                        </h4>
-                        <h5 className="assetdetail">
-                            <span className="assettype"> Vendor Address: {vendor.vendorAddress}</span>
-                        </h5>
+                <div className="row px-2">
+                    <div className="col-md-9 bg-light border rounded shadow-sm d-flex justify-content-between  py-3">
+                        <div>
+                            <h2 style={{ color: "#00509d" }} className="title-detail fw-bolder fw-bolder m-0">
+                                {vendor.vendorCompanyName}
+                            </h2>
+                            <hr className="m-1" />
+                            <h6 className="title-detail m-0">
+                                GST No. : {vendor.companyGSTNo}
+                            </h6>
+                        </div>
+                        <div>
+                            <p className="m-0">
+                                <span> Contact Person: {vendor.contactPersonName || "N/A"}</span>
+                            </p>
+                            <p className="m-0">
+                                <span> ContactNo.: {vendor.contactPersonMobile || "N/A"}</span>
+                            </p>
+                        </div>
                     </div>
-
-                    <div className="col-md-3">
-                        <div className="p-2 barcode-inner">
-                            <div className="vendor-actions">
-                                <button
-                                    onClick={onClose}
-                                    className="btn btn-primary mr-2"
-                                >
-                                    Back to Vendor List
+                    <div className="col-md-3 d-flex align-items-center justify-content-center">
+                        <div className="assetbarcode d-flex flex-column gap-2 align-items-center">
+                            <div className=" p-2 barcode-inner d-flex gap-2 align-items-center justify-content-center">
+                                <button onClick={onClose} className="btn btn-outline-primary">
+                                    <i className="fa fa-arrow-left"></i> Back
                                 </button>
+
                             </div>
                         </div>
                     </div>
                 </div>
+                <hr />
                 <div className="row">
                     <div className="col-md-12">
                         <ul className="nav nav-tabs" id="myTab" role="tablist">
@@ -110,63 +119,63 @@ const VendorDesc = ({ vendor, onClose }) => {
                                 aria-labelledby="details-tab"
                             >
                                 <div className="row">
-                                    <div className="col-md-9 ">
-                                        <table className="table table-hover" cellpadding="0" cellspacing="0">
+                                    <div className="col-md-12 ">
+                                        <table className="table table-bordered">
                                             <tbody>
                                                 <tr>
                                                     <td bgcolor="#f2f3f4" width="200">
-                                                        <p className="mb-0 font-bold">Company Name:</p>
+                                                        <p className="mb-0 font-bold">Company Name</p>
                                                     </td>
                                                     <td>
-                                                        <p className="mb-0 vendorcompanyname">{vendor.vendorCompanyName}</p>
+                                                        <p className="mb-0">: {vendor.vendorCompanyName}</p>
                                                     </td>
                                                 </tr>
                                                 <tr>
                                                     <td bgcolor="#f2f3f4" width="200">
-                                                        <p className="mb-0 font-bold">Address:</p>
+                                                        <p className="mb-0 font-bold">Address</p>
                                                     </td>
                                                     <td>
-                                                        <p className="mb-0 vendoraddress">{vendor.vendorAddress}</p>
+                                                        <p className="mb-0 ">: {vendor.vendorAddress}</p>
                                                     </td>
                                                 </tr>
                                                 <tr>
                                                     <td bgcolor="#f2f3f4" width="200">
-                                                        <p className="mb-0 font-bold">Company GST No.:</p>
+                                                        <p className="mb-0 font-bold">Company GST No.</p>
                                                     </td>
                                                     <td>
-                                                        <p className="mb-0 companygstno">{vendor.companyGSTNo}</p>
+                                                        <p className="mb-0">: {vendor.companyGSTNo}</p>
                                                     </td>
                                                 </tr>
                                                 <tr>
                                                     <td bgcolor="#f2f3f4" width="200">
-                                                        <p className="mb-0 font-bold">Contact Person's Name:</p>
+                                                        <p className="mb-0 font-bold">Contact Person's Name</p>
                                                     </td>
                                                     <td>
-                                                        <p className="mb-0 contactpersonname">{vendor.contactPersonName}</p>
+                                                        <p className="mb-0 ">: {vendor.contactPersonName}</p>
                                                     </td>
                                                 </tr>
                                                 <tr>
                                                     <td bgcolor="#f2f3f4" width="200">
-                                                        <p className="mb-0 font-bold">Designation:</p>
+                                                        <p className="mb-0 font-bold">Designation</p>
                                                     </td>
                                                     <td>
-                                                        <p className="mb-0 contactpersondesignation">{vendor.contactPersonDesignation}</p>
+                                                        <p className="mb-0">: {vendor.contactPersonDesignation}</p>
                                                     </td>
                                                 </tr>
                                                 <tr>
                                                     <td bgcolor="#f2f3f4" width="200">
-                                                        <p className="mb-0 font-bold">Mobile No.:</p>
+                                                        <p className="mb-0 font-bold">Mobile No.</p>
                                                     </td>
                                                     <td>
-                                                        <p className="mb-0 contactpersonmobile">{vendor.contactPersonMobile}</p>
+                                                        <p className="mb-0">: {vendor.contactPersonMobile}</p>
                                                     </td>
                                                 </tr>
                                                 <tr>
                                                     <td bgcolor="#f2f3f4" width="200">
-                                                        <p className="mb-0 font-bold">Email ID:</p>
+                                                        <p className="mb-0 font-bold">Email ID</p>
                                                     </td>
                                                     <td>
-                                                        <p className="mb-0 contactpersonemail">{vendor.contactPersonEmail}</p>
+                                                        <p className="mb-0 ">: {vendor.contactPersonEmail}</p>
                                                     </td>
                                                 </tr>
                                             </tbody>
@@ -177,32 +186,40 @@ const VendorDesc = ({ vendor, onClose }) => {
                             <div className="tab-pane fade" id="assetlist" role="tabpanel" aria-labelledby="assetlist-tab">
                                 <div className="row">
                                     <div className="col-md-12">
-                                        <table className="table table-striped">
-                                            <thead>
-                                                <tr>
-                                                    <th>Asset Picture</th>
-                                                    <th>Asset Name</th>
-                                                    <th>Asset Tag</th>
-                                                    <th>Brand</th>
-                                                    <th>Purchase Date</th>
-                                                    <th>Description</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                {assetofvendor.map((entry) => (
-                                                    <tr key={entry.asset_id}>
-                                                        <td>
-                                                            <img src={`${process.env.REACT_APP_LOCAL_URL}/uploads/assets/${entry.picture}`} style={{ width: "100px" }} alt="Asset" />
-                                                        </td>
-                                                        <td>{entry.name}</td>
-                                                        <td>{entry.assettag}</td>
-                                                        <td>{entry.brand}</td>
-                                                        <td>{formatDate(entry.purchaseDate)}</td>
-                                                        <td>{entry.description}</td>
+                                        <div style={{ maxHeight: "450px", overflowY: "auto" }}>
+                                            <table className="table table-striped table-bordered" style={{ width: "100%" }}>
+                                                <thead style={{ position: "sticky", top: "0", zIndex: "1", backgroundColor: "#fff" }}>
+                                                    <tr>
+                                                        <th>Asset Picture</th>
+                                                        <th>Asset Name</th>
+                                                        <th>Asset Tag</th>
+                                                        <th>Brand</th>
+                                                        <th>Purchase Date</th>
+                                                        <th>Description</th>
                                                     </tr>
-                                                ))}
-                                            </tbody>
-                                        </table>
+                                                </thead>
+                                                <tbody>
+                                                    {assetofvendor.length === 0 ? (
+                                                        <tr>
+                                                            <td colSpan="7" className="text-center">Thier is No CheckIn Asset .</td>
+                                                        </tr>
+                                                    ) : (
+                                                        assetofvendor.map((entry) => (
+                                                            <tr key={entry.asset_id}>
+                                                                <td>
+                                                                    <img src={`${process.env.REACT_APP_LOCAL_URL}/uploads/assets/${entry.picture}`} style={{ width: "100px" }} alt="Asset" />
+                                                                </td>
+                                                                <td>{entry.name}</td>
+                                                                <td>{entry.assettag}</td>
+                                                                <td>{entry.brand}</td>
+                                                                <td>{formatDate(entry.purchaseDate)}</td>
+                                                                <td>{entry.description}</td>
+                                                            </tr>
+                                                        )))}
+                                                </tbody>
+                                            </table>
+                                        </div>
+
                                         {/* Pagination */}
                                         <ul className="pagination">
                                             <li className={`page-item ${currentPage === 1 && 'disabled'}`}>

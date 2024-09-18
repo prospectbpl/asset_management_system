@@ -132,22 +132,21 @@ function Dashboard({ handleLogout, username }) {
 
 
     return (
-
         <div className='d-flex w-100 h-100 '>
             <Sidebar />
-            <div className='w-100'>
+            <div className='w-100 bg-white'>
                 <SearchBar username={username} handleLogout={handleLogout} /> {/* Pass username and handleLogout props */}
-                <div className="container-fluid">
+                <div className="container-fluid bg-white">
                     {/* add new Asset Modal is open or Close  */}
                     {/*  <!-- Page Heading --> */}
-                    <div className="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 className="h3 mb-0 text-gray-800">Dashboard</h1>
+                    <div className="d-sm-flex align-items-center justify-content-between mb-3">
+                        <h3 className="mb-0 text-gray-800">Dashboard</h3>
                     </div>
                     {/*  <!-- Content Row --> */}
                     <div className="row">
                         {/*  <!-- Total Asset Card Example --> */}
                         <div className="col-xl-3 col-md-6 mb-4">
-                            <div className="card border-left-success shadow h-100 py-2">
+                            <div className="card border-left-success shadow-sm h-100 py-2">
                                 <div className="card-body">
                                     <div className="row no-gutters align-items-center">
                                         <div className="col mr-2">
@@ -156,7 +155,7 @@ function Dashboard({ handleLogout, username }) {
                                             <div className="h5 mb-0 font-weight-bold text-gray-800">{totalAssetCount}</div> {/* Updated amount */}
                                         </div>
                                         <div className="col-auto">
-                                            <i className="fas fa-dollar-sign fa-2x text-gray-300"></i>
+                                            <i className="fa fa-arrow-right fa-2x text-success"></i>
                                         </div>
                                     </div>
                                     <div className="row no-gutters align-items-center">
@@ -174,7 +173,7 @@ function Dashboard({ handleLogout, username }) {
 
                         {/*  <!-- Total Component Card Example --> */}
                         <div className="col-xl-3 col-md-6 mb-4">
-                            <div className="card border-left-success shadow h-100 py-2">
+                            <div className="card border-left-success shadow-sm h-100 py-2">
                                 <div className="card-body">
                                     <div className="row no-gutters align-items-center">
                                         <div className="col mr-2">
@@ -183,7 +182,7 @@ function Dashboard({ handleLogout, username }) {
                                             <div className="h5 mb-0 font-weight-bold text-gray-800">{totalComponentCount}</div> {/* Updated amount */}
                                         </div>
                                         <div className="col-auto">
-                                            <i className="fas fa-dollar-sign fa-2x text-gray-300"></i>
+                                            <i className="fa fa-arrow-right fa-2x text-success"></i>
                                         </div>
                                     </div>
                                     <div className="row no-gutters align-items-center">
@@ -201,7 +200,7 @@ function Dashboard({ handleLogout, username }) {
 
                         {/*  <!-- Total Maintenance Card Example --> */}
                         <div className="col-xl-3 col-md-6 mb-4">
-                            <div className="card border-left-success shadow h-100 py-2">
+                            <div className="card border-left-success shadow-sm h-100 py-2">
                                 <div className="card-body">
                                     <div className="row no-gutters align-items-center">
                                         <div className="col mr-2">
@@ -210,7 +209,7 @@ function Dashboard({ handleLogout, username }) {
                                             <div className="h5 mb-0 font-weight-bold text-gray-800">{totalMaintenanceCount}</div> {/* Updated amount */}
                                         </div>
                                         <div className="col-auto">
-                                            <i className="fas fa-dollar-sign fa-2x text-gray-300"></i>
+                                            <i className="fa fa-arrow-right fa-2x text-success"></i>
                                         </div>
                                     </div>
                                     <div className="row no-gutters align-items-center">
@@ -228,7 +227,7 @@ function Dashboard({ handleLogout, username }) {
 
                         {/*  <!-- Total Sites Card Example --> */}
                         <div className="col-xl-3 col-md-6 mb-4">
-                            <div className="card border-left-success shadow h-100 py-2">
+                            <div className="card border-left-success shadow-sm h-100 py-2">
                                 <div className="card-body">
                                     <div className="row no-gutters align-items-center">
                                         <div className="col mr-2">
@@ -238,7 +237,7 @@ function Dashboard({ handleLogout, username }) {
                                             <div className="h5 mb-0 font-weight-bold text-gray-800">{totalSiteCount}</div> {/* Updated amount */}
                                         </div>
                                         <div className="col-auto">
-                                            <i className="fas fa-dollar-sign fa-2x text-gray-300"></i>
+                                            <i className="fa fa-arrow-right fa-2x text-success"></i>
                                         </div>
                                     </div>
                                     <div className="row no-gutters align-items-center">
@@ -254,50 +253,47 @@ function Dashboard({ handleLogout, username }) {
                             </div>
                         </div>
                     </div>
-
-                    {/*  <!-- Content Row --> */}
-
-                    <div className="row">
-
+                    {/* Check that how it works */}
+                    <div className="row  pb-4">
                         {/*   <!-- Area Chart --> */}
-                        <div className="" style={{ height: "200px" }}>
-                            <div className="card shadow mb-4">
+                        <div >
+                            <div className="card shadow-sm">
                                 {/*  <!-- Card Header - Dropdown --> */}
                                 <div
                                     className="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                                     <h6 className="m-0 font-weight-bold text-primary">Overview</h6>
                                 </div>
-                                {/*  <!-- Card Body --> */}
-                                {/*  <!-- Card Body --> */}
-                                <div className="card-body">
-                                    <div className="table-responsive d-flex">
-                                        <table className="table table-bordered" style={{ width: "100%", tableLayout: "fixed", border: "1px solid #ECECEC" }}>
-                                            <thead>
-                                                <tr>
-                                                    <th>Total Assets</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody style={{ maxHeight: "240px", overflowY: "auto", overflowX: "hidden", display: "block", background: "green" }}>
-                                                {assets.length > 0 ? (
-                                                    assets.map(asset => (
-                                                        <tr key={asset.id}>
-                                                            <td style={{ width: "100vw" }}>{asset.name}</td>
-                                                        </tr>
-                                                    ))
-                                                ) : (
+                                <div className="card-body ">
+                                    <div style={{ width: "100%" }} className="table-responsive d-flex justify-content-between ">
+                                        <div style={{ maxHeight: "450px", overflowY: "auto", width: "33.3%", borderTop: "1px solid #E3E6F0" }}>
+                                            <table className="table table-bordered" style={{ width: "100%" }}>
+                                                <thead style={{ position: "sticky", top: "0", zIndex: "1", backgroundColor: "#fff" }}>
                                                     <tr>
-                                                        <td style={{ width: "100vw" }} colSpan="1">No Assets ..</td>
+                                                        <th>Total Assets</th>
                                                     </tr>
-                                                )}
-                                            </tbody>
-                                        </table>
-                                        <table className="table table-bordered" style={{ width: "100%", tableLayout: "fixed", border: "1px solid #ECECEC" }}>
-                                            <thead>
-                                                <tr>
-                                                    <th>Total Components</th>
-                                                </tr>
-                                            </thead>
-                                            <div style={{ maxHeight: "240px", overflowY: "auto", overflowX: "hidden", display: "block", background: "green" }}>
+                                                </thead>
+                                                <tbody >
+                                                    {assets.length > 0 ? (
+                                                        assets.map(asset => (
+                                                            <tr key={asset.id}>
+                                                                <td style={{ width: "100vw" }}>{asset.name}</td>
+                                                            </tr>
+                                                        ))
+                                                    ) : (
+                                                        <tr>
+                                                            <td className='text-center text-secondary fw-bold' >No Assets ..</td>
+                                                        </tr>
+                                                    )}
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <div style={{ maxHeight: "450px", overflowY: "auto", width: "33.3%", borderTop: "1px solid #E3E6F0" }}>
+                                            <table className="table table-bordered" style={{ width: "100%" }}>
+                                                <thead style={{ position: "sticky", top: "0", zIndex: "1", backgroundColor: "#fff" }}>
+                                                    <tr>
+                                                        <th>Total Components</th>
+                                                    </tr>
+                                                </thead>
                                                 <tbody>
                                                     {fullComponents.length > 0 ? (
                                                         fullComponents.map(component => (
@@ -307,21 +303,20 @@ function Dashboard({ handleLogout, username }) {
                                                         ))
                                                     ) : (
                                                         <tr>
-                                                            <td style={{ width: "100vw" }} colSpan="1">No Components ..</td>
+                                                            <td className='text-center text-secondary fw-bold' >No Components ..</td>
                                                         </tr>
                                                     )}
                                                 </tbody>
-
-                                            </div>
-                                        </table>
-                                        <table className="table table-bordered" style={{ width: "100%", tableLayout: "fixed", border: "1px solid #ECECEC" }} >
-                                            <thead>
-                                                <tr>
-                                                    <th>Under Maintenance</th>
-                                                </tr>
-                                            </thead>
-                                            <div style={{ maxHeight: "240px", overflowY: "auto", overflowX: "hidden", display: "block", background: "green" }}>
-                                                <tbody >
+                                            </table>
+                                        </div>
+                                        <div style={{ maxHeight: "450px", overflowY: "auto", width: "33.3%", borderTop: "1px solid #E3E6F0" }}>
+                                            <table className="table table-bordered" style={{ width: "100%" }}>
+                                                <thead style={{ position: "sticky", top: "0", zIndex: "1", backgroundColor: "#fff" }}>
+                                                    <tr>
+                                                        <th>Under Maintenance</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
                                                     {maintenance.length > 0 ? (
                                                         maintenance.map(maintenanceItem => (
                                                             <tr key={maintenanceItem.id}>
@@ -330,78 +325,105 @@ function Dashboard({ handleLogout, username }) {
                                                         ))
                                                     ) : (
                                                         <tr >
-                                                            <td style={{ width: "100vw" }} colSpan="1">No Maintenance ..</td>
+                                                            <td className='text-center text-secondary fw-bold' >No Maintenance ..</td>
                                                         </tr>
                                                     )}
                                                 </tbody>
-                                            </div>
-                                        </table>
-                                        <table className="table table-bordered" style={{ width: "100%", tableLayout: "fixed", border: "1px solid #ECECEC" }}>
-                                            <thead>
-                                                <tr>
-                                                    <th>Total Sites</th>
-                                                </tr>
-                                            </thead>
-                                            <div style={{ maxHeight: "240px", overflowY: "auto", overflowX: "hidden", display: "block", background: "green" }}>
-                                                <tbody>
-                                                    {sites.length > 0 ? (
-                                                        sites.map(site => (
-                                                            <tr key={site.id}>
-                                                                <td style={{ width: "100vw" }}>{site.siteName}</td>
+                                            </table>
+                                        </div>
+
+
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {/* check */}
+                    <div className="row  pb-4">
+                        {/*   <!-- Area Chart --> */}
+                        <div>
+                            <div className="card shadow-sm mb-4">
+                                {/*  <!-- Card Header - Dropdown --> */}
+                                <div
+                                    className="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                                    <h6 className="m-0 font-weight-bold text-primary">Overview</h6>
+                                </div>
+                                <div className="card-body">
+                                    <div style={{ width: "100%" }} className="table-responsive d-flex justify-content-between ">
+                                        <div style={{ maxHeight: "450px", overflowY: "auto", width: "33.3%", borderTop: "1px solid #E3E6F0" }}>
+                                            <table className="table table-bordered" style={{ width: "100%" }}>
+                                                <thead style={{ position: "sticky", top: "0", zIndex: "1", backgroundColor: "#fff" }}>
+                                                    <tr>
+                                                        <th>Total Sites</th>
+                                                    </tr>
+                                                </thead>
+                                                <div >
+                                                    <tbody>
+                                                        {sites.length > 0 ? (
+                                                            sites.map(site => (
+                                                                <tr key={site.id}>
+                                                                    <td style={{ width: "100vw" }}>{site.siteName}</td>
+                                                                </tr>
+                                                            ))
+                                                        ) : (
+                                                            <tr>
+                                                                <td className='text-center text-secondary fw-bold'>No Sites ..</td>
                                                             </tr>
-                                                        ))
-                                                    ) : (
-                                                        <tr>
-                                                            <td style={{ width: "100vw" }} colSpan="1">No Sites ..</td>
-                                                        </tr>
-                                                    )}
-                                                </tbody>
-                                            </div>
-                                        </table>
-                                        <table className="table table-bordered" style={{ width: "100%", tableLayout: "fixed", border: "1px solid #ECECEC" }}>
-                                            <thead>
-                                                <tr>
-                                                    <th>Total Employees</th>
-                                                </tr>
-                                            </thead>
-                                            <div style={{ maxHeight: "240px", overflowY: "auto", overflowX: "hidden", display: "block", background: "green" }}>
-                                                <tbody>
-                                                    {employees.length > 0 ? (
-                                                        employees.map(employee => (
-                                                            <tr key={employee.id}>
-                                                                <td style={{ width: "100vw" }}>{employee.ename}</td>
+                                                        )}
+                                                    </tbody>
+                                                </div>
+                                            </table>
+                                        </div>
+                                        <div style={{ maxHeight: "450px", overflowY: "auto", width: "33.3%", borderTop: "1px solid #E3E6F0" }}>
+                                            <table className="table table-bordered" style={{ width: "100%" }}>
+                                                <thead style={{ position: "sticky", top: "0", zIndex: "1", backgroundColor: "#fff" }}>
+                                                    <tr>
+                                                        <th>Total Employees</th>
+                                                    </tr>
+                                                </thead>
+                                                <div >
+                                                    <tbody>
+                                                        {employees.length > 0 ? (
+                                                            employees.map(employee => (
+                                                                <tr key={employee.id}>
+                                                                    <td style={{ width: "100vw" }}>{employee.ename}</td>
+                                                                </tr>
+                                                            ))
+                                                        ) : (
+                                                            <tr>
+                                                                <td className='text-center text-secondary fw-bold'>No Employees ..</td>
                                                             </tr>
-                                                        ))
-                                                    ) : (
-                                                        <tr>
-                                                            <td style={{ width: "100vw" }} colSpan="1">No Employees ..</td>
-                                                        </tr>
-                                                    )}
-                                                </tbody>
-                                            </div>
-                                        </table>
-                                        <table className="table table-bordered" style={{ width: "100%", tableLayout: "fixed", border: "1px solid #ECECEC" }}>
-                                            <thead>
-                                                <tr>
-                                                    <th>Total Clients</th>
-                                                </tr>
-                                            </thead>
-                                            <div style={{ maxHeight: "240px", overflowY: "auto", overflowX: "hidden", display: "block", background: "green" }}>
-                                                <tbody>
-                                                    {clients.length > 0 ? (
-                                                        clients.map(client => (
-                                                            <tr key={client.id}>
-                                                                <td style={{ width: "100vw" }}>{client.clientName}</td>
+                                                        )}
+                                                    </tbody>
+                                                </div>
+                                            </table>
+                                        </div>
+                                        <div style={{ maxHeight: "450px", overflowY: "auto", width: "33.3%", borderTop: "1px solid #E3E6F0" }}>
+                                            <table className="table table-bordered" style={{ width: "100%" }}>
+                                                <thead style={{ position: "sticky", top: "0", zIndex: "1", backgroundColor: "#fff" }}>
+                                                    <tr>
+                                                        <th>Total Clients</th>
+                                                    </tr>
+                                                </thead>
+                                                <div >
+                                                    <tbody>
+                                                        {clients.length > 0 ? (
+                                                            clients.map(client => (
+                                                                <tr key={client.id}>
+                                                                    <td style={{ width: "100vw" }}>{client.clientName}</td>
+                                                                </tr>
+                                                            ))
+                                                        ) : (
+                                                            <tr>
+                                                                <td className='text-center text-secondary fw-bold'>No Clients ..</td>
                                                             </tr>
-                                                        ))
-                                                    ) : (
-                                                        <tr>
-                                                            <td style={{ width: "100vw" }} colSpan="1">No Clients ..</td>
-                                                        </tr>
-                                                    )}
-                                                </tbody>
-                                            </div>
-                                        </table>
+                                                        )}
+                                                    </tbody>
+                                                </div>
+                                            </table>
+                                        </div>
+
                                     </div>
                                 </div>
 

@@ -52,9 +52,9 @@ function DeleteList({ handleLogout, username }) {
   return (
     <div className='d-flex w-100 h-100 '>
       <Sidebar />
-      <div className='w-100'>
+      <div className='w-100 bg-white'>
       <SearchBar username={username} handleLogout={handleLogout} /> {/* Pass username and handleLogout props */}
-        <div className="container-fluid">
+        <div className="container-fluid bg-white">
           <div className="row">
             <div className="col-xl-12">
               <div className="card shadow mb-4">

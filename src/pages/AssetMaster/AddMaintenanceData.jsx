@@ -1,7 +1,7 @@
 // import React, { useState, useEffect } from "react";
 // import axios from "axios";
 
-// const AddMaintenanceData = ({ onClose, onUpdateMaintenances }) => {
+// const AddMaintenanceData = ({ onClose, onUpdate }) => {
 //   const [formData, setFormData] = useState({
 //     asset_master_id: "", // Change to asset_master_id
 //     assetName: "",
@@ -137,7 +137,7 @@
 //       );
 //       console.log("Maintenance data uploaded successfully:", response.data);
 //       onClose();
-//       onUpdateMaintenances();
+//       onUpdate();
 //     } catch (error) {
 //       console.error("Error uploading maintenance data:", error);
 //     }
@@ -341,7 +341,7 @@
 // import React, { useState, useEffect } from "react";
 // import axios from "axios";
 
-// const AddMaintenanceData = ({ onClose, onUpdateMaintenances }) => {
+// const AddMaintenanceData = ({ onClose, onUpdate }) => {
 //   const [formData, setFormData] = useState({
 //     asset_master_id: "",
 //     assetName: "",
@@ -523,7 +523,7 @@
 
 //       console.log("Maintenance data uploaded successfully:", response.data);
 //       onClose();
-//       onUpdateMaintenances();
+//       onUpdate();
 //     } catch (error) {
 //       console.error("Error uploading maintenance data:", error);
 //       setError("Error uploading maintenance data. Please try again.");
@@ -772,7 +772,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
-const AddMaintenanceData = ({ onClose, onUpdateMaintenances }) => {
+const AddMaintenanceData = ({ onClose, onUpdate }) => {
   const [formData, setFormData] = useState({
     asset_master_id: "",
     assetName: "",
@@ -826,16 +826,14 @@ const AddMaintenanceData = ({ onClose, onUpdateMaintenances }) => {
 
   useEffect(() => {
     if (selectedAsset) {
-      axios.get(`${process.env.REACT_APP_LOCAL_URL}/allassets/${selectedAsset}`)
-        .then(response => {
+      axios
+        .get(`${process.env.REACT_APP_LOCAL_URL}/allassets/${selectedAsset}`)
+        .then((response) => {
           setAllAssets(response.data);
-          const asset = response.data.find(a => a.asset_master_id === parseInt(selectedAsset));
-          if (asset) {
-            setCurrentQuantity(asset.quantity);
-          }
+          const asset = response.data.find((a) => a.asset_master_id === parseInt(selectedAsset));
         })
-        .catch(error => {
-          console.error('Error fetching assets:', error);
+        .catch((error) => {
+          console.error("Error fetching assets:", error);
         });
     }
   }, [selectedAsset]);
@@ -843,29 +841,29 @@ const AddMaintenanceData = ({ onClose, onUpdateMaintenances }) => {
   const handleChange = (e) => {
     const { name, value, type } = e.target;
 
-    if (name === 'serviceType') {
+    if (name === "serviceType") {
       setFormData({
         ...formData,
         [name]: value,
         employeeName: "",
         serviceName: "",
-        serviceAddress: ""
+        serviceAddress: "",
       });
-    } else if (name === 'employeeName' && formData.serviceType === "In-house") {
+    } else if (name === "employeeName" && formData.serviceType === "In-house") {
       const selectedEmployee = employees.find((employee) => employee.ename === value);
       if (selectedEmployee) {
         setFormData({
           ...formData,
           employee_id: selectedEmployee.id,
-          [name]: value
+          [name]: value,
         });
       }
-    } else if (name === 'serviceName' && formData.serviceType === "Service Center") {
+    } else if (name === "serviceName" && formData.serviceType === "Service Center") {
       setFormData({
         ...formData,
-        [name]: value
+        [name]: value,
       });
-    } else if (name === 'asset_master_id') {
+    } else if (name === "asset_master_id") {
       const selectedAsset = assets.find((asset) => asset.asset_master_id === parseInt(value));
       if (selectedAsset) {
         setFormData({
@@ -886,10 +884,11 @@ const AddMaintenanceData = ({ onClose, onUpdateMaintenances }) => {
   };
 
   useEffect(() => {
-    if (transferFrom && Array.isArray(assets)) {
-      const currentLocation = assets.find(a => a.location === transferFrom);
+    if (transferFrom && Array.isArray(allAssets)) {
+      const currentLocation = allAssets.find(a => a.location === transferFrom);
+      console.log("currentLocation", currentLocation)
       setCurrentQuantity(currentLocation ? currentLocation.quantity : 0);
-      const selectedAsset = assets.find(asset => asset.location === transferFrom);
+      const selectedAsset = allAssets.find(asset => asset.location === transferFrom);
 
       if (selectedAsset) {
         setFormData({
@@ -900,15 +899,19 @@ const AddMaintenanceData = ({ onClose, onUpdateMaintenances }) => {
         });
       }
     }
-  }, [transferFrom, assets]);
+  }, [transferFrom, allAssets, quantity, currentQuantity]);
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (quantity <= 0 || quantity >= currentQuantity) {
-      setError('Please enter a valid quantity between 0 and ' + currentQuantity);
+
+
+    if (quantity > currentQuantity) {
+      setError('Transfer quantity exceeds available quantity.');
       return;
     }
+
 
     const requiredFields = [
       "asset_master_id",
@@ -925,7 +928,7 @@ const AddMaintenanceData = ({ onClose, onUpdateMaintenances }) => {
 
     for (const field of requiredFields) {
       if (!formData[field]) {
-        setError(`Please fill in the ${field.replace(/([A-Z])/g, ' $1').toLowerCase()}`);
+        setError(`Please fill in the ${field.replace(/([A-Z])/g, " $1").toLowerCase()}`);
         return;
       }
     }
@@ -938,7 +941,6 @@ const AddMaintenanceData = ({ onClose, onUpdateMaintenances }) => {
         formDataToSend.append(key, formData[key]);
       }
 
-      // Append other fields separately
       formDataToSend.append("transferFrom", transferFrom);
       formDataToSend.append("quantity", quantity);
 
@@ -953,8 +955,11 @@ const AddMaintenanceData = ({ onClose, onUpdateMaintenances }) => {
       );
 
       console.log("Maintenance data uploaded successfully:", response.data);
-      onClose();
-      onUpdateMaintenances();
+      onUpdate();
+      setTimeout(() => {
+        onClose();
+        window.location.reload();
+    }, 1000); // 1 second delay
     } catch (error) {
       console.error("Error uploading maintenance data:", error);
       setError("Error uploading maintenance data. Please try again.");
@@ -1130,18 +1135,15 @@ const AddMaintenanceData = ({ onClose, onUpdateMaintenances }) => {
                   value={quantity}
                   onChange={(e) => {
                     const value = parseInt(e.target.value, 10);
-                    if (!isNaN(value) && value >= 0 && value <= currentQuantity) {
+                    if (!isNaN(value) && value >= 1 && value <= currentQuantity) {
                       setQuantity(value);
-                      setError(""); // Clear error if valid input
                     } else {
-                      setError('Please enter a valid quantity between 0 and ' + currentQuantity);
+                      // Optionally, you can set an error state or show a message to the user
+                      setError('Please enter a valid quantity between 1 and ' + currentQuantity);
                     }
                   }}
                 />
-                {error && <div style={{ color: "red" }}>{error}</div>}
               </div>
-
-
               <div className="form-group">
                 <label>Start Date<span style={{ color: "red" }}>*</span></label>
                 <input

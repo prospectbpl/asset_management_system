@@ -20,9 +20,8 @@ function BrandAssetsTable({ brand, onClose }) {
     const handleCloseModal=()=>{
         onClose();
     }
-
     return (
-        <div className="container-fluid">
+        <div className="container-fluid bg-white">
             <div className="row">
                 <div className="col-xl-12">
                     <div className="card shadow mb-4">

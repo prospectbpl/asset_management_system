@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
-const AddCategory = ({ onClose, onUpdateCategories }) => {
+const AddCategory = ({ onClose, onUpdate }) => {
     const [formData, setFormData] = useState({
         categoryName: '',
         categoryType: '', // Default to 'asset'
@@ -38,8 +38,11 @@ const AddCategory = ({ onClose, onUpdateCategories }) => {
         try {
             const response = await axios.post(`${apiUrl}/categories`, formDataToSend);
             console.log('Data uploaded successfully:', response.data);
-            onClose();
-            onUpdateCategories();
+            onUpdate();
+            setTimeout(() => {
+                onClose();
+                window.location.reload();
+            }, 1000); // 1 second delay
 
         } catch (error) {
             console.error('Error uploading data:', error);

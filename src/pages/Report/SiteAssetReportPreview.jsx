@@ -71,7 +71,7 @@ const SiteAssetReportPreview = ({ record, onClose }) => {
     };
 
     return (
-        <div className="container-fluid">
+        <div className="container-fluid bg-white">
             <div className="row p-1">
                 <div className="modal-content">
                     <div className="modal-header m-0 p-2 d-flex align-items-center justify-content-between px-3">
@@ -100,7 +100,7 @@ const SiteAssetReportPreview = ({ record, onClose }) => {
                                     <th>Asset Name</th>
                                     <th>Asset Tag</th>
                                     <th>Quantity</th>
-                                    <th>Site Location</th>
+                                    <th>Site</th>
                                 </tr>
                             </thead>
                             <tbody style={{ maxHeight: "calc(100vh - 130px)", overflowY: "auto" }}>

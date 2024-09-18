@@ -18,19 +18,22 @@ const EditVendor = ({ vendor, onClose, onUpdate }) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-                // Check for empty fields
-                for (const key in vendor) {
-                    if (!vendor[key]) {
-                        setError(`Please fill in ${key}`);
-                        return;
-                    }
-                }
-            
+        // Check for empty fields
+        for (const key in vendor) {
+            if (!vendor[key]) {
+                setError(`Please fill in ${key}`);
+                return;
+            }
+        }
+
         try {
             // Call onUpdate function to update vendor details in the database
             await axios.put(`${process.env.REACT_APP_LOCAL_URL}/vendors/${editedVendor.id}`, editedVendor);
-            onUpdate(editedVendor); // Update the local state with the edited vendor
-            onClose(); // Close the modal after successful update
+            onUpdate(); // Update the local state with the edited vendor
+            setTimeout(() => {
+                onClose();
+                window.location.reload();
+            }, 1000); // 1 second delay // Close the modal after successful update
         } catch (error) {
             console.error("Error updating vendor:", error);
             // Handle error here, e.g., display an error message to the user
@@ -51,7 +54,7 @@ const EditVendor = ({ vendor, onClose, onUpdate }) => {
                             <button type="button" className="close" onClick={handleClose}>&times;</button> {/* Close button */}
                         </div>
                         <div className="modal-body" style={{ maxHeight: 'calc(100vh - 200px)', overflowY: 'auto' }}> {/* Modal body with scrollbar */}
-                        {error && <div className="alert alert-danger">{error}</div>}
+                            {error && <div className="alert alert-danger">{error}</div>}
                             <div className="form-group">
                                 <label>Vendor Company Name<span style={{ color: "red" }}>*</span></label>
                                 <input name="vendorCompanyName" type="text" className="form-control" value={editedVendor.vendorCompanyName} onChange={handleChange} />

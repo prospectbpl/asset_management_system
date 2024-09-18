@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-const AssetLost = ({ onClose, onUpdateAssetLosts }) => {
+const AssetLost = ({ onClose, onUpdate }) => {
     const [formData, setFormData] = useState({
         asset_master_id: '',
         asset_id: '',
@@ -26,6 +26,8 @@ const AssetLost = ({ onClose, onUpdateAssetLosts }) => {
     const [assets, setAssets] = useState([]);
     const [employees, setEmployees] = useState([]);
     const [locations, setLocations] = useState([]);
+    const [quantity, setQuantity] = useState(0);
+    const [currentQuantity, setCurrentQuantity] = useState(0);
     const [selectedAsset, setSelectedAsset] = useState(null);
     const [error, setError] = useState("");
 
@@ -82,6 +84,7 @@ const AssetLost = ({ onClose, onUpdateAssetLosts }) => {
         } else if (name === 'lossLocation') {
             const [selectedLocation, selectedQuantity] = value.split('-');
             const relatedLocation = locations.find(location => location.location === selectedLocation);
+            setCurrentQuantity(relatedLocation ? relatedLocation.quantity : 0);
 
             if (relatedLocation) {
                 setFormData(prevState => ({
@@ -131,11 +134,11 @@ const AssetLost = ({ onClose, onUpdateAssetLosts }) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        // Validate quantities
-        if (parseInt(formData.prevquantity) < parseInt(formData.newquantity)) {
-            setError('New quantity cannot exceed the previous quantity.');
+        if (quantity > currentQuantity) {
+            setError('Transfer quantity exceeds available quantity.');
             return;
         }
+
         setIsLoading(true);
         const requiredFields = ["asset_master_id", "lossLocation", "lossDate", "newquantity", "lossType", "lossCircumstances", "responsiblePerson", "contactNo"];
         for (const field of requiredFields) {
@@ -164,8 +167,11 @@ const AssetLost = ({ onClose, onUpdateAssetLosts }) => {
 
 
             console.log('Lost asset reported successfully:', response.data);
-            onUpdateAssetLosts();
-            onClose();
+            onUpdate();
+            setTimeout(() => {
+                onClose();
+                window.location.reload();
+            }, 1000); // 1 second delay
         } catch (error) {
             console.error('Error reporting lost asset:', error);
         } finally {
@@ -237,9 +243,29 @@ const AssetLost = ({ onClose, onUpdateAssetLosts }) => {
                                     </div>
                                 </div>
                             </div>
+
                             <div className="form-group">
-                                <label>Quantity<span style={{ color: "red" }}>*</span></label>
-                                <input name="newquantity" placeholder='How much qunaity Loss' type="number" className="form-control" value={formData.newquantity} onChange={handleChange} />
+                                <label htmlFor="newquantity">Quantity<span style={{ color: "red" }}>*</span></label>
+                                <input
+                                    className="form-control"
+                                    required
+                                    placeholder="newquantity"
+                                    id="newquantity"
+                                    name="newquantity"
+                                    type="number"
+                                    min="0"
+                                    max={currentQuantity}
+                                    value={quantity}
+                                    onChange={(e) => {
+                                        const value = parseInt(e.target.value, 10);
+                                        if (!isNaN(value) && value >= 1 && value <= currentQuantity) {
+                                            setQuantity(value);
+                                        } else {
+                                            // Optionally, you can set an error state or show a message to the user
+                                            setError('Please enter a valid quantity between 1 and ' + currentQuantity);
+                                        }
+                                    }}
+                                />
                             </div>
                             <div className="form-group">
                                 <label>Date of Loss<span style={{ color: "red" }}>*</span></label>

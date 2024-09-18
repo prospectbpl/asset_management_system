@@ -90,7 +90,7 @@ function CategoryAssetList({ onClose, assetCategory }) {
     : assets;
 
   return (
-    <div className="container-fluid">
+    <div className="container-fluid bg-white">
       <ToastContainer />
       {showAssetDetails ? (
         <AssetDesc
@@ -131,33 +131,42 @@ function CategoryAssetList({ onClose, assetCategory }) {
                       </tr>
                     </thead>
                     <tbody>
-                      {filteredAssets.map((asset) => (
-                        <tr key={asset.id}>
-                          <td>{asset.name}</td>
-                          <td>{asset.assetType}</td>
-                          <td>
-                            <div className="btn-group">
-                              <button className="btn btn-sm btn-primary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i className="fa fa-ellipsis-h" aria-hidden="true"></i>
-                              </button>
-                              <div className="dropdown-menu actionmenu" x-placement="bottom-start">
-                                <a
-                                  className="dropdown-item"
-                                  href="javascript:void(0);"
-                                  onClick={() =>
-                                    handleAssetDetails(asset)
-                                  }
-                                >
-                                  <i className="fa fa-file "></i>
-                                  <span> Details</span>
-                                </a>
-                                <a className="dropdown-item" href="#" id="btnedit" customdata="386" data-toggle="modal" data-target="#edit" onClick={() => handleEditAsset(asset)}><i className="fa fa-pencil"></i> Edit</a>
-                                {/* <a className="dropdown-item" href="#" id="btnedit" customdata="386" data-toggle="modal" data-target="#delete" onClick={() => handleDeleteAsset(asset.id)}><i className="fa fa-trash"></i> Delete</a> */}
-                              </div>
-                            </div>
-                          </td>
+                      <style>
+                        {`.hyperlink:hover {color: blue;}`}
+                      </style>
+                      {filteredAssets.length === 0 ? (
+                        <tr>
+                          <td colSpan="7" className="text-center">Thier is No Category.</td>
                         </tr>
-                      ))}
+                      ) : (
+                        filteredAssets.map((asset) => (
+                          <tr key={asset.id}>
+                            <td className='hyperlink' style={{ cursor: "pointer" }} onClick={() => handleAssetDetails(asset)}>{asset.name}</td>
+                            <td>{asset.assetType}</td>
+                            <td>
+                              <div className="btn-group">
+                                <button className="btn btn-sm btn-primary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                  <i className="fa fa-ellipsis-h" aria-hidden="true"></i>
+                                </button>
+                                <div className="dropdown-menu actionmenu" x-placement="bottom-start">
+                                  <a
+                                    className="dropdown-item"
+                                    href="javascript:void(0);"
+                                    onClick={() =>
+                                      handleAssetDetails(asset)
+                                    }
+                                  >
+                                    <i className="fa fa-file "></i>
+                                    <span> Details</span>
+                                  </a>
+                                  <a className="dropdown-item" href="#" id="btnedit" customdata="386" data-toggle="modal" data-target="#edit" onClick={() => handleEditAsset(asset)}><i className="fa fa-pencil"></i> Edit</a>
+                                  {/* <a className="dropdown-item" href="#" id="btnedit" customdata="386" data-toggle="modal" data-target="#delete" onClick={() => handleDeleteAsset(asset.id)}><i className="fa fa-trash"></i> Delete</a> */}
+                                </div>
+                              </div>
+                            </td>
+                          </tr>
+                        ))
+                      )}
                     </tbody>
                   </table>
                 </div>

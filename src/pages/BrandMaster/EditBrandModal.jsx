@@ -20,7 +20,7 @@ const EditBrandModal = ({ brand, onClose, onUpdate }) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        
+
         try {
             const formData = new FormData();
             formData.append('brandName', editedBrand.brandName);
@@ -28,8 +28,11 @@ const EditBrandModal = ({ brand, onClose, onUpdate }) => {
             formData.append('brandLogo', logoFile);
 
             await axios.put(`${process.env.REACT_APP_LOCAL_URL}/brands/${editedBrand.id}`, formData);
-            onUpdate(editedBrand);
-            onClose();
+            onUpdate();
+            setTimeout(() => {
+                onClose();
+                window.location.reload();
+            }, 1000); // 1 second delay
         } catch (error) {
             console.error("Error updating brand:", error);
         }

@@ -21,13 +21,14 @@ const AddRenwalInsurence = ({ assetInsurance, onClose, onUpdate }) => {
 
       // Save insurance history
       await saveInsuranceHistory(assetInsurance, updateInsurance);
-
-      // Close modal
-      onClose();
       // Update parent component
-      onUpdate(updateInsurance);
+      onUpdate();
+      setTimeout(() => {
+        onClose();
+        window.location.reload();
+      }, 1000); // 1 second delay
 
-      
+
     } catch (error) {
       console.error("Error updating insurance:", error);
     }

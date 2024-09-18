@@ -104,7 +104,7 @@
 //         : fullcomponents;
 
 //     return (
-//         <div className="container-fluid">
+//         <div className="container-fluid bg-white">
 //             {showFullComponentDetails ? (
 //                 <FullComponentDetails
 //                     component={selectedFullComponent}
@@ -292,8 +292,8 @@ function CategoryComponentList({ onClose, ComponentCategory }) {
         : fullcomponents;
 
     return (
-        <div className="container-fluid">
-             <ToastContainer/>
+        <div className="container-fluid bg-white">
+            <ToastContainer />
             {showFullComponentDetails ? (
                 <FullComponentDetails
                     component={selectedFullComponent}
@@ -306,10 +306,10 @@ function CategoryComponentList({ onClose, ComponentCategory }) {
                             <div className="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                                 <div className='d-flex gap-3'>
                                     <div style={{ padding: "5px 10px", backgroundColor: "green", color: "white", borderRadius: "30px", cursor: "pointer" }}>
-                                    Category Component List
+                                        Category Component List
                                     </div>
                                     <div onClick={handleBackToCategoryList} style={{ padding: "5px 10px", backgroundColor: "#4E73DF", color: "white", borderRadius: "30px", cursor: "pointer" }} onMouseEnter={(e) => e.target.style.backgroundColor = 'red'} onMouseLeave={(e) => e.target.style.backgroundColor = '#4E73DF'}>
-                                    Category List
+                                        Category List
                                     </div>
                                 </div>
                                 <div className='d-flex align-items-center'>
@@ -323,46 +323,56 @@ function CategoryComponentList({ onClose, ComponentCategory }) {
                                 </div>
                             </div>
                             <div className="card-body">
-                                <table className="table table-striped table-bordered" style={{ width: "100%" }}>
-                                    <thead>
-                                        <tr>
-                                            <th>Component Name</th>
-                                            <th>Size</th>
-                                            <th>Category</th>
-                                            <th>Action</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {filteredComponents.map((component) => (
-                                            <tr key={component.id}>
-                                                <td>{component.componentName}</td>
-                                                <td>{component.size}</td>
-                                                <td>{component.category}</td>
-                                                <td>
-                                                    <div className="btn-group">
-                                                        <button className="btn btn-sm btn-primary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                            <i className="fa fa-ellipsis-h" aria-hidden="true"></i>
-                                                        </button>
-                                                        <div className="dropdown-menu actionmenu" x-placement="bottom-start">
-                                                            <a className="dropdown-item" href="javascript:void(0);" onClick={() => handleFullComponentDetails(component)}>
-                                                                <i className="fa fa-file "></i>
-                                                                <span> Details</span>
-                                                            </a>
-                                                            <a className="dropdown-item" href="#" onClick={() => handleEditFullComponent(component)}><i className="fas fa-edit"></i> Edit</a>
-                                                            {/* <a className="dropdown-item" href="#" onClick={() => handleDeleteComponentList(component.id)}><i className="fa fa-trash"></i> Delete</a> */}
-                                                        </div>
-                                                    </div>
-                                                </td>
+                                <div style={{ maxHeight: "450px", overflowY: "auto" }}>
+                                    <table className="table table-striped table-bordered" style={{ width: "100%" }}>
+                                        <thead style={{ position: "sticky", top: "0", zIndex: "1", backgroundColor: "#fff" }}>
+                                            <tr>
+                                                <th>Component Name</th>
+                                                <th>Size</th>
+                                                <th>Category</th>
+                                                <th>Action</th>
                                             </tr>
-                                        ))}
-                                    </tbody>
-                                </table>
+                                        </thead>
+                                        <tbody>
+                                            <style>
+                                                {`.hyperlink:hover {color: blue;}`}
+                                            </style>
+                                            {filteredComponents.length === 0 ? (
+                                                <tr>
+                                                    <td colSpan="7" className="text-center">Thier is No Category Component.</td>
+                                                </tr>
+                                            ) : (filteredComponents.map((component) => (
+                                                <tr key={component.id}>
+                                                    <td className='hyperlink' style={{ cursor: "pointer" }} onClick={() => handleFullComponentDetails(component)} >{component.componentName}</td>
+                                                    <td>{component.size}</td>
+                                                    <td>{component.category}</td>
+                                                    <td>
+                                                        <div className="btn-group">
+                                                            <button className="btn btn-sm btn-primary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                                <i className="fa fa-ellipsis-h" aria-hidden="true"></i>
+                                                            </button>
+                                                            <div className="dropdown-menu actionmenu" x-placement="bottom-start">
+                                                                <a className="dropdown-item" href="javascript:void(0);" onClick={() => handleFullComponentDetails(component)}>
+                                                                    <i className="fa fa-file "></i>
+                                                                    <span> Details</span>
+                                                                </a>
+                                                                <a className="dropdown-item" href="#" onClick={() => handleEditFullComponent(component)}><i className="fas fa-edit"></i> Edit</a>
+                                                                {/* <a className="dropdown-item" href="#" onClick={() => handleDeleteComponentList(component.id)}><i className="fa fa-trash"></i> Delete</a> */}
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            )))}
+                                        </tbody>
+                                    </table>
+                                </div>
+
                             </div>
                         </div>
                     </div>
                 </div>
             )}
-            {isAddComponentListModalOpen && <AddComponentList onClose={handleCloseComponentListModal} onUpdateComponents={handleUpdateFullComponentList} />}
+            {isAddComponentListModalOpen && <AddComponentList onClose={handleCloseComponentListModal} onUpdate={handleUpdateFullComponentList} />}
             {isEditModalOpen && <FullEditComponentModal component={editFullComponent} onClose={handleCloseComponentListModal} onUpdate={handleUpdateComponentList} />}
         </div>
     );

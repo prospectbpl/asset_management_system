@@ -150,7 +150,6 @@ import BrandList from './pages/BrandMaster/BrandList';
 import ApplicationSetting from './pages/SettingMaster/ApplicationSetting';
 import CategoryAssetList from './pages/CategoryMaster/CategoryAssetList';
 import AssetTransferList from './pages/AssetMaster/AssetTransferList';
-import TransporterList from './pages/AssetMaster/TransporterList';
 import AssetMasterList from './pages/AssetMaster/AssetMasterList';
 import Profile from './pages/SettingMaster/Profile';
 import UserDashboard from './pages/UserDashboard';
@@ -166,6 +165,8 @@ import InsuranceExpiry from './pages/Insurance/InsuranceExpiry';
 import InsuranceReport from './pages/Report/InsuranceReport';
 import InsuranceExpiryReport from './pages/Report/InsuranceExpiryReport';
 import MaintenanceReport from './pages/Report/MaintenanceReport';
+import TransporterList from './pages/Transport/TransporterList';
+import BrandReport from './pages/Report/BrandReport';
 
 
 const App = () => {
@@ -287,6 +288,7 @@ const App = () => {
             <Route path="/insurancereport" element={isAuthenticated ? <InsuranceReport username={username} userType={userType} employeeId={employeeId} handleLogout={handleLogout} /> : <Navigate to="/" replace />} />
             <Route path="/insuranceexpiryreport" element={isAuthenticated ? <InsuranceExpiryReport username={username} userType={userType} employeeId={employeeId} handleLogout={handleLogout} /> : <Navigate to="/" replace />} />
             <Route path="/maintenancereport" element={isAuthenticated ? <MaintenanceReport username={username} userType={userType} employeeId={employeeId} handleLogout={handleLogout} /> : <Navigate to="/" replace />} />
+            <Route path="/brandreport" element={isAuthenticated ? <BrandReport username={username} userType={userType} employeeId={employeeId} handleLogout={handleLogout} /> : <Navigate to="/" replace />} />
           </>
         )}
         <Route path="*" element={<PageNotFound />} />

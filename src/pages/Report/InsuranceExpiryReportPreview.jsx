@@ -69,7 +69,7 @@ const InsuranceExpiryReportPreview = ({ record, onClose }) => {
     };
 
     return (
-        <div className="container-fluid">
+        <div className="container-fluid bg-white">
             <div className="row p-1">
                 <div className="modal-content">
                     <div className="modal-header m-0 p-2 d-flex align-items-center justify-content-between px-3">

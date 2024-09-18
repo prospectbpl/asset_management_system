@@ -68,7 +68,10 @@ const AddQuantity = ({ asset, onClose, onUpdate }) => {
 
       console.log("Updated data:", response.data);
       onUpdate();
-      onClose();
+      setTimeout(() => {
+        onClose();
+        window.location.reload();
+    }, 1000); // 1 second delay
     } catch (error) {
       console.error("Error updating data:", error);
       setError("Error updating data");

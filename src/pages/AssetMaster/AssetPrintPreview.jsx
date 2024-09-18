@@ -484,7 +484,7 @@ function AssetPintPreview({ record, onClose }) {
                                         <tr key={event.event_id}>
                                             <td>
                                                 <img
-                                                    src={event.assetPhoto}
+                                                     src={`${process.env.REACT_APP_LOCAL_URL}/uploads/assets/${event.assetPhoto}`}
                                                     style={{ width: "90px" }}
                                                     alt="Asset"
                                                 />
@@ -533,7 +533,8 @@ function AssetPintPreview({ record, onClose }) {
                                         <tr key={event.event_id}>
                                             <td>
                                                 <img
-                                                    src={event.assetPhoto}
+                                                
+                                                src={`${process.env.REACT_APP_LOCAL_URL}/uploads/assets/${event.assetPhoto}`}
                                                     style={{ width: "90px" }}
                                                     alt="Asset"
                                                 />
@@ -577,7 +578,7 @@ function AssetPintPreview({ record, onClose }) {
                                         <tr key={event.event_id}>
                                             <td>
                                                 <img
-                                                    src={event.assetPhoto}
+                                                    src={`${process.env.REACT_APP_LOCAL_URL}/uploads/assets/${event.assetPhoto}`}
                                                     style={{ width: "90px" }}
                                                     alt="Asset"
                                                 />

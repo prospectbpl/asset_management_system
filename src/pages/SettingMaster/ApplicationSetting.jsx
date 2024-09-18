@@ -90,9 +90,9 @@ const ApplicationSetting = ({ handleLogout, username }) => {
     return (
         <div className='d-flex w-100 h-100 '>
             <Sidebar />
-            <div className='w-100'>
+            <div className='w-100 bg-white'>
                 <SearchBar username={username} handleLogout={handleLogout} />
-                <div className="container-fluid">
+                <div className="container-fluid bg-white">
                     <ToastContainer /> {/* Toast container */}
                     <div className="se-pre-con" style={{ display: 'none' }}></div>
                     <div className="row shadow-sm bg-white rounded p-2 mb-4">

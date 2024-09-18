@@ -21,7 +21,7 @@ function CategoryList({ handleLogout, username }) {
   const [showComponentList, setShowComponentList] = useState(false);
   const [showAssetList, setShowAssetList] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage, setItemsPerPage] = useState(10);
+  const [itemsPerPage, setItemsPerPage] = useState(25);
 
   useEffect(() => {
     fetchCategories();
@@ -100,9 +100,9 @@ function CategoryList({ handleLogout, username }) {
   return (
     <div className='d-flex w-100 h-100 '>
       <Sidebar />
-      <div className='w-100'>
+      <div className='w-100 bg-white'>
         <SearchBar username={username} handleLogout={handleLogout} /> {/* Pass username and handleLogout props */}
-        <div className="container-fluid">
+        <div className="container-fluid bg-white">
           <ToastContainer />
           {showCategoryDetails ? (
             <CategoryDetails
@@ -144,23 +144,29 @@ function CategoryList({ handleLogout, username }) {
                           </tr>
                         </thead>
                         <tbody>
-                          {currentItems.map((category) => (
-                            <tr key={category.id}>
-                              <td>{category.categoryName}</td>
-                              <td>{category.categoryType}</td>
-                              <td>
-                                <div className="btn-group">
-                                  <button className="btn btn-sm btn-primary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <i className="fa fa-ellipsis-h" aria-hidden="true"></i>
-                                  </button>
-                                  <div className="dropdown-menu actionmenu" x-placement="bottom-start">
-                                    <button className="dropdown-item" id="btnedit" customdata="386" data-toggle="modal" data-target="#edit" onClick={() => handleEditCategory(category)}><i className="fas fa-edit"></i> Edit</button>
-                                    {/* <button className="dropdown-item" id="btnedit" customdata="386" data-toggle="modal" data-target="#delete" onClick={() => handleDeleteCategory(category.id)}><i className="fa fa-trash"></i> Delete</button> */}
-                                  </div>
-                                </div>
-                              </td>
+                         
+                          {currentItems.length === 0 ? (
+                            <tr>
+                              <td colSpan="7" className="text-center">Thier is No Category List.</td>
                             </tr>
-                          ))}
+                          ) : (
+                            currentItems.map((category) => (
+                              <tr key={category.id}>
+                                <td>{category.categoryName}</td>
+                                <td>{category.categoryType}</td>
+                                <td>
+                                  <div className="btn-group">
+                                    <button className="btn btn-sm btn-primary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                      <i className="fa fa-ellipsis-h" aria-hidden="true"></i>
+                                    </button>
+                                    <div className="dropdown-menu actionmenu" x-placement="bottom-start">
+                                      <button className="dropdown-item" id="btnedit" customdata="386" data-toggle="modal" data-target="#edit" onClick={() => handleEditCategory(category)}><i className="fas fa-edit"></i> Edit</button>
+                                      {/* <button className="dropdown-item" id="btnedit" customdata="386" data-toggle="modal" data-target="#delete" onClick={() => handleDeleteCategory(category.id)}><i className="fa fa-trash"></i> Delete</button> */}
+                                    </div>
+                                  </div>
+                                </td>
+                              </tr>
+                            )))}
                         </tbody>
                       </table>
                     </div>
@@ -188,10 +194,10 @@ function CategoryList({ handleLogout, username }) {
             <EditCategoryModal
               category={editCategoryData}
               onClose={() => setIsEditModalOpen(false)}
-              onUpdate={handleUpdateCategory}
+              onUpdate={handleUpdateCategoryList}
             />
           )}
-          {isCategoryModalOpen && (<AddCategory onClose={handleCloseModal} onUpdateCategories={handleUpdateCategoryList} />)}
+          {isCategoryModalOpen && (<AddCategory onClose={handleCloseModal} onUpdate={handleUpdateCategoryList} />)}
         </div>
       </div>
     </div>

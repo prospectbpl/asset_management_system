@@ -248,8 +248,11 @@ const EditSiteModal = ({ site, onClose, onUpdate }) => {
 
         try {
             await axios.put(`${process.env.REACT_APP_LOCAL_URL}/sites/${editedSite.id}`, editedSite);
-            onUpdate(editedSite);
-            onClose();
+            onUpdate();
+            setTimeout(() => {
+                onClose();
+                window.location.reload();
+            }, 1000); // 1 second delay
         } catch (error) {
             console.error("Error updating site:", error);
         }

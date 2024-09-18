@@ -14,7 +14,7 @@ function RenewalInsurance({ renewalInsurances, onClose }) {
   const [isEditAssetInsuranceModalOpen, setIsEditAssetInsuranceModalOpen] = useState(false);
   const [editAssetInsurance, setEditAssetInsurance] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage, setItemsPerPage] = useState(10);
+  const [itemsPerPage, setItemsPerPage] = useState(25);
   const [showInsuranceDetails, setShowInsuranceDetails] = useState(false);
   const [selectedInsurance, setSelectedInsurance] = useState(null);
 
@@ -121,65 +121,74 @@ function RenewalInsurance({ renewalInsurances, onClose }) {
                     </tr>
                   </thead>
                   <tbody>
-
-                    {renewalInsurances.map((assetInsurance) => (
-                      <tr key={assetInsurance.id}>
-                        <td><img
-                          src={`${process.env.REACT_APP_LOCAL_URL}/uploads/assets/${assetInsurance.assetPhoto}`}
-                          style={{ width: "90px" }}
-                          alt="Asset"
-                        />
-                        </td>
-                        <td>{assetInsurance.assetName}</td>
-                        <td>{assetInsurance.assetTag}</td>
-                        <td>{assetInsurance.insuranceCompanyName}</td>
-                        <td>{assetInsurance.policyNumber}</td>
-                        <td style={{whiteSpace:"nowrap"}}>{formatDate(assetInsurance.endDate)}</td>
-                        <td style={{whiteSpace:"nowrap"}}>{formatDate(assetInsurance.renewalDate)}</td>
-                        <td>
-                          <div className="btn-group">
-                            <button
-                              className="btn btn-sm btn-primary dropdown-toggle"
-                              type="button"
-                              data-toggle="dropdown"
-                              aria-haspopup="true"
-                              aria-expanded="false"
-                            >
-                              <i
-                                className="fa fa-ellipsis-h"
-                                aria-hidden="true"
-                              ></i>
-                            </button>
-                            <div
-                              className="dropdown-menu actionmenu"
-                              x-placement="bottom-start"
-                            >
+                    <style>
+                      {`.hyperlink:hover {color: blue;}`}
+                    </style>
+                    {renewalInsurances.length === 0 ? (
+                      <tr>
+                        <td colSpan="7" className="text-center">Thier is No Asset.</td>
+                      </tr>
+                    ) : (
+                      renewalInsurances.map((assetInsurance) => (
+                        <tr key={assetInsurance.id}>
+                          <td><img
+                            src={`${process.env.REACT_APP_LOCAL_URL}/uploads/assets/${assetInsurance.assetPhoto}`}
+                            style={{ width: "90px" }}
+                            alt="Asset"
+                          />
+                          </td>
+                          <td className='hyperlink' style={{ cursor: "pointer" }} onClick={() =>
+                            handleShowInsuranceDetails(assetInsurance)
+                          }>{assetInsurance.assetName}</td>
+                          <td>{assetInsurance.assetTag}</td>
+                          <td>{assetInsurance.insuranceCompanyName}</td>
+                          <td>{assetInsurance.policyNumber}</td>
+                          <td style={{ whiteSpace: "nowrap" }}>{formatDate(assetInsurance.endDate)}</td>
+                          <td style={{ whiteSpace: "nowrap" }}>{formatDate(assetInsurance.renewalDate)}</td>
+                          <td>
+                            <div className="btn-group">
                               <button
-                                className="dropdown-item"
-                                onClick={() =>
-                                  handleShowInsuranceDetails(assetInsurance)
-                                }
+                                className="btn btn-sm btn-primary dropdown-toggle"
+                                type="button"
+                                data-toggle="dropdown"
+                                aria-haspopup="true"
+                                aria-expanded="false"
                               >
-                                <i className="fas fa-info-circle"></i>{" "}
-                                Details
+                                <i
+                                  className="fa fa-ellipsis-h"
+                                  aria-hidden="true"
+                                ></i>
                               </button>
-                              <button
-                                className="dropdown-item"
-                                onClick={() => handleEditAssetInsurance(assetInsurance)}
+                              <div
+                                className="dropdown-menu actionmenu"
+                                x-placement="bottom-start"
                               >
-                                <i className="fas fa-edit"></i> Renewed
-                              </button>
-                              {/* <button
+                                <button
+                                  className="dropdown-item"
+                                  onClick={() =>
+                                    handleShowInsuranceDetails(assetInsurance)
+                                  }
+                                >
+                                  <i className="fas fa-info-circle"></i>{" "}
+                                  Details
+                                </button>
+                                <button
+                                  className="dropdown-item"
+                                  onClick={() => handleEditAssetInsurance(assetInsurance)}
+                                >
+                                  <i className="fas fa-edit"></i> Renewed
+                                </button>
+                                {/* <button
                                     className="dropdown-item"
                                     onClick={() => handleDeleteAssetInsurance(assetInsurance.id)}
                                   >
                                     <i className="fa fa-trash"></i> Delete
                                   </button> */}
+                              </div>
                             </div>
-                          </div>
-                        </td>
-                      </tr>
-                    ))}
+                          </td>
+                        </tr>
+                      )))}
                   </tbody>
                 </table>
                 {/* Pagination */}

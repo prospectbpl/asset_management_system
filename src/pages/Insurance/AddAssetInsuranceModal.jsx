@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
-const AddInsuranceModal = ({ onClose, onUpdateInsurances }) => {
+const AddInsuranceModal = ({ onClose, onUpdate }) => {
   const [formData, setFormData] = useState({
     asset_master_id: "",
     assetName: "",
@@ -85,8 +85,11 @@ const AddInsuranceModal = ({ onClose, onUpdateInsurances }) => {
       );
 
       console.log("Data uploaded successfully:", response.data);
-      onClose();
-      onUpdateInsurances();
+      onUpdate();
+      setTimeout(() => {
+        onClose();
+        window.location.reload();
+      }, 1000); // 1 second delay
 
     } catch (error) {
       console.error("Error uploading data:", error);

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import QRCode from 'qrcode.react';
 
-const AddEmployeeTable = ({ onClose, onUpdateEmployees }) => {
+const AddEmployeeTable = ({ onClose, onUpdate }) => {
     const [formData, setFormData] = useState({
         employeeName: '',
         employeeCode: '',
@@ -65,8 +65,12 @@ const AddEmployeeTable = ({ onClose, onUpdateEmployees }) => {
         try {
             const response = await axios.post(`${process.env.REACT_APP_LOCAL_URL}/empdata`, formDataToSend);
             console.log('Data uploaded successfully:', response.data);
-            onClose();
-            onUpdateEmployees();
+            onUpdate();
+            setTimeout(() => {
+                onClose();
+                window.location.reload();
+            }, 1000); // 1 second delay
+
         } catch (error) {
             console.error('Error uploading data:', error);
         }

@@ -50,10 +50,8 @@ import axios from "axios";
 
 const MaintenanceDetails = ({ MaintenanceDetailsModal, onClose }) => {
     return (
-        <div>
+        <div className="shadow-sm bg-white rounded">
             <div className="card-body p-4">
-
-
                 <div className="row px-2">
                     <div className="col-md-9 bg-light border rounded shadow-sm d-flex justify-content-between  py-3">
                         <div>
@@ -86,7 +84,6 @@ const MaintenanceDetails = ({ MaintenanceDetailsModal, onClose }) => {
                     </div>
                 </div>
                 <hr />
-
                 <div className="row">
                     <div className="col-md-12">
                         <ul className="nav nav-tabs" id="siteTab" role="tablist">
@@ -112,15 +109,10 @@ const MaintenanceDetails = ({ MaintenanceDetailsModal, onClose }) => {
                                 role="tabpanel"
                                 aria-labelledby="details-tab"
                             >
-
                                 <div class="row">
-                                    <div class="col-md-9 pt-3">
+                                    <div class="col-md-9">
                                         {/* Table for Asset Details */}
-                                        <table
-                                            class="table table-hover"
-                                            cellpadding="0"
-                                            cellspacing="0"
-                                        >
+                                        <table className="table table-bordered m-0">
                                             <tbody>
                                                 <tr>
                                                     <td bgcolor="#f2f3f4" width="200">
@@ -235,7 +227,7 @@ const MaintenanceDetails = ({ MaintenanceDetailsModal, onClose }) => {
                                     {/* Image Section */}
                                     <div class="col-md-3 pt-2 text-center">
                                         <img
-                                            src={MaintenanceDetailsModal.assetPhoto}
+                                            src={`${process.env.REACT_APP_LOCAL_URL}/uploads/assets/${MaintenanceDetailsModal.assetPhoto}`}
                                             style={{ width: "200px" }}
                                             alt="Asset"
                                         />

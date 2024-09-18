@@ -1,17 +1,14 @@
 import React, { useState } from 'react';
-import { toast, ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
 
-const AddVendor = ({ onClose, onUpdate }) => {
+const AddTransporterModal = ({ onClose, onUpdate }) => {
     const [formData, setFormData] = useState({
-        vendorCompanyName: '',
-        vendorAddress: '',
-        companyGSTNo: '',
-        contactPersonName: '',
-        contactPersonDesignation: '',
-        contactPersonMobile: '',
-        contactPersonEmail: ''
+        transporterCompanyName: '',
+        transporterPersonName: '',
+        transporterPersonEmail: '',
+        transporterPersonPhone: '',
+        transporterCompanyAddress: '',
+        transporterCityName: ''
     });
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState('');
@@ -29,11 +26,11 @@ const AddVendor = ({ onClose, onUpdate }) => {
 
         setIsLoading(true);
         const requiredFields = [
-            "vendorCompanyName",
-            "vendorAddress",
-            "contactPersonName",
-            "contactPersonDesignation",
-            "contactPersonMobile"
+            "transporterCompanyName",
+            "transporterPersonName",
+            "transporterPersonPhone",
+            "transporterCompanyAddress",
+            "transporterCityName"
         ];
         for (const field of requiredFields) {
             if (!formData[field]) {
@@ -45,16 +42,14 @@ const AddVendor = ({ onClose, onUpdate }) => {
         setError("");
 
         try {
-            const response = await axios.post(`${process.env.REACT_APP_LOCAL_URL}/vendordata`, formData);
+            const response = await axios.post(`${process.env.REACT_APP_LOCAL_URL}/transporterdata`, formData);
             console.log('Data uploaded successfully:', response.data);
-            toast.success('Successfully logged in');
             onUpdate();
             setTimeout(() => {
                 onClose();
                 window.location.reload();
             }, 1000); // 1 second delay
         } catch (error) {
-            setError('Invalid email or password');
             console.error('Error uploading data:', error);
         } finally {
             setIsLoading(false);
@@ -66,44 +61,39 @@ const AddVendor = ({ onClose, onUpdate }) => {
     };
 
     return (
-        <div id="add" className="modal fade show" role="dialog" style={{ display: "block", paddingRight: "17px" }}>
-            <ToastContainer /> {/* Toast container */}
+        <div id="add-transporter" className="modal fade show" role="dialog" style={{ display: "block", paddingRight: "17px" }}>
             <div className="modal-dialog modal-lg">
                 <div className="modal-content">
                     <form onSubmit={handleSubmit} encType="multipart/form-data" autoComplete="off" noValidate="novalidate">
                         <div className="modal-header">
-                            <h5 className="modal-title">Add Vendor</h5>
+                            <h5 className="modal-title">Add Transporter</h5>
                             <button type="button" className="close" onClick={handleClose}>&times;</button>
                         </div>
                         <div className="modal-body" style={{ maxHeight: 'calc(100vh - 200px)', overflowY: 'auto' }}>
                             {error && <div className="alert alert-danger">{error}</div>}
                             <div className="form-group">
-                                <label>Vendor Company Name<span style={{ color: "red" }}>*</span></label>
-                                <input name="vendorCompanyName" type="text" className="form-control" required placeholder="Vendor Company Name" onChange={handleChange} />
-                            </div>
-                            <div className="form-group">
-                                <label>Vendor Address<span style={{ color: "red" }}>*</span></label>
-                                <input name="vendorAddress" type="text" className="form-control" required placeholder="Vendor Address" onChange={handleChange} />
-                            </div>
-                            <div className="form-group">
-                                <label>Company GST No (Optional)</label>
-                                <input name="companyGSTNo" type="text" className="form-control" required placeholder="Company GST No." onChange={handleChange} />
+                                <label>Transporter Company Name<span style={{ color: "red" }}>*</span></label>
+                                <input name="transporterCompanyName" type="text" className="form-control" required placeholder="Transporter Company Name" onChange={handleChange} />
                             </div>
                             <div className="form-group">
                                 <label>Name of Contact Person<span style={{ color: "red" }}>*</span></label>
-                                <input name="contactPersonName" type="text" className="form-control" required placeholder="Name of Contact Person" onChange={handleChange} />
-                            </div>
-                            <div className="form-group">
-                                <label>Designation<span style={{ color: "red" }}>*</span></label>
-                                <input name="contactPersonDesignation" type="text" className="form-control" required placeholder="Designation" onChange={handleChange} />
-                            </div>
-                            <div className="form-group">
-                                <label>Mobile No.<span style={{ color: "red" }}>*</span></label>
-                                <input name="contactPersonMobile" type="text" className="form-control" required placeholder="Mobile No." onChange={handleChange} />
+                                <input name="transporterPersonName" type="text" className="form-control" required placeholder="Name of Contact Person" onChange={handleChange} />
                             </div>
                             <div className="form-group">
                                 <label>Email ID (Optional)</label>
-                                <input name="contactPersonEmail" type="email" className="form-control" required placeholder="Email ID" onChange={handleChange} />
+                                <input name="transporterPersonEmail" type="email" className="form-control" placeholder="Email ID" onChange={handleChange} />
+                            </div>
+                            <div className="form-group">
+                                <label>Phone No.<span style={{ color: "red" }}>*</span></label>
+                                <input name="transporterPersonPhone" type="text" className="form-control" required placeholder="Phone No." onChange={handleChange} />
+                            </div>
+                            <div className="form-group">
+                                <label>Company Address<span style={{ color: "red" }}>*</span></label>
+                                <input name="transporterCompanyAddress" type="text" className="form-control" required placeholder="Company Address" onChange={handleChange} />
+                            </div>
+                            <div className="form-group">
+                                <label>City Name<span style={{ color: "red" }}>*</span></label>
+                                <input name="transporterCityName" type="text" className="form-control" required placeholder="City Name" onChange={handleChange} />
                             </div>
                         </div>
                         <div className="modal-footer">
@@ -118,4 +108,4 @@ const AddVendor = ({ onClose, onUpdate }) => {
     );
 };
 
-export default AddVendor;
+export default AddTransporterModal;

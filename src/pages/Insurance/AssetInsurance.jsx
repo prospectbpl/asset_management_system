@@ -19,7 +19,7 @@ function AssetInsurance({ handleLogout, username }) {
   const [isEditAssetInsuranceModalOpen, setIsEditAssetInsuranceModalOpen] = useState(false);
   const [editAssetInsurance, setEditAssetInsurance] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage, setItemsPerPage] = useState(10);
+  const [itemsPerPage, setItemsPerPage] = useState(25);
   const [showInsuranceDetails, setShowInsuranceDetails] = useState(false);
   const [selectedInsurance, setSelectedInsurance] = useState(null);
   const [showRenewalList, setShowRenewalList] = useState(false); // Added state to control visibility of RenewalInsurance modal
@@ -121,9 +121,9 @@ function AssetInsurance({ handleLogout, username }) {
   return (
     <div className='d-flex w-100 h-100 '>
       <Sidebar />
-      <div className='w-100'>
+      <div className='w-100 bg-white'>
         <SearchBar username={username} handleLogout={handleLogout} /> {/* Pass username and handleLogout props */}
-        <div className="container-fluid">
+        <div className="container-fluid bg-white">
           <ToastContainer />
           {showInsuranceDetails ? (
             <InsuranceDetails insuranceDetails={selectedInsurance} onClose={handleCloseAssetInsuranceModal} />
@@ -160,60 +160,68 @@ function AssetInsurance({ handleLogout, username }) {
                           </tr>
                         </thead>
                         <tbody>
-                          {currentItems.map((assetInsurance) => (
-                            <tr key={assetInsurance.asset_master_id}> {/* Change key to asset_master_id */}
-                              <td>
-                                <img
-                                  src={`${process.env.REACT_APP_LOCAL_URL}/uploads/assets/${assetInsurance.assetPhoto}`}
-                                  style={{ width: "90px" }}
-                                  alt="Asset"
-                                />
-                              </td>
-                              <td>{assetInsurance.assetName}</td>
-                              <td>{assetInsurance.assetTag}</td>
-                              <td>{assetInsurance.insuranceCompanyName}</td>
-                              <td>{assetInsurance.policyNumber}</td>
-                              <td style={{ whiteSpace: "nowrap" }}>{formatDate(assetInsurance.endDate)}</td>
-                              <td style={{ whiteSpace: "nowrap" }}>{formatDate(assetInsurance.renewalDate)}</td>
+                          <style>
+                            {`.hyperlink:hover {color: blue;}`}
+                          </style>
+                          {currentItems.length === 0 ? (
+                            <tr>
+                              <td colSpan="7" className="text-center">Thier is No Asset in Insurance.</td>
+                            </tr>
+                          ) : (
+                            currentItems.map((assetInsurance) => (
+                              <tr key={assetInsurance.asset_master_id}> {/* Change key to asset_master_id */}
+                                <td>
+                                  <img
+                                    src={`${process.env.REACT_APP_LOCAL_URL}/uploads/assets/${assetInsurance.assetPhoto}`}
+                                    style={{ width: "90px" }}
+                                    alt="Asset"
+                                  />
+                                </td>
+                                <td  className='hyperlink' style={{ cursor: "pointer" }} onClick={() => handleShowInsuranceDetails(assetInsurance)}>{assetInsurance.assetName}</td>
+                                <td>{assetInsurance.assetTag}</td>
+                                <td>{assetInsurance.insuranceCompanyName}</td>
+                                <td>{assetInsurance.policyNumber}</td>
+                                <td style={{ whiteSpace: "nowrap" }}>{formatDate(assetInsurance.endDate)}</td>
+                                <td style={{ whiteSpace: "nowrap" }}>{formatDate(assetInsurance.renewalDate)}</td>
 
-                              <td>
-                                <div className="btn-group">
-                                  <button
-                                    className="btn btn-sm btn-primary dropdown-toggle"
-                                    type="button"
-                                    data-toggle="dropdown"
-                                    aria-haspopup="true"
-                                    aria-expanded="false"
-                                  >
-                                    <i className="fa fa-ellipsis-h" aria-hidden="true"></i>
-                                  </button>
-                                  <div className="dropdown-menu actionmenu" x-placement="bottom-start">
-                                    <a
-                                      className="dropdown-item"
-                                      href="#"
-                                      onClick={() => handleShowInsuranceDetails(assetInsurance)}
+                                <td>
+                                  <div className="btn-group">
+                                    <button
+                                      className="btn btn-sm btn-primary dropdown-toggle"
+                                      type="button"
+                                      data-toggle="dropdown"
+                                      aria-haspopup="true"
+                                      aria-expanded="false"
                                     >
-                                      <i className="fas fa-info-circle"></i> Details
-                                    </a>
-                                    <a
-                                      className="dropdown-item"
-                                      href="#"
-                                      onClick={() => handleEditAssetInsurance(assetInsurance)}
-                                    >
-                                      <i className="fas fa-edit"></i> Edit
-                                    </a>
-                                    {/* <a
+                                      <i className="fa fa-ellipsis-h" aria-hidden="true"></i>
+                                    </button>
+                                    <div className="dropdown-menu actionmenu" x-placement="bottom-start">
+                                      <a
+                                        className="dropdown-item"
+                                        href="#"
+                                        onClick={() => handleShowInsuranceDetails(assetInsurance)}
+                                      >
+                                        <i className="fas fa-info-circle"></i> Details
+                                      </a>
+                                      <a
+                                        className="dropdown-item"
+                                        href="#"
+                                        onClick={() => handleEditAssetInsurance(assetInsurance)}
+                                      >
+                                        <i className="fas fa-edit"></i> Edit
+                                      </a>
+                                      {/* <a
                                     className="dropdown-item"
                                     href="#"
                                     onClick={() => handleDeleteAssetInsurance(assetInsurance.asset_master_id)}
                                   >
                                     <i className="fa fa-trash"></i> Delete
                                   </a> */}
+                                    </div>
                                   </div>
-                                </div>
-                              </td>
-                            </tr>
-                          ))}
+                                </td>
+                              </tr>
+                            )))}
                         </tbody>
                       </table>
                     </div>
@@ -239,7 +247,7 @@ function AssetInsurance({ handleLogout, username }) {
           )}
 
           {isAddAssetInsuranceModalOpen && (
-            <AddAssetInsuranceModal onClose={handleCloseAssetInsuranceModal} onUpdateInsurances={handleUpdateAssetInsurances} />
+            <AddAssetInsuranceModal onClose={handleCloseAssetInsuranceModal} onUpdate={handleUpdateAssetInsurances} />
           )}
 
           {isEditAssetInsuranceModalOpen && (

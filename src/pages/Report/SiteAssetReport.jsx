@@ -87,9 +87,9 @@ function SiteAssetReport({ handleLogout, username }) {
     return (
         <div className='d-flex w-100 h-100'>
             {showSidebar && <Sidebar />}
-            <div className='w-100'>
+            <div className='w-100 bg-white'>
                 {showSearchBar && <SearchBar className="searchbarr" username={username} handleLogout={handleLogout} />}
-                <div className="container-fluid">
+                <div className="container-fluid bg-white">
                     <ToastContainer />
                     {showAssetPrint ? (
                         <SiteAssetReportPreview
@@ -129,7 +129,7 @@ function SiteAssetReport({ handleLogout, username }) {
                                                         <th>Asset Name</th>
                                                         <th>Asset Tag</th>
                                                         <th>Quantity</th>
-                                                        <th>Site Location</th>
+                                                        <th>Site</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>

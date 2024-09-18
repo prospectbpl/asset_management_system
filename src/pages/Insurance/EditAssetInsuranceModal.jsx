@@ -59,9 +59,11 @@ const EditAssetInsuranceModal = ({ assetInsurance, onClose, onUpdate }) => {
       });
 
       console.log('Data updated successfully'); // Log success message
-
-      onClose(); // Close the modal
       onUpdate(); // Trigger onUpdate function to update state
+      setTimeout(() => {
+        onClose();
+        window.location.reload();
+      }, 1000); // 1 second delay
       setEditedInsurance(assetInsurance); // Reset form fields after successful submission
     } catch (error) {
       console.error('Error updating insurance:', error); // Log error message

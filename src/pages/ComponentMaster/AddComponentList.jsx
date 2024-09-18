@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-const AddComponentList = ({ onClose, onUpdateComponents }) => {
+const AddComponentList = ({ onClose, onUpdate }) => {
     const [formData, setFormData] = useState({
         componentName: '',
         componentId: '',
@@ -54,7 +54,7 @@ const AddComponentList = ({ onClose, onUpdateComponents }) => {
             console.error('Error fetching vendors:', error);
         }
     };
-    
+
     const handleChange = (e) => {
         const { name, value } = e.target;
         if (name === 'componentId') {
@@ -85,7 +85,7 @@ const AddComponentList = ({ onClose, onUpdateComponents }) => {
             });
         }
     };
-    
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         setError("");
@@ -101,10 +101,11 @@ const AddComponentList = ({ onClose, onUpdateComponents }) => {
         try {
             const response = await axios.post(`${apiUrl}/component-list-data`, formData);
             console.log('Data uploaded successfully:', response.data);
-
-            onClose();
-            onUpdateComponents();
-            
+            onUpdate();
+            setTimeout(() => {
+                onClose();
+                window.location.reload();
+            }, 1000); // 1 second delay
         } catch (error) {
             console.error('Error uploading data:', error);
         }

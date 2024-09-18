@@ -244,11 +244,11 @@ function Assetlist({ handleLogout, username }) {
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   return (
-    <div className='d-flex w-100% h-100 '>
-       {showSidebar && <Sidebar />}
-      <div className='w-100'>
-      {showSearchBar && <SearchBar className="searchbarr" username={username} handleLogout={handleLogout} />}
-        <div className="container-fluid">
+    <div className='d-flex w-100% h-100'>
+      {showSidebar && <Sidebar />}
+      <div className='w-100 bg-white'>
+        {showSearchBar && <SearchBar className="searchbarr" username={username} handleLogout={handleLogout} />}
+        <div className="container-fluid bg-white">
           <ToastContainer />
           {/* Conditionally render the asset list if showDetails is false */}
           {!showDetails ? (
@@ -292,107 +292,111 @@ function Assetlist({ handleLogout, username }) {
                       </div>
                     </div>
                     <div className="card-body" >
-                    <div style={{ maxHeight: "450px", overflowY: "auto" }}>
+                      <div style={{ maxHeight: "450px", overflowY: "auto" }}>
                         <table className="table table-striped table-bordered" style={{ width: "100%" }}>
                           <thead style={{ position: "sticky", top: "0", zIndex: "1", backgroundColor: "#fff" }}>
-                          <tr>
-                            <th>Asset Picture</th>
-                            <th>Asset Name</th>
-                            <th>Asset Type</th>
-                            <th>Asset Quantity</th>
-                            <th>Vendor</th>
-                            <th>Category</th>
-                            <th>Action</th>
-                          </tr>
-                        </thead>
-                        {/* Table body */}
-                        <style>
-                          {`.hyperlink:hover {color: blue;}`}
-                        </style>
-                        <tbody>
-                          {currentItems.map((asset) => (
-                            <tr key={asset.id}>
-                              <td>
-                                <img
-                                  src={`${process.env.REACT_APP_LOCAL_URL}/uploads/assets/${asset.picture}`}
-                                  style={{ width: "90px" }}
-                                  alt="Asset"
-                                />
-                              </td>
-                              <td className='hyperlink' style={{ cursor: "pointer" }} onClick={() => handleAssetDetails(asset)}>{asset.name}</td>
-                              <td>{asset.assetType}</td>
-                              <td>{asset.totalQuantity}</td>
-                              <td>{asset.vendorcompanyname}</td>
-                              <td>{asset.category_name}</td>
-                              {/* <td>
+                            <tr>
+                              <th>Asset Picture</th>
+                              <th>Asset Name</th>
+                              <th>Asset Type</th>
+                              <th>Asset Quantity</th>
+                              <th>Vendor</th>
+                              <th>Category</th>
+                              <th>Action</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <style>
+                              {`.hyperlink:hover {color: blue;}`}
+                            </style>
+                            {currentItems.length === 0 ? (
+                              <tr>
+                                <td colSpan="7" className="text-center">Thier is No Asset.</td>
+                              </tr>
+                            ) : (
+                              currentItems.map((asset) => (
+                                <tr key={asset.id}>
+                                  <td>
+                                    <img
+                                      src={`${process.env.REACT_APP_LOCAL_URL}/uploads/assets/${asset.picture}`}
+                                      style={{ width: "90px" }}
+                                      alt="Asset"
+                                    />
+                                  </td>
+                                  <td className='hyperlink' style={{ cursor: "pointer" }} onClick={() => handleAssetDetails(asset)}>{asset.name}</td>
+                                  <td>{asset.assetType}</td>
+                                  <td>{asset.totalQuantity}</td>
+                                  <td>{asset.vendorcompanyname}</td>
+                                  <td>{asset.category_name}</td>
+                                  {/* <td>
                               <ul style={{ listStyleType: "none" }}>
                                 <li key={asset.id}>
                                   {getLatestEventText(getLatestEvent(asset.id))}
                                 </li>
                               </ul>
                             </td> */}
-                              <td>
-                                <div className="btn-group">
-                                  <button
-                                    className="btn btn-sm btn-primary dropdown-toggle"
-                                    type="button"
-                                    data-toggle="dropdown"
-                                    aria-haspopup="true"
-                                    aria-expanded="false"
-                                  >
-                                    <i className="fa fa-ellipsis-h" aria-hidden="true"></i>
-                                  </button>
-                                  <div className="dropdown-menu actionmenu" x-placement="bottom-start">
+                                  <td>
+                                    <div className="btn-group">
+                                      <button
+                                        className="btn btn-sm btn-primary dropdown-toggle"
+                                        type="button"
+                                        data-toggle="dropdown"
+                                        aria-haspopup="true"
+                                        aria-expanded="false"
+                                      >
+                                        <i className="fa fa-ellipsis-h" aria-hidden="true"></i>
+                                      </button>
+                                      <div className="dropdown-menu actionmenu" x-placement="bottom-start">
 
-                                    <a
-                                      className="dropdown-item"
-                                      href="#"
-                                      onClick={() => handleAddQuntity(asset)}
-                                    >
-                                      <i className="fa fa-plus"></i> Add Quantity
-                                    </a>
+                                        <a
+                                          className="dropdown-item"
+                                          href="#"
+                                          onClick={() => handleAddQuntity(asset)}
+                                        >
+                                          <i className="fa fa-plus"></i> Add Quantity
+                                        </a>
 
-                                    <a
-                                      className="dropdown-item"
-                                      href="#"
-                                      onClick={() => handleOpenTransferAssetModal(asset)}
-                                    >
-                                      <i className="fa fa-share"></i>Transfer Asset
-                                    </a>
+                                        <a
+                                          className="dropdown-item"
+                                          href="#"
+                                          onClick={() => handleOpenTransferAssetModal(asset)}
+                                        >
+                                          <i className="fa fa-share"></i>Transfer Asset
+                                        </a>
 
-                                    <div className="dropdown-divider"></div>
-                                    <a
-                                      className="dropdown-item"
-                                      href="#"
-                                      onClick={() => handleAssetDetails(asset)}
-                                    >
-                                      <i className="fa fa-file "></i>
-                                      <span> Details</span>
-                                    </a>
-                                    <a className="dropdown-item" href="#" id="btnedit" customdata="386" data-toggle="modal" data-target="#" onClick={() => handleAssetPrint(asset)}><i className="fa fa-plus"></i> Print</a>
-                                    {/* <a
+                                        <div className="dropdown-divider"></div>
+                                        <a
+                                          className="dropdown-item"
+                                          href="#"
+                                          onClick={() => handleAssetDetails(asset)}
+                                        >
+                                          <i className="fa fa-file "></i>
+                                          <span> Details</span>
+                                        </a>
+                                        <a className="dropdown-item" href="#" id="btnedit" customdata="386" data-toggle="modal" data-target="#" onClick={() => handleAssetPrint(asset)}><i className="fa fa-plus"></i> Print</a>
+                                        {/* <a
                                     className="dropdown-item"
                                     href="#"
                                     onClick={() => handleEditAsset(asset)}
                                   >
                                     <i className="fas fa-edit"></i> Edit
                                   </a> */}
-                                    {/* <a
+                                        {/* <a
                                     className="dropdown-item"
                                     href="#"
                                     onClick={() => handleDeleteAsset(asset)}
                                   >
                                     <i className="fa fa-trash"></i> Delete
                                   </a> */}
-                                  </div>
-                                </div>
-                              </td>
-                            </tr>
-                          ))}
-                        </tbody>
-                      </table>
+                                      </div>
+                                    </div>
+                                  </td>
+                                </tr>
+                              )))}
+                          </tbody>
+                        </table>
                       </div>
-                     
+
                       {/* Pagination */}
                       <ul className="pagination">
                         <li className={`page-item ${currentPage === 1 && 'disabled'}`}>
@@ -420,7 +424,7 @@ function Assetlist({ handleLogout, username }) {
               onClose={handleCloseDetails}
             />
           )}
-          {isModalOpen && <AddDataModal onClose={handleCloseModal} onUpdateAssets={handleUpdateAssets} />}
+          {isModalOpen && <AddDataModal onClose={handleCloseModal} onUpdate={handleUpdateAssets} />}
 
           {/* Edit Asset Modal */}
           {isEditModalOpen && (
@@ -453,7 +457,7 @@ function Assetlist({ handleLogout, username }) {
             <AddTransferAsset
               asset={addTransferAssetEditAsset}
               onClose={handleCloseTransferAssetModal}
-              onUpdateAssets={handleUpdateAssets} // Pass the callback function
+              onUpdate={handleUpdateAssets} // Pass the callback function
             />
           )}
         </div>

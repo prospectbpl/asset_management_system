@@ -45,17 +45,17 @@ const EditComponentModal = ({ component, onClose, onUpdate }) => {
         const file = e.target.files[0];
         setEditedComponent({ ...editedComponent, componentImage: file }); // Update componentImage only when a new image is selected
     };
-    
+
     const handleSubmit = async (e) => {
         e.preventDefault();
-    
+
         if (!editedComponent.componentName || !editedComponent.size || !editedComponent.category) {
             setError('Please fill in all required fields');
             return;
         }
-    
+
         setError('');
-    
+
         try {
             const formData = new FormData();
             formData.append('name', editedComponent.componentName);
@@ -70,14 +70,17 @@ const EditComponentModal = ({ component, onClose, onUpdate }) => {
             }
             const response = await axios.put(`${process.env.REACT_APP_LOCAL_URL}/components/${editedComponent.id}`, formData);
             console.log('Data updated successfully:', response.data);
-            onClose();
             onUpdate();
-    
+            setTimeout(() => {
+                onClose();
+                window.location.reload();
+            }, 1000); // 1 second delay
+
         } catch (error) {
             console.error('Error updating component:', error);
         }
     };
-    
+
     const handleClose = () => {
         onClose();
     };

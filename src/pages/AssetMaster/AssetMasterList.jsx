@@ -71,7 +71,7 @@ function AssetMasterList({ handleLogout, username }) {
       <Sidebar />
       <div className="w-100">
         <SearchBar username={username} handleLogout={handleLogout} />
-        <div className="container-fluid">
+        <div className="container-fluid bg-white">
           <ToastContainer />
           <div className="row">
             <div className="col-xl-12">
@@ -98,24 +98,32 @@ function AssetMasterList({ handleLogout, username }) {
                         </tr>
                       </thead>
                       <tbody>
-                        {filteredAssets.map((asset) => (
-                          <tr key={asset.id}>
-                            <td>
-                              <img
-                                src={`${process.env.REACT_APP_LOCAL_URL}/uploads/assets/${asset.asset_image}`}
-                                style={{ width: "90px" }}
-                                alt="Asset"
-                              />
-                            </td>
-                            <td>{asset.assetmaster_name}</td>
-                            <td>{asset.asset_type}</td>
-                            <td>{asset.serial_number}</td>
+                        <style>
+                          {`.hyperlink:hover {color: blue;}`}
+                        </style>
+                        {filteredAssets.length === 0 ? (
+                          <tr>
+                            <td colSpan="7" className="text-center">Thier is No Asset.</td>
                           </tr>
-                        ))}
+                        ) : (
+                            filteredAssets.map((asset) => (
+                              <tr key={asset.id}>
+                                <td>
+                                  <img
+                                    src={`${process.env.REACT_APP_LOCAL_URL}/uploads/assets/${asset.asset_image}`}
+                                    style={{ width: "90px" }}
+                                    alt="Asset"
+                                  />
+                                </td>
+                                <td>{asset.assetmaster_name}</td>
+                                <td>{asset.asset_type}</td>
+                                <td>{asset.serial_number}</td>
+                              </tr>
+                            ))
+                          )}
                       </tbody>
                     </table>
                   </div>
-
                 </div>
               </div>
             </div>

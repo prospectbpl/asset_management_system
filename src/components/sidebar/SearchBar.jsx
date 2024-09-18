@@ -40,7 +40,7 @@ const SearchBar = ({ username, handleLogout }) => {
   };
 
   return (
-    <div>
+    <div className="bg-white">
       <div id="content-wrapper" className="d-flex flex-column">
         {/*  <!-- Main Content --> */}
         <div id="content">
@@ -109,10 +109,10 @@ const SearchBar = ({ username, handleLogout }) => {
                       aria-haspopup="true"
                       aria-expanded="false"
                     >
-                      <Link className="dropdown-item" to="/profile">
+                      {/* <Link className="dropdown-item" to="/profile">
                         <i className="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                         Profile
-                      </Link>
+                      </Link> */}
                     </Link>
                     <Link className="dropdown-item" to="/applicationsetting" >
                       <i className="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
@@ -134,9 +134,6 @@ const SearchBar = ({ username, handleLogout }) => {
           </div>
         </div>
       </div>
-      <a className="scroll-to-top rounded" href="#page-top">
-        <i className="fas fa-angle-up"></i>
-      </a>
       {/*  <!-- Logout Modal--> */}
       <div className="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">

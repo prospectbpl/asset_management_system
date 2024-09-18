@@ -100,21 +100,28 @@ const ClientDesc = ({ client, onClose }) => {
                     <div className="col-md-9 bg-light border rounded shadow-sm d-flex justify-content-between  py-3">
                         <div>
                             <h2 style={{ color: "#00509d" }} className="title-detail fw-bolder fw-bolder m-0">
-                                {client.clientName}
+                                {client.clientName || ""}
                             </h2>
                             <hr className="m-1" />
                             <h6 className="title-detail m-0">
-                                Reprensentative : {client.representativeName}
+                                GST No. : {client.gstNo || "N/A"}
                             </h6>
                         </div>
                         <div>
                             <p className="m-0">
-                                <span> Phone: {client.clientMobile || "N/A"}</span>
+                                <span> Contact No.: {client.clientMobile || ""}</span>
                             </p>
                             <p className="m-0">
-                                <span> Emial: {client.clientEmail || "N/A"}</span>
+                                <span> Email : {client.clientEmail || ""}</span>
+                            </p>
+                            <p className="m-0">
+                                <span> Representative Name : {client.representativeName || ""}</span>
+                            </p>
+                            <p className="m-0">
+                                <span> Designaion :{client.designation || ""}</span>
                             </p>
                         </div>
+
                     </div>
                     <div className="col-md-3 d-flex align-items-center justify-content-center">
                         <div className="assetbarcode d-flex flex-column gap-2 align-items-center">
@@ -130,6 +137,7 @@ const ClientDesc = ({ client, onClose }) => {
                     </div>
                 </div>
                 <hr />
+
                 <div className="row">
                     <div className="col-md-12">
                         <ul className="nav nav-tabs" id="myTab" role="tablist">
@@ -329,38 +337,41 @@ const ClientDesc = ({ client, onClose }) => {
                             <div className="tab-pane fade" id="checkin" role="tabpanel" aria-labelledby="checkin-tab">
                                 <div className="row">
                                     <div className="col-md-12">
-                                        <table className="table table-striped table-bordered">
-                                            <thead>
-                                                <tr>
-                                                    <th>Asset Name</th>
-                                                    <th>Transfer From</th>
-                                                    <th>Transfer TO</th>
-                                                    <th>Total Quantity</th>
-                                                    <th>Transfer Quantity</th>
-                                                    <th>Transfer Date</th>
-                                                    <th>Transporter Name</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                {currentItemsforcheckinhistory.length === 0 ? (
+                                        <div className='col-md-12' style={{ maxHeight: "450px", overflowY: "auto" }}>
+                                            <table className="table table-striped table-bordered" style={{ width: "100%" }}>
+                                                <thead style={{ position: "sticky", top: "0", zIndex: "1", backgroundColor: "#fff" }}>
                                                     <tr>
-                                                        <td colSpan="7" className="text-center">Thier is No CheckIn Asset .</td>
+                                                        <th>Asset Name</th>
+                                                        <th>Transfer From</th>
+                                                        <th>Transfer TO</th>
+                                                        <th>Total Quantity</th>
+                                                        <th>Transfer Quantity</th>
+                                                        <th>Transfer Date</th>
+                                                        <th>Transporter Name</th>
                                                     </tr>
-                                                ) : (
-                                                    currentItemsforcheckinhistory.map((entry) => (
-                                                        <tr key={entry.event_id}>
-                                                            <td>{entry.assetName}</td>
-                                                            <td>{entry.transferFrom}</td>
-                                                            <td>{entry.location}</td>
-                                                            <td>{entry.currentQuantity}</td>
-                                                            <td>{entry.quantity}</td>
-                                                            <td>{formatDate(entry.transferDate)}</td>
-                                                            <td>{entry.selectedTransporterName}</td>
+                                                </thead>
+                                                <tbody>
+                                                    {currentItemsforcheckinhistory.length === 0 ? (
+                                                        <tr>
+                                                            <td colSpan="7" className="text-center">Thier is No CheckIn Asset .</td>
                                                         </tr>
-                                                    ))
-                                                )}
-                                            </tbody>
-                                        </table>
+                                                    ) : (
+                                                        currentItemsforcheckinhistory.map((entry) => (
+                                                            <tr key={entry.event_id}>
+                                                                <td>{entry.assetName}</td>
+                                                                <td>{entry.transferFrom}</td>
+                                                                <td>{entry.location}</td>
+                                                                <td>{entry.currentQuantity}</td>
+                                                                <td>{entry.quantity}</td>
+                                                                <td>{formatDate(entry.transferDate)}</td>
+                                                                <td>{entry.selectedTransporterName}</td>
+                                                            </tr>
+                                                        ))
+                                                    )}
+                                                </tbody>
+                                            </table>
+                                        </div>
+
                                         {/* Pagination */}
                                         <ul className="pagination">
                                             <li className={`page-item ${currentPage === 1 && 'disabled'}`}>
@@ -382,38 +393,41 @@ const ClientDesc = ({ client, onClose }) => {
                             <div className="tab-pane fade" id="checkout" role="tabpanel" aria-labelledby="checkout-tab">
                                 <div className="row">
                                     <div className="col-md-12">
-                                        <table className="table table-striped table-bordered">
-                                            <thead>
-                                                <tr>
-                                                    <th>Asset Name</th>
-                                                    <th>Transfer From</th>
-                                                    <th>Transfer TO</th>
-                                                    <th>Total Quantity</th>
-                                                    <th>Transfer Quantity</th>
-                                                    <th>Transfer Date</th>
-                                                    <th>Transporter Name</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                            {currentItemsforcheckouthistory.length === 0 ? (
+                                        <div style={{ maxHeight: "450px", overflowY: "auto" }}>
+                                            <table className="table table-striped table-bordered" style={{ width: "100%" }}>
+                                                <thead style={{ position: "sticky", top: "0", zIndex: "1", backgroundColor: "#fff" }}>
                                                     <tr>
-                                                        <td colSpan="7" className="text-center">Thier is No CheckOut Asset .</td>
+                                                        <th>Asset Name</th>
+                                                        <th>Transfer From</th>
+                                                        <th>Transfer TO</th>
+                                                        <th>Total Quantity</th>
+                                                        <th>Transfer Quantity</th>
+                                                        <th>Transfer Date</th>
+                                                        <th>Transporter Name</th>
                                                     </tr>
-                                                ) : (
-                                                currentItemsforcheckouthistory.map((entry) => (
-                                                    <tr key={entry.event_id}>
-                                                        <td>{entry.assetName}</td>
-                                                        <td>{entry.transferFrom}</td>
-                                                        <td>{entry.location}</td>
-                                                        <td>{entry.currentQuantity}</td>
-                                                        <td>{entry.quantity}</td>
-                                                        <td>{formatDate(entry.transferDate)}</td>
-                                                        <td>{entry.selectedTransporterName}</td>
-                                                    </tr>
-                                                 ))
-                                                )}
-                                            </tbody>
-                                        </table>
+                                                </thead>
+                                                <tbody>
+                                                    {currentItemsforcheckouthistory.length === 0 ? (
+                                                        <tr>
+                                                            <td colSpan="7" className="text-center">Thier is No CheckOut Asset .</td>
+                                                        </tr>
+                                                    ) : (
+                                                        currentItemsforcheckouthistory.map((entry) => (
+                                                            <tr key={entry.event_id}>
+                                                                <td>{entry.assetName}</td>
+                                                                <td>{entry.transferFrom}</td>
+                                                                <td>{entry.location}</td>
+                                                                <td>{entry.currentQuantity}</td>
+                                                                <td>{entry.quantity}</td>
+                                                                <td>{formatDate(entry.transferDate)}</td>
+                                                                <td>{entry.selectedTransporterName}</td>
+                                                            </tr>
+                                                        ))
+                                                    )}
+                                                </tbody>
+                                            </table>
+                                        </div>
+
                                         {/* Pagination */}
                                         <ul className="pagination">
                                             <li className={`page-item ${currentPage === 1 && 'disabled'}`}>
@@ -435,32 +449,35 @@ const ClientDesc = ({ client, onClose }) => {
                             <div className="tab-pane fade" id="site_history" role="tabpanel" aria-labelledby="site-history">
                                 <div className="row">
                                     <div className="col-md-12">
-                                        <table className="table table-striped table-bordered">
-                                            <thead>
-                                                <tr>
-                                                    <th>Status</th>
-                                                    <th>Reason </th>
-                                                    <th>Date of Active/Inactive</th>
-                                                    <th>Description</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                            {currentItemsforclienthistory.length === 0 ? (
+                                        <div style={{ maxHeight: "450px", overflowY: "auto" }}>
+                                            <table className="table table-striped table-bordered" style={{ width: "100%" }}>
+                                                <thead style={{ position: "sticky", top: "0", zIndex: "1", backgroundColor: "#fff" }}>
                                                     <tr>
-                                                        <td colSpan="7" className="text-center">Thier is No Client History .</td>
+                                                        <th>Status</th>
+                                                        <th>Reason </th>
+                                                        <th>Date of Active/Inactive</th>
+                                                        <th>Description</th>
                                                     </tr>
-                                                ) : (
-                                                currentItemsforclienthistory.map((entry) => (
-                                                    <tr key={entry.event_id}>
-                                                        <td>{entry.status}</td>
-                                                        <td>{entry.reason}</td>
-                                                        <td>{formatDate(entry.date)}</td>
-                                                        <td>{entry.description}</td>
-                                                    </tr>
-                                                 ))
-                                                )}
-                                            </tbody>
-                                        </table>
+                                                </thead>
+                                                <tbody>
+                                                    {currentItemsforclienthistory.length === 0 ? (
+                                                        <tr>
+                                                            <td colSpan="7" className="text-center">Thier is No Client History .</td>
+                                                        </tr>
+                                                    ) : (
+                                                        currentItemsforclienthistory.map((entry) => (
+                                                            <tr key={entry.event_id}>
+                                                                <td>{entry.status}</td>
+                                                                <td>{entry.reason}</td>
+                                                                <td>{formatDate(entry.date)}</td>
+                                                                <td>{entry.description}</td>
+                                                            </tr>
+                                                        ))
+                                                    )}
+                                                </tbody>
+                                            </table>
+                                        </div>
+
                                         {/* Pagination */}
                                         <ul className="pagination">
                                             <li className={`page-item ${currentPage === 1 && 'disabled'}`}>

@@ -17,7 +17,7 @@ function Vendorlist({ handleLogout, username }) {
     const [isEditModalOpen, setIsEditModalOpen] = useState(false);
     const [editVendor, setEditVendor] = useState(null);
     const [currentPage, setCurrentPage] = useState(1);
-    const [itemsPerPage, setItemsPerPage] = useState(5);
+    const [itemsPerPage, setItemsPerPage] = useState(25);
     const [deleteVendor, setDeleteVendor] = useState(null); // State to store data of vendor being deleted
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false); // State to manage delete confirmation modal
     const [deleteReason, setDeleteReason] = useState(""); // State to store deletion reason
@@ -116,9 +116,9 @@ function Vendorlist({ handleLogout, username }) {
     return (
         <div className='d-flex w-100 h-100 '>
             <Sidebar />
-            <div className='w-100'>
+            <div className='w-100 bg-white'>
                 <SearchBar username={username} handleLogout={handleLogout} /> {/* Pass username and handleLogout props */}
-                <div className="container-fluid">
+                <div className="container-fluid bg-white">
                     <ToastContainer />
                     {!showVendorDetails && (
                         <div className="row">
@@ -145,25 +145,33 @@ function Vendorlist({ handleLogout, username }) {
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    {currentItems.map((vendor, index) => (
-                                                        <tr key={index}>
-                                                            <td>{vendor.vendorCompanyName}</td>
-                                                            <td>{vendor.vendorAddress}</td>
-                                                            <td>{vendor.contactPersonMobile}</td>
-                                                            <td>
-                                                                <div className="btn-group">
-                                                                    <button className="btn btn-sm btn-primary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                                        <i className="fa fa-ellipsis-h" aria-hidden="true"></i>
-                                                                    </button>
-                                                                    <div className="dropdown-menu actionmenu" x-placement="bottom-start">
-                                                                        <a className="dropdown-item" href="#" onClick={() => handleVendorDetails(vendor)}><i className="fa fa-file"></i> Detail</a>
-                                                                        <a className="dropdown-item" href="#" onClick={() => handleEditVendorClick(vendor)}><i className="fas fa-edit"></i> Edit</a>
-                                                                        {/* <a className="dropdown-item" href="#" onClick={() => handleDeleteVendor(vendor)}><i className="fa fa-trash"></i> Delete</a> */}
-                                                                    </div>
-                                                                </div>
-                                                            </td>
+                                                    <style>
+                                                        {`.hyperlink:hover {color: blue;}`}
+                                                    </style>
+                                                    {currentItems.length === 0 ? (
+                                                        <tr>
+                                                            <td colSpan="7" className="text-center">Thier is No Vendor .</td>
                                                         </tr>
-                                                    ))}
+                                                    ) : (
+                                                        currentItems.map((vendor, index) => (
+                                                            <tr key={index}>
+                                                                <td className='hyperlink' style={{ cursor: "pointer" }} onClick={() => handleVendorDetails(vendor)}>{vendor.vendorCompanyName}</td>
+                                                                <td>{vendor.vendorAddress}</td>
+                                                                <td>{vendor.contactPersonMobile}</td>
+                                                                <td>
+                                                                    <div className="btn-group">
+                                                                        <button className="btn btn-sm btn-primary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                                            <i className="fa fa-ellipsis-h" aria-hidden="true"></i>
+                                                                        </button>
+                                                                        <div className="dropdown-menu actionmenu" x-placement="bottom-start">
+                                                                            <a className="dropdown-item" href="#" onClick={() => handleVendorDetails(vendor)}><i className="fa fa-file"></i> Detail</a>
+                                                                            <a className="dropdown-item" href="#" onClick={() => handleEditVendorClick(vendor)}><i className="fas fa-edit"></i> Edit</a>
+                                                                            {/* <a className="dropdown-item" href="#" onClick={() => handleDeleteVendor(vendor)}><i className="fa fa-trash"></i> Delete</a> */}
+                                                                        </div>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                        )))}
                                                 </tbody>
                                             </table>
                                         </div>
@@ -193,9 +201,9 @@ function Vendorlist({ handleLogout, username }) {
                         />
                     )}
                     {selectedVendor && !showVendorDetails && (
-                        <EditVendor vendor={selectedVendor} onClose={handleEditVendorClose} onUpdate={handleUpdateVendor} />
+                        <EditVendor vendor={selectedVendor} onClose={handleEditVendorClose} onUpdate={handleUpdateVendors} />
                     )}
-                    {isAddVendorModalOpen && <AddVendor onClose={handleCloseVendorModal} onUpdateVendors={handleUpdateVendors} />}
+                    {isAddVendorModalOpen && <AddVendor onClose={handleCloseVendorModal} onUpdate={handleUpdateVendors} />}
                     <DeleteConfirmationModal
                         isOpen={isDeleteModalOpen}
                         itemName={deleteVendor ? deleteVendor.vendorCompanyName : ""}

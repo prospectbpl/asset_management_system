@@ -22,7 +22,7 @@ const EditEmployeeModal = ({ employee, onClose, onUpdate }) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-    
+
         try {
             const formData = new FormData();
             formData.append('ename', editedEmployee.ename);
@@ -31,21 +31,24 @@ const EditEmployeeModal = ({ employee, onClose, onUpdate }) => {
             formData.append('eemail', editedEmployee.eemail);
             formData.append('elocation', editedEmployee.elocation);
             formData.append('epicture', editedEmployee.epicture);
-    
+
             // Call onUpdate function to update employee details in the database
             const response = await axios.put(`${process.env.REACT_APP_LOCAL_URL}/employees/${editedEmployee.id}`, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 }
             });
-            onClose(); // Close the modal after successful update
-            onUpdate(response.data); // Update the local state with the edited employee data returned from the server
+            onUpdate() // Update the local state with the edited employee data returned from the server
+            setTimeout(() => {
+                onClose();
+                window.location.reload();
+            }, 1000); // 1 second delay
         } catch (error) {
             console.error("Error updating employee:", error);
             // Handle error here, e.g., display an error message to the user
         }
     };
-    
+
     const handleClose = () => {
         onClose(); // Call the onClose function passed as prop to close the modal
     };

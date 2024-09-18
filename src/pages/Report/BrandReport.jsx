@@ -4,33 +4,33 @@ import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Sidebar from '../../components/sidebar/Sidebar';
 import SearchBar from '../../components/sidebar/SearchBar';
-import ClientAssetReportPreview from './ClientAssetReportPreview';
+import BrandReportPreview from './BrandReportPreview';
 
-function ClientAssetReport({ handleLogout, username }) {
+function BrandReport({ handleLogout, username }) {
     const [showSidebar, setShowSidebar] = useState(true);
     const [showSearchBar, setShowSearchBar] = useState(true);
-    const [clients, setClients] = useState([]);
-    const [selectedClient, setSelectedClient] = useState('');
+    const [brands, setBrands] = useState([]);
+    const [selectedBrand, setSelectedBrand] = useState('');
     const [assets, setAssets] = useState([]);
     const [showAssetPrint, setShowAssetPrint] = useState(false);
     const [filteredAssets, setFilteredAssets] = useState([]);
     const [selectedRecord, setSelectedRecord] = useState({});
 
-    // Fetch clients and assets on component mount
+    // Fetch brands and assets on component mount
     useEffect(() => {
-        const fetchClients = async () => {
+        const fetchBrands = async () => {
             try {
-                const response = await axios.get(`${process.env.REACT_APP_LOCAL_URL}/clients`);
-                setClients(response.data);
+                const response = await axios.get(`${process.env.REACT_APP_LOCAL_URL}/brands`);
+                setBrands(response.data);
             } catch (error) {
-                console.error("Error fetching clients:", error);
-                toast.error('Failed to fetch clients.');
+                console.error("Error fetching brands:", error);
+                toast.error('Failed to fetch brands.');
             }
         };
 
         const fetchAssets = async () => {
             try {
-                const response = await axios.get(`${process.env.REACT_APP_LOCAL_URL}/clientuniquedata`);
+                const response = await axios.get(`${process.env.REACT_APP_LOCAL_URL}/branduniquedata`);
                 setAssets(response.data);
                 setFilteredAssets(response.data); // Initially show all assets
             } catch (error) {
@@ -39,23 +39,23 @@ function ClientAssetReport({ handleLogout, username }) {
             }
         };
 
-        fetchClients();
+        fetchBrands();
         fetchAssets();
     }, []);
 
-    // Filter assets based on selected client
+    // Filter assets based on selected brand
     useEffect(() => {
-        if (selectedClient) {
-            const filtered = assets.filter(asset => asset.client_master_id === parseInt(selectedClient, 10));
+        if (selectedBrand) {
+            const filtered = assets.filter(asset => asset.brand_id === parseInt(selectedBrand, 10));
             setFilteredAssets(filtered);
         } else {
-            setFilteredAssets(assets); // Show all assets when no client is selected
+            setFilteredAssets(assets); // Show all assets when no brand is selected
         }
-    }, [selectedClient, assets]);
+    }, [selectedBrand, assets]);
 
-    // Handle client selection change
-    const handleClientChange = (event) => {
-        setSelectedClient(event.target.value);
+    // Handle brand selection change
+    const handleBrandChange = (event) => {
+        setSelectedBrand(event.target.value);
     };
 
     // Handle print report
@@ -85,14 +85,14 @@ function ClientAssetReport({ handleLogout, username }) {
     };
 
     return (
-        <div className='d-flex w-100 h-100'>
+        <div className='d-flex w-100% h-100'>
             {showSidebar && <Sidebar />}
             <div className='w-100 bg-white'>
                 {showSearchBar && <SearchBar className="searchbarr" username={username} handleLogout={handleLogout} />}
                 <div className="container-fluid bg-white">
                     <ToastContainer />
                     {showAssetPrint ? (
-                        <ClientAssetReportPreview
+                        <BrandReportPreview
                             record={selectedRecord}
                             onClose={handleClosePreview}
                         />
@@ -101,19 +101,19 @@ function ClientAssetReport({ handleLogout, username }) {
                             <div className="col-xl-12">
                                 <div className="card shadow mb-4">
                                     <div className="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                        <h6 className="m-0 font-weight-bold text-primary">Asset Client Report</h6>
+                                        <h6 className="m-0 font-weight-bold text-primary">Asset Brand Report</h6>
                                         <div className='d-flex align-items-center gap-2'>
-                                            <label className='pt-2 text-black fw-bolder'>Client:</label>
+                                            <label className='pt-2 text-black fw-bolder'>Brand:</label>
                                             <select
-                                                id="clientSelect"
-                                                value={selectedClient}
-                                                onChange={handleClientChange}
+                                                id="brandSelect"
+                                                value={selectedBrand}
+                                                onChange={handleBrandChange}
                                                 className="form-select"
                                             >
-                                                <option value="">Select Client</option>
-                                                {clients.map(client => (
-                                                    <option key={client.id} value={client.id}>
-                                                        {client.clientName}
+                                                <option value="">Select Brand</option>
+                                                {brands.map(brand => (
+                                                    <option key={brand.id} value={brand.id}>
+                                                        {brand.brandName}
                                                     </option>
                                                 ))}
                                             </select>
@@ -129,7 +129,7 @@ function ClientAssetReport({ handleLogout, username }) {
                                                         <th>Asset Name</th>
                                                         <th>Asset Tag</th>
                                                         <th>Quantity</th>
-                                                        <th>Client</th>
+                                                        <th>Location</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -145,7 +145,7 @@ function ClientAssetReport({ handleLogout, username }) {
                                                                 </td>
                                                                 <td>{asset.name}</td>
                                                                 <td>{asset.assettag}</td>
-                                                                <td>{asset.quantity}</td>
+                                                                <td>{asset.totalQuantity}</td>
                                                                 <td>{asset.location}</td>
                                                             </tr>
                                                         ))
@@ -169,4 +169,4 @@ function ClientAssetReport({ handleLogout, username }) {
     );
 }
 
-export default ClientAssetReport;
+export default BrandReport;

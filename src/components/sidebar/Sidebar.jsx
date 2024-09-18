@@ -17,7 +17,7 @@ import AddMaintenanceData from "../../pages/AssetMaster/AddMaintenanceData";
 import AddAsset from "../../pages/AssetMaster/AddAsset";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import AddTransporterModal from "../../pages/AssetMaster/AddTransporterModal";
+import AddTransporterModal from "../../pages/Transport/AddTransporterModal";
 // list import  
 
 // import { Dashboard } from "@mui/icons-material";
@@ -469,6 +469,9 @@ function Sidebar({ handleLogout }) {
                   <Link className="collapse-item" onClick={() => handleListClick("/maintenancereport")} to="/maintenancereport" >
                     <span>Maintenance Report</span>
                   </Link>
+                  <Link className="collapse-item" onClick={() => handleListClick("/brandreport")} to="/brandreport" >
+                    <span>Brand Report</span>
+                  </Link>
                 </div>
               </div>
             </li>
@@ -488,20 +491,20 @@ function Sidebar({ handleLogout }) {
         </div>
       </body>
       {/* Add Modal Tables*/}
-      {isModalOpen && <AddDataModal onClose={handleCloseModal} onUpdateAssets={handleUpdate} />}
+      {isModalOpen && <AddDataModal onClose={handleCloseModal} onUpdate={handleUpdate} />}
       {isAssetModalOpen && <AddAsset onClose={handleCloseAssetModal} onUpdate={handleUpdate} />}
-      {isEmployeeModalOpen && <AddEmployeeTable onClose={handleCloseEmployeeModal} onUpdateEmployees={handleUpdate} />}
-      {isVendorModalOpen && <AddVendor onClose={handleCloseVendorModal} onUpdateVendors={handleUpdate} />}
-      {isCategoryModalOpen && <AddCategory onClose={handleCloseCategoryModal} onUpdateCategories={handleUpdate} />}
-      {isAddSiteModalOpen && <AddSiteModal onClose={handleCloseSiteModal} onUpdateClients={handleUpdate} />}
-      {isAddClientModalOpen && <AddClientModal onClose={handleCloseClientModal} onUpdateClients={handleUpdate} />}
-      {isAddAssetLostModalOpen && <AssetLost onClose={handleCloseAssetLostModal} onUpdateAssetLosts={handleUpdate} />}
-      {isAddBrandModalOpen && <AddBrandModal onClose={handleCloseBrandModal} onUpdateBrands={handleUpdate} />}
-      {isHeadComponentModalOpen && <AddComponent onClose={handleCloseHeadComponentModal} onUpdateComponents={handleUpdate} />}
-      {isAddComponentListModalOpen && <AddComponentList onClose={handleCloseComponentListModal} onUpdateComponents={handleUpdate} />}
-      {isAddAssetInsuranceModalOpen && <AddInsuranceModal onClose={handleCloseAssetInsuranceModal} onUpdateInsurances={handleUpdate} />}
-      {isAddMaintenanceModalOpen && <AddMaintenanceData onClose={handleCloseMaintenanceModal} onUpdateMaintenances={handleUpdate} />}
-      {isAddTransporterModalOpen && <AddTransporterModal onClose={handleCloseTransporterModal} onUpdateTransporters={handleUpdate} />}
+      {isEmployeeModalOpen && <AddEmployeeTable onClose={handleCloseEmployeeModal} onUpdate={handleUpdate} />}
+      {isVendorModalOpen && <AddVendor onClose={handleCloseVendorModal} onUpdate={handleUpdate} />}
+      {isCategoryModalOpen && <AddCategory onClose={handleCloseCategoryModal} onUpdate={handleUpdate} />}
+      {isAddSiteModalOpen && <AddSiteModal onClose={handleCloseSiteModal} onUpdate={handleUpdate} />}
+      {isAddClientModalOpen && <AddClientModal onClose={handleCloseClientModal} onUpdate={handleUpdate} />}
+      {isAddAssetLostModalOpen && <AssetLost onClose={handleCloseAssetLostModal} onUpdate={handleUpdate} />}
+      {isAddBrandModalOpen && <AddBrandModal onClose={handleCloseBrandModal} onUpdate={handleUpdate} />}
+      {isHeadComponentModalOpen && <AddComponent onClose={handleCloseHeadComponentModal} onUpdate={handleUpdate} />}
+      {isAddComponentListModalOpen && <AddComponentList onClose={handleCloseComponentListModal} onUpdate={handleUpdate} />}
+      {isAddAssetInsuranceModalOpen && <AddInsuranceModal onClose={handleCloseAssetInsuranceModal} onUpdate={handleUpdate} />}
+      {isAddMaintenanceModalOpen && <AddMaintenanceData onClose={handleCloseMaintenanceModal} onUpdate={handleUpdate} />}
+      {isAddTransporterModalOpen && <AddTransporterModal onClose={handleCloseTransporterModal} onUpdate={handleUpdate} />}
     </div>
   );
 }

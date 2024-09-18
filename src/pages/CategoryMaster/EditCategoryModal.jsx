@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-const EditCategoryModal = ({ category, onClose, onUpdateCategory }) => {
+const EditCategoryModal = ({ category, onClose, onUpdate }) => {
     const [editedCategory, setEditedCategory] = useState(category);
     const [error, setError] = useState('');
 
@@ -37,8 +37,11 @@ const EditCategoryModal = ({ category, onClose, onUpdateCategory }) => {
 
             const response = await axios.put(`${process.env.REACT_APP_LOCAL_URL}/categories/${editedCategory.id}`, formData);
             console.log('Data updated successfully:', response.data);
-            onClose();
-            onUpdateCategory();
+            onUpdate();
+            setTimeout(() => {
+                onClose();
+                window.location.reload();
+            }, 1000); // 1 second delay
 
         } catch (error) {
             console.error('Error updating category:', error);

@@ -23,7 +23,7 @@ function ClientList({ handleLogout, username }) {
   const [deleteReason, setDeleteReason] = useState("");
   const [isStatusModalOpen, setIsStatusModalOpen] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage] = useState(5);
+  const [itemsPerPage] = useState(25);
   const [isClientAdded, setIsClientAdded] = useState(false);
 
   const indexOfLastItem = currentPage * itemsPerPage;
@@ -104,9 +104,9 @@ function ClientList({ handleLogout, username }) {
   return (
     <div className='d-flex w-100 h-100 '>
       <Sidebar />
-      <div className='w-100'>
+      <div className='w-100 bg-white'>
         <SearchBar username={username} handleLogout={handleLogout} /> {/* Pass username and handleLogout props */}
-        <div className="container-fluid">
+        <div className="container-fluid bg-white">
           <ToastContainer />
           {showClientDetails ? (
             <ClientDesc client={selectedClient} onClose={() => setShowClientDetails(false)} />
@@ -136,37 +136,46 @@ function ClientList({ handleLogout, username }) {
                           </tr>
                         </thead>
                         <tbody>
-                          {currentItems.map((client) => (
-                            <tr key={client.id}>
-                              <td>{client.clientName}</td>
-                              <td>{client.clientAddress}</td>
-                              <td>{client.clientMobile}</td>
-                              <td>{client.clientEmail}</td>
-                              <td>
-                                <div className="d-flex align-item-center justify-content-start gap-3">
-                                  <div className="btn-group">
-                                    <button className="btn btn-sm btn-primary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                      <i className="fa fa-ellipsis-h" aria-hidden="true"></i>
-                                    </button>
-                                    <div className="dropdown-menu actionmenu" x-placement="bottom-start">
-                                      <a className="dropdown-item" href="javascript:void(0);" onClick={() => handleClientDetails(client)}>
-                                        <i className="fa fa-file "></i> Detailss
-                                      </a>
-                                      <a className="dropdown-item" href="#" onClick={() => handleEditClient(client)}>
-                                        <i className="fas fa-edit"></i> Edit
-                                      </a>
-                                      {/* <a className="dropdown-item" href="#" onClick={() => handleDeleteClient(client)}>
+                          <style>
+                            {`.hyperlink:hover {color: blue;}`}
+                          </style>
+                          {currentItems.length === 0 ? (
+                            <tr>
+                              <td colSpan="7" className="text-center">Thier is No Client.</td>
+                            </tr>
+                          ) : (
+                            currentItems.map((client) => (
+                              <tr key={client.id}>
+                                <td className='hyperlink' style={{ cursor: "pointer" }} onClick={() => handleClientDetails(client)}>{client.clientName}</td>
+                                <td>{client.clientAddress}</td>
+                                <td style={{ whiteSpace: "nowrap" }}>{client.clientMobile}</td>
+                                <td >{client.clientEmail}</td>
+                                <td>
+                                  <div className="d-flex align-item-center justify-content-start gap-3">
+                                    <div className="btn-group">
+                                      <button className="btn btn-sm btn-primary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <i className="fa fa-ellipsis-h" aria-hidden="true"></i>
+                                      </button>
+                                      <div className="dropdown-menu actionmenu" x-placement="bottom-start">
+                                        <a className="dropdown-item" href="javascript:void(0);" onClick={() => handleClientDetails(client)}>
+                                          <i className="fa fa-file "></i> Detailss
+                                        </a>
+                                        <a className="dropdown-item" href="#" onClick={() => handleEditClient(client)}>
+                                          <i className="fas fa-edit"></i> Edit
+                                        </a>
+                                        {/* <a className="dropdown-item" href="#" onClick={() => handleDeleteClient(client)}>
                                       <i className="fa fa-trash"></i> Delete
                                     </a> */}
+                                      </div>
                                     </div>
-                                  </div>
-                                  {/* <div className={getToggleClass(client.status)} onClick={() => handleStatusModalOpen(client)}>
+                                    {/* <div className={getToggleClass(client.status)} onClick={() => handleStatusModalOpen(client)}>
                                   <div className="ball" style={{ backgroundColor: client.status === 'active' ? 'green' : 'red' }}></div>
                                 </div> */}
-                                </div>
-                              </td>
-                            </tr>
-                          ))}
+                                  </div>
+                                </td>
+                              </tr>
+                            ))
+                          )}
                         </tbody>
                       </table>
                     </div>
@@ -190,8 +199,8 @@ function ClientList({ handleLogout, username }) {
               </div>
             </div>
           )}
-          {isAddClientModalOpen && <AddClientModal onClose={handleCloseClientModal} onUpdateClients={handleUpdateClients} />}
-          {isEditModalOpen && <EditClientModal client={editClient} onClose={handleCloseClientModal} onUpdate={handleUpdateClient} />}
+          {isAddClientModalOpen && <AddClientModal onClose={handleCloseClientModal} onUpdate={handleUpdateClients} />}
+          {isEditModalOpen && <EditClientModal client={editClient} onClose={handleCloseClientModal} onUpdate={handleUpdateClients} />}
           <DeleteConfirmationModal
             isOpen={isDeleteModalOpen}
             itemName={deleteClient ? deleteClient.clientName : ""}

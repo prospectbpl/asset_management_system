@@ -1,10 +1,12 @@
+
+
 import React, { useEffect, useState } from 'react';
 import myLogo from '../../images/salary.jpg'; // Updated image reference for advances
 import axios from 'axios';
 
-const EmployeeAssetReportPreview = ({ record, onClose }) => {
-    // Correctly access filteredAsset from record.assetData
-    const filteredAsset = record.assetData || [];
+const BrandReportPreview = ({ record, onClose }) => {
+    // Correctly access filteredAssets from record.assetData
+    const filteredAssets = record.assetData || [];
     const month = record.selectedMonth;
     const year = record.selectedYear;
 
@@ -28,35 +30,6 @@ const EmployeeAssetReportPreview = ({ record, onClose }) => {
         totalAmount: 0,
     });
 
-    // Effect to calculate totals whenever filteredAsset changes
-    useEffect(() => {
-        calculateTotals();
-    }, [filteredAsset]);
-
-    // Function to calculate the grand totals
-    const calculateTotals = () => {
-        const totals = filteredAsset.reduce((acc, record) => {
-            if (record.employee_id) {
-                acc.totalEmployees += 1;
-                acc.totalAmount += record.amount ? parseFloat(record.amount) : 0;
-            }
-            return acc;
-        }, {
-            totalEmployees: 0,
-            totalAmount: 0,
-        });
-
-        setGrandTotals(totals);
-    };
-
-    // Function to get month name from number
-    const getMonthName = (monthNumber) => {
-        const months = [
-            'January', 'February', 'March', 'April', 'May', 'June',
-            'July', 'August', 'September', 'October', 'November', 'December'
-        ];
-        return months[monthNumber - 1]; // monthNumber is 1-based, array is 0-based
-    };
     // Function to format the date
     const formatDate = (dateString) => {
         const date = new Date(dateString);
@@ -84,7 +57,7 @@ const EmployeeAssetReportPreview = ({ record, onClose }) => {
                                 />
                             </div>
                         </div>
-                        <h4 style={{ color: "#3F4D67" }} className='title-detail text-uppercase fw-bolder font-bold m-0'>All Employee Report</h4>
+                        <h4 style={{ color: "#3F4D67" }} className='title-detail text-uppercase fw-bolder font-bold m-0'>All Brand Report</h4>
                         <div>
                             <h5 style={{ color: "#3F4D67" }} className='title-detail text-uppercase fw-bolder font-bold m-0'>{setting.title || 'Title'}</h5>
                         </div>
@@ -92,31 +65,37 @@ const EmployeeAssetReportPreview = ({ record, onClose }) => {
 
                     <div className="card-body">
                         <table className="table table-striped table-bordered" style={{ width: "100%" }}>
-                            <thead>
+                            <thead style={{ position: "sticky", top: "0", zIndex: "1", backgroundColor: "#fff" }}>
                                 <tr>
                                     <th>Asset Picture</th>
                                     <th>Asset Name</th>
                                     <th>Asset Tag</th>
                                     <th>Quantity</th>
-                                    <th>Employee</th>
+                                    <th>Location</th>
                                 </tr>
                             </thead>
-                            <tbody style={{ maxHeight: "calc(100vh - 130px)", overflowY: "auto" }}>
-                                {filteredAsset.map((asset) => (
-                                    <tr key={asset.id}>
-                                        <td>
-                                            <img
-                                                src={`${process.env.REACT_APP_LOCAL_URL}/uploads/assets/${asset.picture}`}
-                                                style={{ width: "90px" }}
-                                                alt="Asset"
-                                            />
-                                        </td>
-                                        <td>{asset.name}</td>
-                                        <td>{asset.assettag}</td>
-                                        <td>{asset.quantity}</td>
-                                        <td>{asset.location}</td>
+                            <tbody>
+                                {filteredAssets.length > 0 ? (
+                                    filteredAssets.map((asset) => (
+                                        <tr key={asset.id}>
+                                            <td>
+                                                <img
+                                                    src={`${process.env.REACT_APP_LOCAL_URL}/uploads/assets/${asset.picture}`}
+                                                    style={{ width: "90px" }}
+                                                    alt="Asset"
+                                                />
+                                            </td>
+                                            <td>{asset.name}</td>
+                                            <td>{asset.assettag}</td>
+                                            <td>{asset.totalQuantity}</td>
+                                            <td>{asset.location}</td>
+                                        </tr>
+                                    ))
+                                ) : (
+                                    <tr>
+                                        <td colSpan="5" className="text-center">No assets found</td>
                                     </tr>
-                                ))}
+                                )}
                             </tbody>
                         </table>
                     </div>
@@ -135,5 +114,5 @@ const EmployeeAssetReportPreview = ({ record, onClose }) => {
     );
 };
 
-export default EmployeeAssetReportPreview;
+export default BrandReportPreview;
 

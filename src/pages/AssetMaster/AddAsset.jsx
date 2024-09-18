@@ -53,13 +53,13 @@ const AddAsset = ({ onClose, onUpdate }) => {
         setIsLoading(true);
         const requiredFields = ["assetName", "serialNumber", "assetType", "assetImage"];
         for (const field of requiredFields) {
-          if (!eval(field)) {
-            setError(`Please fill in the ${field.replace(/([A-Z])/g, ' $1').toLowerCase()}`);
-            setIsLoading(false);
-            return;
-          }
+            if (!eval(field)) {
+                setError(`Please fill in the ${field.replace(/([A-Z])/g, ' $1').toLowerCase()}`);
+                setIsLoading(false);
+                return;
+            }
         }
-    
+
         setError("");
 
         try {
@@ -77,8 +77,11 @@ const AddAsset = ({ onClose, onUpdate }) => {
                 }
             });
             console.log('Asset added successfully:', response.data);
-            onClose();
             onUpdate();
+            setTimeout(() => {
+                onClose();
+                window.location.reload();
+            }, 1000); // 1 second delay
         } catch (error) {
             console.error('Error adding asset:', error);
         } finally {
@@ -118,7 +121,7 @@ const AddAsset = ({ onClose, onUpdate }) => {
                                     value={assetType}
                                     onChange={handleChange}
                                     required
-                                    
+
                                 >
                                     <option value="" disabled hidden>Select Type</option>
                                     <option value="Movable">Movable</option>

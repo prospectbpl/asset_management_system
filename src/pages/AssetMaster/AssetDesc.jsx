@@ -207,9 +207,9 @@ const AssetDesc = ({ asset, onClose }) => {
             <div className="card-body p-4">
                 {/* Asset Details Section */}
                 <div className="row px-2">
-                    <div className="col-md-9 bg-light border rounded shadow-sm d-flex gap-2 justify-content-between  py-3" style={{width:"100%"}}>
-                        <div style={{width:"80%"}}>
-                            <h2  className="title-detail fw-bolder fw-bolder m-0 asset-title">
+                    <div className="col-md-9 bg-light border rounded shadow-sm d-flex gap-2 justify-content-between  py-3" style={{ width: "100%" }}>
+                        <div style={{ width: "80%" }}>
+                            <h2 className="title-detail fw-bolder fw-bolder m-0 asset-title">
                                 {asset.name}
                             </h2>
                             <hr className="m-1" />
@@ -217,7 +217,7 @@ const AssetDesc = ({ asset, onClose }) => {
                                 Asset Tag: {asset.assettag}
                             </h6>
                         </div>
-                        <div style={{width:"30%"}}>
+                        <div style={{ width: "30%" }}>
                             <p className="m-0">
                                 <span> Type: {asset.assetType || "N/A"}</span>
                             </p>
@@ -461,40 +461,43 @@ const AssetDesc = ({ asset, onClose }) => {
                             {/* History Tab Content */}
                             {/* History Tab Content */}
                             <div className="tab-pane fade" id="history" role="tabpanel" aria-labelledby="history-tab">
-                                <table className="table table-striped table-bordered">
-                                    <thead>
-                                        <tr>
-                                            <th>Asset Name</th>
-                                            <th>AssetTag</th>
-                                            <th>Quantity</th>
-                                            <th>Purchase Date</th>
-                                            <th>Cost</th>
-                                            <th>Vendor</th>
-                                            {/* <th>Category</th> */}
-                                            <th>Brand</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {purchasehistory.length === 0 ? (
+                                <div className='col-md-12' style={{ maxHeight: "450px", overflowY: "auto" }}>
+                                    <table className="table table-striped table-bordered" style={{ width: "100%" }}>
+                                        <thead style={{ position: "sticky", top: "0", zIndex: "1", backgroundColor: "#fff" }}>
                                             <tr>
-                                                <td colSpan="7" className="text-center">No Attendance Found. First Select the Employee.</td>
+                                                <th>Asset Name</th>
+                                                <th>AssetTag</th>
+                                                <th>Quantity</th>
+                                                <th>Purchase Date</th>
+                                                <th>Cost</th>
+                                                <th>Vendor</th>
+                                                {/* <th>Category</th> */}
+                                                <th>Brand</th>
                                             </tr>
-                                        ) : (
-                                            purchasehistory.map((event) => (
-                                                <tr key={event.id}>
-                                                    <td>{event.name}</td>
-                                                    <td>{event.assettag}</td>
-                                                    <td>{event.quantity}</td>
-                                                    <td>{formatDate(event.purchaseDate)}</td>
-                                                    <td>{event.cost}</td>
-                                                    <td>{event.vendorcompanyname}</td>
-                                                    {/* <td>{event.category_name}</td> */}
-                                                    <td>{event.brand}</td>
+                                        </thead>
+                                        <tbody>
+                                            {purchasehistory.length === 0 ? (
+                                                <tr>
+                                                    <td colSpan="7" className="text-center">No Attendance Found. First Select the Employee.</td>
                                                 </tr>
-                                            ))
-                                        )}
-                                    </tbody>
-                                </table>
+                                            ) : (
+                                                purchasehistory.map((event) => (
+                                                    <tr key={event.id}>
+                                                        <td>{event.name}</td>
+                                                        <td>{event.assettag}</td>
+                                                        <td>{event.quantity}</td>
+                                                        <td>{formatDate(event.purchaseDate)}</td>
+                                                        <td>{event.cost}</td>
+                                                        <td>{event.vendorcompanyname}</td>
+                                                        {/* <td>{event.category_name}</td> */}
+                                                        <td>{event.brand}</td>
+                                                    </tr>
+                                                ))
+                                            )}
+                                        </tbody>
+                                    </table>
+                                </div>
+
                                 {/* Pagination */}
                                 <ul className="pagination">
                                     <li className={`page-item ${currentPage === 1 && 'disabled'}`}>
@@ -514,51 +517,54 @@ const AssetDesc = ({ asset, onClose }) => {
 
                             {/* Maintenance Tab Content */}
                             <div className="tab-pane fade" id="maintenance" role="tabpanel" aria-labelledby="maintenance-tab">
-                                <table className="table table-striped table-bordered">
-                                    <thead>
-                                        <tr>
-                                            <th>Asset photo</th>
-                                            <th>Asset Name</th>
-                                            <th>Asset Tag</th>
-                                            <th>Service Type</th>
-                                            <th>Provider Name</th>
-                                            <th>Start Date</th>
-                                            <th>End Date</th>
-                                            <th>Remark</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {maintenanceHistory.length === 0 ? (
+                                <div className='col-md-12' style={{ maxHeight: "450px", overflowY: "auto" }}>
+                                    <table className="table table-striped table-bordered" style={{ width: "100%" }}>
+                                        <thead style={{ position: "sticky", top: "0", zIndex: "1", backgroundColor: "#fff" }}>
                                             <tr>
-                                                <td colSpan="8" className="text-center">No Attendance Found. First Select the Employee.</td>
+                                                <th>Asset photo</th>
+                                                <th>Asset Name</th>
+                                                <th>Asset Tag</th>
+                                                <th>Service Type</th>
+                                                <th>Provider Name</th>
+                                                <th>Start Date</th>
+                                                <th>End Date</th>
+                                                <th>Remark</th>
                                             </tr>
-                                        ) : (
-                                            maintenanceHistory.map((event) => (
-                                                <tr key={event.event_id}>
-                                                    <td>
-                                                        <img
-                                                            src={event.assetPhoto}
-                                                            style={{ width: "90px" }}
-                                                            alt="Asset"
-                                                        />
-                                                    </td>
-                                                    <td>{event.assetName}</td>
-                                                    <td>{event.assetTag}</td>
-                                                    <td>{event.serviceType}</td>
-                                                    <td>
-                                                        {event.serviceType === "In-house"
-                                                            ? event.employeeName
-                                                            : event.serviceName || event.serviceAddress}
-                                                    </td>
-                                                    <td>{formatDate(event.startDate)}</td>
-                                                    <td>{formatDate(event.endDate)}</td>
-                                                    <td>{event.remarks}</td>
+                                        </thead>
+                                        <tbody>
+                                            {maintenanceHistory.length === 0 ? (
+                                                <tr>
+                                                    <td colSpan="8" className="text-center">No Attendance Found. First Select the Employee.</td>
                                                 </tr>
-                                            ))
-                                        )}
-                                    </tbody>
+                                            ) : (
+                                                maintenanceHistory.map((event) => (
+                                                    <tr key={event.event_id}>
+                                                        <td>
+                                                            <img
+                                                                src={event.assetPhoto}
+                                                                style={{ width: "90px" }}
+                                                                alt="Asset"
+                                                            />
+                                                        </td>
+                                                        <td>{event.assetName}</td>
+                                                        <td>{event.assetTag}</td>
+                                                        <td>{event.serviceType}</td>
+                                                        <td>
+                                                            {event.serviceType === "In-house"
+                                                                ? event.employeeName
+                                                                : event.serviceName || event.serviceAddress}
+                                                        </td>
+                                                        <td>{formatDate(event.startDate)}</td>
+                                                        <td>{formatDate(event.endDate)}</td>
+                                                        <td>{event.remarks}</td>
+                                                    </tr>
+                                                ))
+                                            )}
+                                        </tbody>
 
-                                </table>
+                                    </table>
+                                </div>
+
                                 {/* Pagination */}
                                 <ul className="pagination">
                                     <li className={`page-item ${currentPage === 1 && 'disabled'}`}>
@@ -577,89 +583,95 @@ const AssetDesc = ({ asset, onClose }) => {
 
                             {/* Insurence Tab Content */}
                             <div className="tab-pane fade" id="insurence" role="tabpanel" aria-labelledby="insurence-tab">
-                                <table className="table table-striped table-bordered">
-                                    <thead>
-                                        <tr>
-                                            <th>Asset Picture</th>
-                                            <th>Asset Name</th>
-                                            <th>Asset Tag</th>
-                                            <th>Insurence Company</th>
-                                            <th>Policy Number</th>
-                                            <th>End Date</th>
-                                            <th>Renewal Date</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {insurence.length === 0 ? (
+                                <div className='col-md-12' style={{ maxHeight: "450px", overflowY: "auto" }}>
+                                    <table className="table table-striped table-bordered" style={{ width: "100%" }}>
+                                        <thead style={{ position: "sticky", top: "0", zIndex: "1", backgroundColor: "#fff" }}>
                                             <tr>
-                                                <td colSpan="7" className="text-center">No Attendance Found. First Select the Employee.</td>
+                                                <th>Asset Picture</th>
+                                                <th>Asset Name</th>
+                                                <th>Asset Tag</th>
+                                                <th>Insurence Company</th>
+                                                <th>Policy Number</th>
+                                                <th>End Date</th>
+                                                <th>Renewal Date</th>
                                             </tr>
-                                        ) : (
-                                            insurence.map((event) => (
-                                                <tr key={event.event_id}>
-                                                    <td>
-                                                        <img
-                                                            src={event.assetPhoto}
-                                                            style={{ width: "90px" }}
-                                                            alt="Asset"
-                                                        />
-                                                    </td>
-                                                    <td>{event.assetName}</td>
-                                                    <td>{event.assetTag}</td>
-                                                    <td>{event.insuranceCompanyName}</td>
-                                                    <td>{event.policyNumber}</td>
-                                                    <td>{formatDate(event.endDate)}</td>
-                                                    <td>{formatDate(event.renewalDate)}</td>
+                                        </thead>
+                                        <tbody>
+                                            {insurence.length === 0 ? (
+                                                <tr>
+                                                    <td colSpan="7" className="text-center">No Attendance Found. First Select the Employee.</td>
                                                 </tr>
-                                            ))
-                                        )}
-                                    </tbody>
+                                            ) : (
+                                                insurence.map((event) => (
+                                                    <tr key={event.event_id}>
+                                                        <td>
+                                                            <img
+                                                                src={event.assetPhoto}
+                                                                style={{ width: "90px" }}
+                                                                alt="Asset"
+                                                            />
+                                                        </td>
+                                                        <td>{event.assetName}</td>
+                                                        <td>{event.assetTag}</td>
+                                                        <td>{event.insuranceCompanyName}</td>
+                                                        <td>{event.policyNumber}</td>
+                                                        <td>{formatDate(event.endDate)}</td>
+                                                        <td>{formatDate(event.renewalDate)}</td>
+                                                    </tr>
+                                                ))
+                                            )}
+                                        </tbody>
 
-                                </table>
+                                    </table>
+                                </div>
+
                             </div>
 
 
                             {/* Insurence History Tab Content */}
                             <div className="tab-pane fade" id="insurenceHistory" role="tabpanel" aria-labelledby="insurenceHistory-tab">
-                                <table className="table table-striped table-bordered">
-                                    <thead>
-                                        <tr>
-                                            <th>Asset Picture</th>
-                                            <th>Asset Name</th>
-                                            <th>Asset Tag</th>
-                                            <th>Insurence Company</th>
-                                            <th>Policy Number</th>
-                                            <th>End Date</th>
-                                            <th>Renewal Date</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {assetInsurenceHistory.length === 0 ? (
+                                <div className='col-md-12' style={{ maxHeight: "450px", overflowY: "auto" }}>
+                                    <table className="table table-striped table-bordered" style={{ width: "100%" }}>
+                                        <thead style={{ position: "sticky", top: "0", zIndex: "1", backgroundColor: "#fff" }}>
                                             <tr>
-                                                <td colSpan="7" className="text-center">No Attendance Found. First Select the Employee.</td>
+                                                <th>Asset Picture</th>
+                                                <th>Asset Name</th>
+                                                <th>Asset Tag</th>
+                                                <th>Insurence Company</th>
+                                                <th>Policy Number</th>
+                                                <th>End Date</th>
+                                                <th>Renewal Date</th>
                                             </tr>
-                                        ) : (
-                                            assetInsurenceHistory.map((event) => (
-                                                <tr key={event.event_id}>
-                                                    <td>
-                                                        <img
-                                                            src={event.assetPhoto}
-                                                            style={{ width: "90px" }}
-                                                            alt="Asset"
-                                                        />
-                                                    </td>
-                                                    <td>{event.assetName}</td>
-                                                    <td>{event.assetTag}</td>
-                                                    <td>{event.insuranceCompanyName}</td>
-                                                    <td>{event.policyNumber}</td>
-                                                    <td>{formatDate(event.endDate)}</td>
-                                                    <td>{formatDate(event.renewalDate)}</td>
+                                        </thead>
+                                        <tbody>
+                                            {assetInsurenceHistory.length === 0 ? (
+                                                <tr>
+                                                    <td colSpan="7" className="text-center">No Attendance Found. First Select the Employee.</td>
                                                 </tr>
-                                            ))
-                                        )}
-                                    </tbody>
+                                            ) : (
+                                                assetInsurenceHistory.map((event) => (
+                                                    <tr key={event.event_id}>
+                                                        <td>
+                                                            <img
+                                                                src={event.assetPhoto}
+                                                                style={{ width: "90px" }}
+                                                                alt="Asset"
+                                                            />
+                                                        </td>
+                                                        <td>{event.assetName}</td>
+                                                        <td>{event.assetTag}</td>
+                                                        <td>{event.insuranceCompanyName}</td>
+                                                        <td>{event.policyNumber}</td>
+                                                        <td>{formatDate(event.endDate)}</td>
+                                                        <td>{formatDate(event.renewalDate)}</td>
+                                                    </tr>
+                                                ))
+                                            )}
+                                        </tbody>
 
-                                </table>
+                                    </table>
+                                </div>
+
                                 {/* Pagination */}
                                 <ul className="pagination">
                                     <li className={`page-item ${currentPage === 1 && 'disabled'}`}>
@@ -677,43 +689,46 @@ const AssetDesc = ({ asset, onClose }) => {
                             </div>
                             {/* Transfer Asset Tab Content */}
                             <div className="tab-pane fade" id="transferAsset" role="tabpanel" aria-labelledby="transferAsset-tab">
-                                <table className="table table-bordered">
-                                    <thead>
-                                        <tr>
-                                            <th>Asset Name</th>
-                                            <th>current Quantity</th>
-                                            <th>Transfer From</th>
-                                            <th>Transfer To</th>
-                                            <th>Transferred Quantity </th>
-                                            <th>Transfer Date</th>
-                                            <th>Transfer Via</th>
-                                            <th>Description</th>
-                                            {/* Add more columns as needed */}
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {assettransferhistory.length === 0 ? (
+                                <div className='col-md-12' style={{ maxHeight: "450px", overflowY: "auto" }}>
+                                    <table className="table table-striped table-bordered" style={{ width: "100%" }}>
+                                        <thead style={{ position: "sticky", top: "0", zIndex: "1", backgroundColor: "#fff" }}>
                                             <tr>
-                                                <td colSpan="8" className="text-center">No Attendance Found. First Select the Employee.</td>
+                                                <th>Asset Name</th>
+                                                <th>current Quantity</th>
+                                                <th>Transfer From</th>
+                                                <th>Transfer To</th>
+                                                <th>Transferred Quantity </th>
+                                                <th>Transfer Date</th>
+                                                <th>Transfer Via</th>
+                                                <th>Description</th>
+                                                {/* Add more columns as needed */}
                                             </tr>
-                                        ) : (
-                                            assettransferhistory.map((transfer) => (
-                                                <tr key={transfer.id}>
-                                                    <td>{transfer.assetName}</td>
-                                                    <td>{transfer.currentQuantity}</td>
-                                                    <td>{transfer.transferFrom}</td>
-                                                    <td>{transfer.location}</td>
-                                                    <td>{transfer.quantity}</td>
-                                                    <td>{formatDate(transfer.transferDate)}</td>
-                                                    <td>{transfer.selectedTransporterName}</td>
-                                                    <td>{transfer.description}</td>
-                                                    {/* Render more columns as needed */}
+                                        </thead>
+                                        <tbody>
+                                            {assettransferhistory.length === 0 ? (
+                                                <tr>
+                                                    <td colSpan="8" className="text-center">No Attendance Found. First Select the Employee.</td>
                                                 </tr>
-                                            ))
-                                        )}
-                                    </tbody>
+                                            ) : (
+                                                assettransferhistory.map((transfer) => (
+                                                    <tr key={transfer.id}>
+                                                        <td>{transfer.assetName}</td>
+                                                        <td>{transfer.currentQuantity}</td>
+                                                        <td>{transfer.transferFrom}</td>
+                                                        <td>{transfer.location}</td>
+                                                        <td>{transfer.quantity}</td>
+                                                        <td>{formatDate(transfer.transferDate)}</td>
+                                                        <td>{transfer.selectedTransporterName}</td>
+                                                        <td>{transfer.description}</td>
+                                                        {/* Render more columns as needed */}
+                                                    </tr>
+                                                ))
+                                            )}
+                                        </tbody>
 
-                                </table>
+                                    </table>
+                                </div>
+
                                 {/* Pagination */}
                                 <ul className="pagination">
                                     <li className={`page-item ${currentPage === 1 && 'disabled'}`}>
@@ -731,45 +746,47 @@ const AssetDesc = ({ asset, onClose }) => {
                             </div>
                             {/* lost Asset Tab Content */}
                             <div className="tab-pane fade" id="lostAsset" role="tabpanel" aria-labelledby="lostAsset-tab">
-
                                 <div>
-                                    <table className="table table-bordered">
-                                        <thead>
-                                            <tr>
-                                                <th>Asset Name</th>
-                                                <th>Loss Date</th>
-                                                <th>Loss Location</th>
-                                                <th>Loss Type</th>
-                                                <th>Loss Quantity </th>
-                                                <th>Responsible Person</th>
-                                                <th>Contact No.</th>
-                                                <th>Circumstances</th>
-                                                {/* Add more columns as needed */}
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            {assetlosthistory.length === 0 ? (
+                                    <div className='col-md-12' style={{ maxHeight: "450px", overflowY: "auto" }}>
+                                        <table className="table table-striped table-bordered" style={{ width: "100%" }}>
+                                            <thead style={{ position: "sticky", top: "0", zIndex: "1", backgroundColor: "#fff" }}>
                                                 <tr>
-                                                    <td colSpan="8" className="text-center">No Attendance Found. First Select the Employee.</td>
+                                                    <th>Asset Name</th>
+                                                    <th>Loss Date</th>
+                                                    <th>Loss Location</th>
+                                                    <th>Loss Type</th>
+                                                    <th>Loss Quantity </th>
+                                                    <th>Responsible Person</th>
+                                                    <th>Contact No.</th>
+                                                    <th>Circumstances</th>
+                                                    {/* Add more columns as needed */}
                                                 </tr>
-                                            ) : (
-                                                assetlosthistory.map((lost) => (
-                                                    <tr key={lost.id}>
-                                                        <td>{lost.assetName}</td>
-                                                        <td>{formatDate(lost.lossDate)}</td>
-                                                        <td>{lost.lossLocation}</td>
-                                                        <td>{lost.lossType}</td>
-                                                        <td>{lost.newquantity}</td>
-                                                        <td>{lost.responsiblePerson}</td>
-                                                        <td>{lost.contactNo}</td>
-                                                        <td>{lost.lossCircumstances}</td>
-                                                        {/* Render more columns as needed */}
+                                            </thead>
+                                            <tbody>
+                                                {assetlosthistory.length === 0 ? (
+                                                    <tr>
+                                                        <td colSpan="8" className="text-center">No Attendance Found. First Select the Employee.</td>
                                                     </tr>
-                                                ))
-                                            )}
-                                        </tbody>
+                                                ) : (
+                                                    assetlosthistory.map((lost) => (
+                                                        <tr key={lost.id}>
+                                                            <td>{lost.assetName}</td>
+                                                            <td>{formatDate(lost.lossDate)}</td>
+                                                            <td>{lost.lossLocation}</td>
+                                                            <td>{lost.lossType}</td>
+                                                            <td>{lost.newquantity}</td>
+                                                            <td>{lost.responsiblePerson}</td>
+                                                            <td>{lost.contactNo}</td>
+                                                            <td>{lost.lossCircumstances}</td>
+                                                            {/* Render more columns as needed */}
+                                                        </tr>
+                                                    ))
+                                                )}
+                                            </tbody>
 
-                                    </table>
+                                        </table>
+                                    </div>
+
                                     {/* Pagination */}
                                     <ul className="pagination">
                                         <li className={`page-item ${currentPage === 1 && 'disabled'}`}>

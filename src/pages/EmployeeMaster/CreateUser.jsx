@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const CreateUser = ({ onClose, employee, onUpdateEmployees }) => {
+const CreateUser = ({ onClose, employee, onUpdate }) => {
     const navigate = useNavigate();
     const [username, setUsername] = useState(employee ? employee.ename : '');
     const [email, setEmail] = useState(employee ? employee.eemail : '');
@@ -20,8 +20,12 @@ const CreateUser = ({ onClose, employee, onUpdateEmployees }) => {
             const data = await response.json();
             // Check if user creation is successful
             if (response.ok) {
-                onClose(); // Close the modal after successful signup
-                onUpdateEmployees();
+                onUpdate();
+                setTimeout(() => {
+                    onClose();
+                    window.location.reload();
+                }, 1000); // 1 second delay
+
                 // Optionally, you can navigate to a different page after successful signup
                 // navigate('/dashboard');
             } else {

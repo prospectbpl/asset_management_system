@@ -1,7 +1,7 @@
 // import React, { useState } from "react";
 // import axios from "axios";
 
-// const AddClientModal = ({ onClose, onUpdateClients }) => {
+// const AddClientModal = ({ onClose, onUpdate }) => {
 //     const [formData, setFormData] = useState({
 //         clientName: "",
 //         clientAddress: "",
@@ -30,7 +30,7 @@
 
 //     const handleSubmit = async (e) => {
 //         e.preventDefault();
-    
+
 //         const requiredFields = ["clientName","clientMobile","clientAddress","clientEmail","representativeName","designation","gstNo","bankName","accountNo","ifscCode","bankAddress"];
 //         for (const field of requiredFields) {
 //           if (!formData[field]) {
@@ -38,24 +38,24 @@
 //             return;
 //           }
 //         }
-        
+
 //     setError("");
 
-    
+
 //         try {
 //             const response = await axios.post(`${apiUrl}/clientdata`, formData);
 //             console.log("Data uploaded successfully:", response.data);
-      
+
 //             // Call the parent function to update clients data and trigger toast notification
-//             onUpdateClients();
-      
+//             onUpdate();
+
 //             onClose();
 //         } catch (error) {
 //             setError('Failed to add client'); // Update error message here
 //             console.error("Error uploading data:", error);
 //         }
 //     };
-    
+
 
 //     const handleClose = () => {
 //         onClose();
@@ -270,7 +270,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 
-const AddClientModal = ({ onClose, onUpdateClients }) => {
+const AddClientModal = ({ onClose, onUpdate }) => {
     const [formData, setFormData] = useState({
         clientName: "",
         clientAddress: "",
@@ -299,26 +299,27 @@ const AddClientModal = ({ onClose, onUpdateClients }) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-    
-        const requiredFields = ["clientName","clientMobile","clientAddress","clientEmail","representativeName","designation","gstNo","bankName","accountNo","ifscCode","bankAddress"];
+
+        const requiredFields = ["clientName", "clientMobile", "clientAddress", "clientEmail", "representativeName", "designation", "gstNo", "bankName", "accountNo", "ifscCode", "bankAddress"];
         for (const field of requiredFields) {
-          if (!formData[field]) {
-            setError(`Please fill in the ${field.replace(/([A-Z])/g, ' $1').toLowerCase()}`);
-            return;
-          }
+            if (!formData[field]) {
+                setError(`Please fill in the ${field.replace(/([A-Z])/g, ' $1').toLowerCase()}`);
+                return;
+            }
         }
-        
+
         setError("");
 
         try {
             const response = await axios.post(`${apiUrl}/clientdata`, formData);
             console.log("Data uploaded successfully:", response.data);
-      
+
             // Call the parent function to update clients data and trigger toast notification
-            
-      
-            onClose();
-            onUpdateClients();
+            onUpdate();
+            setTimeout(() => {
+                onClose();
+                window.location.reload();
+            }, 1000); // 1 second delay
         } catch (error) {
             setError('Failed to add client'); // Update error message here
             console.error("Error uploading data:", error);

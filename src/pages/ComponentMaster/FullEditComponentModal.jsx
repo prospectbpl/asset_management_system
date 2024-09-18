@@ -217,7 +217,10 @@ const EditFullComponentModal = ({ component, onClose, onUpdate }) => {
       console.log("eddit", editedComponent)
       toast.success('Data updated successfully');
       onUpdate();
-      onClose();
+      setTimeout(() => {
+        onClose();
+        window.location.reload();
+      }, 1000); // 1 second delay
     } catch (error) {
       console.error('Error updating component:', error);
       toast.error('Failed to save data');

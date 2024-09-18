@@ -1,7 +1,7 @@
 // import React, { useState, useEffect } from "react";
 // import axios from "axios";
 
-// const AddDataModal = ({ onClose, onUpdateComponents }) => {
+// const AddDataModal = ({ onClose, onUpdate }) => {
 //   const [formData, setFormData] = useState({
 //     name: "",
 //     size: "",
@@ -77,7 +77,7 @@
 //       console.log("Component data uploaded successfully:", response.data);
 
 //       onClose();
-//       onUpdateComponents();
+//       onUpdate();
 //     } catch (error) {
 //       console.error("Error uploading component data:", error);
 //     }
@@ -146,7 +146,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
-const AddComponent = ({ onClose, onUpdateComponents }) => {
+const AddComponent = ({ onClose, onUpdate }) => {
   const [formData, setFormData] = useState({
     name: "",
     size: "",
@@ -192,7 +192,7 @@ const AddComponent = ({ onClose, onUpdateComponents }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
+
     const requiredFields = ["name", "size", "categoryName"];
     for (const field of requiredFields) {
       if (!formData[field]) {
@@ -204,9 +204,9 @@ const AddComponent = ({ onClose, onUpdateComponents }) => {
       setError("Please upload file");
       return;
     }
-  
+
     setError("");
-  
+
     try {
       // Upload component data
       const formDataToSend = new FormData();
@@ -215,17 +215,19 @@ const AddComponent = ({ onClose, onUpdateComponents }) => {
       formDataToSend.append('categoryId', formData.category_id); // Use category_id instead of categoryName
       formDataToSend.append('categoryName', formData.categoryName); // Include category name
       formDataToSend.append('picture', formData.picture);
-  
+
       const response = await axios.post(`${process.env.REACT_APP_LOCAL_URL}/components`, formDataToSend);
       console.log("Component data uploaded successfully:", response.data);
-  
-      onClose();
-      onUpdateComponents();
+      onUpdate();
+      setTimeout(() => {
+        onClose();
+        window.location.reload();
+      }, 1000); // 1 second delay
     } catch (error) {
       console.error("Error uploading component data:", error);
     }
   };
-  
+
 
   const handleClose = () => {
     onClose();
@@ -253,20 +255,20 @@ const AddComponent = ({ onClose, onUpdateComponents }) => {
               <div className="form-group">
                 <label>Category</label>
                 <select
-                    name="categoryName"
-                    id="categoryName"
-                    className="form-control"
-                    value={formData.categoryName}
-                    onChange={handleChange}
-                    required
-                  >
-                    <option value="" disabled hidden>Select Category</option>
-                    {categories.map((category) => (
-                      <option key={category.id} value={category.categoryName}>
-                        {category.categoryName}
-                      </option>
-                    ))}
-                  </select>
+                  name="categoryName"
+                  id="categoryName"
+                  className="form-control"
+                  value={formData.categoryName}
+                  onChange={handleChange}
+                  required
+                >
+                  <option value="" disabled hidden>Select Category</option>
+                  {categories.map((category) => (
+                    <option key={category.id} value={category.categoryName}>
+                      {category.categoryName}
+                    </option>
+                  ))}
+                </select>
               </div>
               <div className="form-group">
                 <label>Component Picture</label>

@@ -496,7 +496,7 @@
 //               {/*  <!-- End of Topbar --> */}
 
 //               {/* <!-- Begin Page Content --> */}
-//               <div className="container-fluid">
+//               <div className="container-fluid bg-white">
 //                 {showComponentDetails ? (
 //                   <ComponentDetails
 //                     component={selectedComponent}
@@ -611,7 +611,7 @@
 //                     onUpdate={handleUpdateComponent}
 //                   />
 //                 )}
-//                 {isComponentModalOpen && (<AddComponent onClose={handleCloseModal} onUpdateComponents={handleUpdateComponentList} />)}
+//                 {isComponentModalOpen && (<AddComponent onClose={handleClo={handleUpdateComponentList} />)}
 //               </div>
 //             </div>
 //           </div>
@@ -750,9 +750,9 @@
 //   return (
 //     <div className='d-flex w-100 h-100 '>
 //       <Sidebar />
-//       <div className='w-100'>
+//       <div className='w-100 bg-white'>
 //         <SearchBar username={username} handleLogout={handleLogout} /> {/* Pass username and handleLogout props */}
-//         <div className="container-fluid">
+//         <div className="container-fluid bg-white">
 //           {showComponentDetails ? (
 //             <ComponentDetails
 //               component={selectedComponent}
@@ -871,7 +871,7 @@
 //               onUpdate={handleUpdateComponent}
 //             />
 //           )}
-//           {isComponentModalOpen && (<AddComponent onClose={handleCloseModal} onUpdateComponents={handleUpdateComponentList} />)}
+//           {isComponentModalOpen && (<AddComponent onClose={handleClo={handleUpdateComponentList} />)}
 //         </div>
 //       </div>
 //     </div>
@@ -976,9 +976,9 @@ function ComponentList({ handleLogout, username }) {
   return (
     <div className='d-flex w-100 h-100 '>
       <Sidebar />
-      <div className='w-100'>
+      <div className='w-100 bg-white'>
         <SearchBar username={username} handleLogout={handleLogout} />
-        <div className="container-fluid">
+        <div className="container-fluid bg-white">
           <ToastContainer />
           <div className="row">
             <div className="col-xl-12">
@@ -1004,41 +1004,50 @@ function ComponentList({ handleLogout, username }) {
                         </tr>
                       </thead>
                       <tbody>
-                        {currentItems.map((component) => (
-                          <tr key={component.id}>
-                            <td>
-                              <img
-                                src={`${process.env.REACT_APP_LOCAL_URL}/uploads/components/${component.componentImage}`}
-                                style={{ width: "90px" }}
-                                alt="component"
-                              />
-                            </td>
-                            <td>{component.componentName}</td>
-                            <td>{component.size}</td>
-                            <td>{component.category}</td>
-                            <td>
-                              <div className="btn-group">
-                                <button className="btn btn-sm btn-primary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                  <i className="fa fa-ellipsis-h" aria-hidden="true"></i>
-                                </button>
-                                <div className="dropdown-menu actionmenu" x-placement="bottom-start">
-                                  <a
-                                    className="dropdown-item"
-                                    href="#"
-                                    onClick={() =>
-                                      handleComponentDetails(component)
-                                    }
-                                  >
-                                    <i className="fa fa-file "></i>
-                                    <span> Details</span>
-                                  </a>
-                                  <a className="dropdown-item" href="#" id="btnedit" customdata="386" data-toggle="modal" data-target="#edit" onClick={() => handleEditComponent(component)}><i className="fa fa-pencil"></i> Edit</a>
-                                  {/* <a className="dropdown-item" href="#" id="btnedit" customdata="386" data-toggle="modal" data-target="#delete" onClick={() => handleDeleteComponent(component.id)}><i className="fa fa-trash"></i> Delete</a> */}
-                                </div>
-                              </div>
-                            </td>
+                        <style>
+                          {`.hyperlink:hover {color: blue;}`}
+                        </style>
+                        {currentItems.length === 0 ? (
+                          <tr>
+                            <td colSpan="7" className="text-center">Thier is No Asset.</td>
                           </tr>
-                        ))}
+                        ) : (
+                          currentItems.map((component) => (
+                            <tr key={component.id}>
+                              <td>
+                                <img
+                                  src={`${process.env.REACT_APP_LOCAL_URL}/uploads/components/${component.componentImage}`}
+                                  style={{ width: "90px" }}
+                                  alt="component"
+                                />
+                              </td>
+                              <td className='hyperlink' style={{ cursor: "pointer" }} onClick={() => handleComponentDetails(component)}>{component.componentName}</td>
+                              <td>{component.size}</td>
+                              <td>{component.category}</td>
+                              <td>
+                                <div className="btn-group">
+                                  <button className="btn btn-sm btn-primary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <i className="fa fa-ellipsis-h" aria-hidden="true"></i>
+                                  </button>
+                                  <div className="dropdown-menu actionmenu" x-placement="bottom-start">
+                                    <a
+                                      className="dropdown-item"
+                                      href="#"
+                                      onClick={() =>
+                                        handleComponentDetails(component)
+                                      }
+                                    >
+                                      <i className="fa fa-file "></i>
+                                      <span> Details</span>
+                                    </a>
+                                    <a className="dropdown-item" href="#" id="btnedit" customdata="386" data-toggle="modal" data-target="#edit" onClick={() => handleEditComponent(component)}><i className="fa fa-pencil"></i> Edit</a>
+                                    {/* <a className="dropdown-item" href="#" id="btnedit" customdata="386" data-toggle="modal" data-target="#delete" onClick={() => handleDeleteComponent(component.id)}><i className="fa fa-trash"></i> Delete</a> */}
+                                  </div>
+                                </div>
+                              </td>
+                            </tr>
+                          ))
+                        )}
                       </tbody>
                     </table>
                   </div>
@@ -1066,11 +1075,11 @@ function ComponentList({ handleLogout, username }) {
             <EditComponentModal
               component={editComponentData}
               onClose={() => setIsEditModalOpen(false)}
-              onUpdate={handleEditUpdateComponent}
+              onUpdate={handleOnAddComponent}
             />
           )}
           {isComponentModalOpen && (
-            <AddComponent onClose={handleCloseModal} onUpdateComponents={handleOnAddComponent} />
+            <AddComponent onClose={handleCloseModal} onUpdate={handleOnAddComponent} />
           )}
         </div>
       </div>

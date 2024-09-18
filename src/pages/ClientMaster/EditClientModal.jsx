@@ -30,8 +30,11 @@ const EditClientModal = ({ client, onClose, onUpdate }) => {
 
         try {
             await axios.put(`${process.env.REACT_APP_LOCAL_URL}/clients/${editedClient.id}`, editedClient);
-            onUpdate(editedClient);
-            onClose();
+            onUpdate();
+            setTimeout(() => {
+                onClose();
+                window.location.reload();
+            }, 1000); // 1 second delay
         } catch (error) {
             console.error("Error updating client:", error);
         }
@@ -51,7 +54,7 @@ const EditClientModal = ({ client, onClose, onUpdate }) => {
                             <button type="button" className="close" onClick={handleClose}>&times;</button>
                         </div>
                         <div className="modal-body" style={{ maxHeight: "calc(100vh - 200px)", overflowY: "auto" }}>
-                        {error && <div className="alert alert-danger">{error}</div>}
+                            {error && <div className="alert alert-danger">{error}</div>}
                             <div className="row">
                                 <div className="col-md-6">
                                     <div className="form-group">

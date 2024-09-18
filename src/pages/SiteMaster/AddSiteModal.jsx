@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
-const AddSiteModal = ({ onClose, onUpdateSites }) => {
+const AddSiteModal = ({ onClose, onUpdate }) => {
     const [formData, setFormData] = useState({
         siteName: "",
         siteID: "",
@@ -92,8 +92,11 @@ const AddSiteModal = ({ onClose, onUpdateSites }) => {
             );
 
             console.log("Data uploaded successfully:", response.data);
-            onClose();
-            onUpdateSites(); // Update sites list
+            onUpdate(); // Update sites list
+            setTimeout(() => {
+                onClose();
+                window.location.reload();
+            }, 1000); // 1 second delay
         } catch (error) {
             console.error("Error uploading data:", error);
         }

@@ -633,8 +633,11 @@ const EditAssetModal = ({ asset, onUpdate, onClose }) => {
                 }
             );
             console.log("Asset updated successfully:", response.data);
-            if (onUpdate) onUpdate();
-            onClose();
+            onUpdate();
+            setTimeout(() => {
+                onClose();
+                window.location.reload();
+            }, 1000); // 1 second delay
         } catch (error) {
             console.error("Error updating asset:", error);
         }
@@ -776,7 +779,7 @@ const EditAssetModal = ({ asset, onUpdate, onClose }) => {
                                                     onChange={handleChange}
                                                 />
                                             </div>
-                                            
+
                                         </>
                                     )}
                                 </div>

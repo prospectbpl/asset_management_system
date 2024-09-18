@@ -11,7 +11,7 @@ const EmployeeDetails = ({ employee, onClose }) => {
     const [activeInactivelastOccurence, setActiveInactivelastOccurence] = useState(null);
     // pagination 
     const [currentPage, setCurrentPage] = useState(1);
-    const [itemsPerPage, setItemsPerPage] = useState(5);
+    const [itemsPerPage, setItemsPerPage] = useState(25);
 
 
     useEffect(() => {
@@ -118,7 +118,7 @@ const EmployeeDetails = ({ employee, onClose }) => {
                     <div className="col-md-9 bg-light border rounded shadow-sm d-flex justify-content-between  py-3">
                         <div>
                             <h2 style={{ color: "#00509d" }} className="title-detail fw-bolder fw-bolder m-0">
-                            {employee.ename}
+                                {employee.ename}
                             </h2>
                             <hr className="m-1" />
                             <h6 className="title-detail m-0">
@@ -323,38 +323,41 @@ const EmployeeDetails = ({ employee, onClose }) => {
                             <div className="tab-pane fade" id="checkin" role="tabpanel" aria-labelledby="checkin-tab">
                                 <div className="row">
                                     <div className="col-md-12">
-                                        <table className="table table-striped table-bordered">
-                                            <thead>
-                                                <tr>
-                                                    <th>Asset Name</th>
-                                                    <th>Transfer From</th>
-                                                    <th>Transfer TO</th>
-                                                    <th>Total Quantity</th>
-                                                    <th>Transfer Quantity</th>
-                                                    <th>Transfer Date</th>
-                                                    <th>Transporter Name</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                {currentItemsforcheckinhistory.length === 0 ? (
+                                        <div style={{ maxHeight: "450px", overflowY: "auto" }}>
+                                            <table className="table table-striped table-bordered" style={{ width: "100%" }}>
+                                                <thead style={{ position: "sticky", top: "0", zIndex: "1", backgroundColor: "#fff" }}>
                                                     <tr>
-                                                        <td colSpan="7" className="text-center">Thier is No CheckIn Asset .</td>
+                                                        <th>Asset Name</th>
+                                                        <th>Transfer From</th>
+                                                        <th>Transfer TO</th>
+                                                        <th>Total Quantity</th>
+                                                        <th>Transfer Quantity</th>
+                                                        <th>Transfer Date</th>
+                                                        <th>Transporter Name</th>
                                                     </tr>
-                                                ) : (
-                                                    currentItemsforcheckinhistory.map((entry) => (
-                                                        <tr key={entry.event_id}>
-                                                            <td>{entry.assetName}</td>
-                                                            <td>{entry.transferFrom}</td>
-                                                            <td>{entry.location}</td>
-                                                            <td>{entry.currentQuantity}</td>
-                                                            <td>{entry.quantity}</td>
-                                                            <td>{formatDate(entry.transferDate)}</td>
-                                                            <td>{entry.selectedTransporterName}</td>
+                                                </thead>
+                                                <tbody>
+                                                    {currentItemsforcheckinhistory.length === 0 ? (
+                                                        <tr>
+                                                            <td colSpan="7" className="text-center">Thier is No CheckIn Asset .</td>
                                                         </tr>
-                                                    ))
-                                                )}
-                                            </tbody>
-                                        </table>
+                                                    ) : (
+                                                        currentItemsforcheckinhistory.map((entry) => (
+                                                            <tr key={entry.event_id}>
+                                                                <td>{entry.assetName}</td>
+                                                                <td>{entry.transferFrom}</td>
+                                                                <td>{entry.location}</td>
+                                                                <td>{entry.currentQuantity}</td>
+                                                                <td>{entry.quantity}</td>
+                                                                <td>{formatDate(entry.transferDate)}</td>
+                                                                <td>{entry.selectedTransporterName}</td>
+                                                            </tr>
+                                                        ))
+                                                    )}
+                                                </tbody>
+                                            </table>
+                                        </div>
+
                                         {/* Pagination */}
                                         <ul className="pagination">
                                             <li className={`page-item ${currentPage === 1 && 'disabled'}`}>
@@ -377,38 +380,41 @@ const EmployeeDetails = ({ employee, onClose }) => {
                             <div className="tab-pane fade" id="checkout" role="tabpanel" aria-labelledby="checkout-tab">
                                 <div className="row">
                                     <div className="col-md-12">
-                                        <table className="table table-striped table-bordered">
-                                            <thead>
-                                                <tr>
-                                                    <th>Asset Name</th>
-                                                    <th>Transfer From</th>
-                                                    <th>Transfer TO</th>
-                                                    <th>Total Quantity</th>
-                                                    <th>Transfer Quantity</th>
-                                                    <th>Transfer Date</th>
-                                                    <th>Transporter Name</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                {currentItemsforcheckOuthistory.length === 0 ? (
+                                        <div style={{ maxHeight: "450px", overflowY: "auto" }}>
+                                            <table className="table table-striped table-bordered" style={{ width: "100%" }}>
+                                                <thead style={{ position: "sticky", top: "0", zIndex: "1", backgroundColor: "#fff" }}>
                                                     <tr>
-                                                        <td colSpan="7" className="text-center">Thier is No CheckOut Asset .</td>
+                                                        <th>Asset Name</th>
+                                                        <th>Transfer From</th>
+                                                        <th>Transfer TO</th>
+                                                        <th>Total Quantity</th>
+                                                        <th>Transfer Quantity</th>
+                                                        <th>Transfer Date</th>
+                                                        <th>Transporter Name</th>
                                                     </tr>
-                                                ) : (
-                                                    currentItemsforcheckOuthistory.map((entry) => (
-                                                        <tr key={entry.event_id}>
-                                                            <td>{entry.assetName}</td>
-                                                            <td>{entry.transferFrom}</td>
-                                                            <td>{entry.location}</td>
-                                                            <td>{entry.currentQuantity}</td>
-                                                            <td>{entry.quantity}</td>
-                                                            <td>{formatDate(entry.transferDate)}</td>
-                                                            <td>{entry.selectedTransporterName}</td>
+                                                </thead>
+                                                <tbody>
+                                                    {currentItemsforcheckOuthistory.length === 0 ? (
+                                                        <tr>
+                                                            <td colSpan="7" className="text-center">Thier is No CheckOut Asset .</td>
                                                         </tr>
-                                                    ))
-                                                )}
-                                            </tbody>
-                                        </table>
+                                                    ) : (
+                                                        currentItemsforcheckOuthistory.map((entry) => (
+                                                            <tr key={entry.event_id}>
+                                                                <td>{entry.assetName}</td>
+                                                                <td>{entry.transferFrom}</td>
+                                                                <td>{entry.location}</td>
+                                                                <td>{entry.currentQuantity}</td>
+                                                                <td>{entry.quantity}</td>
+                                                                <td>{formatDate(entry.transferDate)}</td>
+                                                                <td>{entry.selectedTransporterName}</td>
+                                                            </tr>
+                                                        ))
+                                                    )}
+                                                </tbody>
+                                            </table>
+                                        </div>
+
                                         {/* Pagination */}
                                         <ul className="pagination">
                                             <li className={`page-item ${currentPage === 1 && 'disabled'}`}>
@@ -430,32 +436,35 @@ const EmployeeDetails = ({ employee, onClose }) => {
                             <div className="tab-pane fade" id="employee_history" role="tabpanel" aria-labelledby="employee-history">
                                 <div className="row">
                                     <div className="col-md-12">
-                                        <table className="table table-striped table-bordered">
-                                            <thead>
-                                                <tr>
-                                                    <th>Status</th>
-                                                    <th>Reason </th>
-                                                    <th>Date of Active/Inactive</th>
-                                                    <th>Description</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                {currentItemsforemployeehistory.length === 0 ? (
+                                        <div style={{ maxHeight: "450px", overflowY: "auto" }}>
+                                            <table className="table table-striped table-bordered" style={{ width: "100%" }}>
+                                                <thead style={{ position: "sticky", top: "0", zIndex: "1", backgroundColor: "#fff" }}>
                                                     <tr>
-                                                        <td colSpan="7" className="text-center">Thier is No ActiveInactive Details .</td>
+                                                        <th>Status</th>
+                                                        <th>Reason </th>
+                                                        <th>Date of Active/Inactive</th>
+                                                        <th>Description</th>
                                                     </tr>
-                                                ) : (
-                                                    currentItemsforemployeehistory.map((entry) => (
-                                                        <tr key={entry.event_id}>
-                                                            <td>{entry.status}</td>
-                                                            <td>{entry.reason}</td>
-                                                            <td>{formatDate(entry.date)}</td>
-                                                            <td>{entry.description}</td>
+                                                </thead>
+                                                <tbody>
+                                                    {currentItemsforemployeehistory.length === 0 ? (
+                                                        <tr>
+                                                            <td colSpan="7" className="text-center">Thier is No ActiveInactive Details .</td>
                                                         </tr>
-                                                    ))
-                                                )}
-                                            </tbody>
-                                        </table>
+                                                    ) : (
+                                                        currentItemsforemployeehistory.map((entry) => (
+                                                            <tr key={entry.event_id}>
+                                                                <td>{entry.status}</td>
+                                                                <td>{entry.reason}</td>
+                                                                <td>{formatDate(entry.date)}</td>
+                                                                <td>{entry.description}</td>
+                                                            </tr>
+                                                        ))
+                                                    )}
+                                                </tbody>
+                                            </table>
+                                        </div>
+
                                         {/* Pagination */}
                                         <ul className="pagination">
                                             <li className={`page-item ${currentPage === 1 && 'disabled'}`}>

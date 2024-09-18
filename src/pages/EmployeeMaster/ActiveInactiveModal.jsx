@@ -50,7 +50,10 @@ const ActiveInactiveModal = ({ onClose, onUpdate, employee, client, site }) => {
 
             console.log('Status updated successfully');
             onUpdate();
-            onClose();
+            setTimeout(() => {
+                onClose();
+                window.location.reload();
+            }, 1000); // 1 second delay
         } catch (error) {
             console.error('Error updating status:', error);
         }
