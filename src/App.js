@@ -181,7 +181,9 @@ const App = () => {
     if (token) {
       try {
         const decodedToken = jwtDecode(token);
-        if (decodedToken.exp * 5000 < Date.now()) {
+
+        // Expiry time is in seconds, convert to milliseconds by multiplying by 1000
+        if (decodedToken.exp * 1000 < Date.now()) {
           localStorage.removeItem('token');
           localStorage.removeItem('username');
           localStorage.removeItem('userType');
