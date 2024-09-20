@@ -5,6 +5,7 @@ import SearchBar from "../../components/sidebar/SearchBar";
 import AddAsset from "./AddAsset";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import EditAssetMaster from "./EditAssetMaster";
 
 function AssetMasterList({ handleLogout, username }) {
   // State for storing assets
@@ -16,6 +17,9 @@ function AssetMasterList({ handleLogout, username }) {
   // State for managing Add Asset Modal
   const [assetMaster, setAddAssetMaster] = useState(null);
   const [assetMasterModalOpen, setAssetMasterModalOpen] = useState(false);
+  // Edit Asset Master List 
+  const [selectedEditAsset, setAddselectedEditAsset] = useState(null);
+  const [editAssetModalOpen, setEditAssetModalOpen] = useState(false);
 
   useEffect(() => {
     // Fetch assets and sites data on component mount
@@ -66,16 +70,25 @@ function AssetMasterList({ handleLogout, username }) {
     handleCloseAssetMaster();
   };
 
+  const handleEditAsset = (asset) => {
+    setAddselectedEditAsset(asset);
+    setEditAssetModalOpen(true);
+  };
+
+  const handleCloseEditAsset = () => {
+    setEditAssetModalOpen(false);
+  };
+
   return (
-    <div className="d-flex w-100% h-100">
+    <div className="d-flex w-100% h-100 bg-white">
       <Sidebar />
       <div className="w-100">
         <SearchBar username={username} handleLogout={handleLogout} />
-        <div className="container-fluid bg-white">
+        <div className="container-fluid">
           <ToastContainer />
           <div className="row">
             <div className="col-xl-12">
-              <div className="card shadow mb-4">
+              <div className="card shadow-sm mb-4">
                 <div className="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                   <h6 className="m-0 font-weight-bold text-primary">
                     Asset Master List
@@ -94,6 +107,8 @@ function AssetMasterList({ handleLogout, username }) {
                           <th>Asset Picture</th>
                           <th>Asset Name</th>
                           <th>Asset Type</th>
+                          <th>Registration No.</th>
+                          <th>RTO No.</th>
                           <th>Serial Number</th>
                         </tr>
                       </thead>
@@ -106,21 +121,45 @@ function AssetMasterList({ handleLogout, username }) {
                             <td colSpan="7" className="text-center">Thier is No Asset.</td>
                           </tr>
                         ) : (
-                            filteredAssets.map((asset) => (
-                              <tr key={asset.id}>
-                                <td>
-                                  <img
-                                    src={`${process.env.REACT_APP_LOCAL_URL}/uploads/assets/${asset.asset_image}`}
-                                    style={{ width: "90px" }}
-                                    alt="Asset"
-                                  />
-                                </td>
-                                <td>{asset.assetmaster_name}</td>
-                                <td>{asset.asset_type}</td>
-                                <td>{asset.serial_number}</td>
-                              </tr>
-                            ))
-                          )}
+                          filteredAssets.map((asset) => (
+                            <tr key={asset.id}>
+                              <td>
+                                <img
+                                  src={`${process.env.REACT_APP_LOCAL_URL}/uploads/assets/${asset.asset_image}`}
+                                  className="asset-image"
+                                  alt="Asset"
+                                />
+                              </td>
+                              <td>{asset.assetmaster_name || "N/A"}</td>
+                              <td>{asset.asset_type || "N/A"}</td>
+                              <td>{asset.registration_number || "N/A"}</td>
+                              <td>{asset.rto_name || "N/A"}</td>
+                              <td>{asset.serial_number || "N/A"}</td>
+                              <td>
+                                <div className="btn-group">
+                                  <button
+                                    className="btn btn-sm btn-primary dropdown-toggle"
+                                    type="button"
+                                    data-toggle="dropdown"
+                                    aria-haspopup="true"
+                                    aria-expanded="false"
+                                  >
+                                    <i className="fa fa-ellipsis-h" aria-hidden="true"></i>
+                                  </button>
+                                  <div className="dropdown-menu actionmenu" x-placement="bottom-start">
+                                    <a
+                                      className="dropdown-item"
+                                      href="#"
+                                      onClick={() => handleEditAsset(asset)}
+                                    >
+                                      <i className="fas fa-edit"></i> Edit
+                                    </a>
+                                  </div>
+                                </div>
+                              </td>
+                            </tr>
+                          ))
+                        )}
                       </tbody>
                     </table>
                   </div>
@@ -138,6 +177,8 @@ function AssetMasterList({ handleLogout, username }) {
           onClose={handleCloseAssetMaster}
         />
       )}
+      {editAssetModalOpen && <EditAssetMaster onClose={handleCloseEditAsset} assetMaster={selectedEditAsset} onUpdate={handleUpdateAssets} />}
+
     </div>
   );
 }

@@ -84,7 +84,7 @@ function BrandList({ handleLogout, username }) {
     };
 
     return (
-        <div className='d-flex w-100 h-100 '>
+        <div className='d-flex w-100 bg-white h-100 '>
             <Sidebar />
             <div className='w-100 '>
                 <SearchBar username={username} handleLogout={handleLogout} /> {/* Pass username and handleLogout props */}

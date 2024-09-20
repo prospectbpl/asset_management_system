@@ -115,7 +115,7 @@ function InsuranceExpiry({ handleLogout, username }) {
         return `${date.getDate().toString().padStart(2, '0')}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getFullYear()} `;
     };
     return (
-        <div className='d-flex w-100 h-100 '>
+        <div className='d-flex w-100 bg-white h-100 '>
             <Sidebar />
             <div className='w-100 bg-white'>
                 <SearchBar username={username} handleLogout={handleLogout} /> {/* Pass username and handleLogout props */}
@@ -154,7 +154,7 @@ function InsuranceExpiry({ handleLogout, username }) {
                                                             <td>
                                                                 <img
                                                                     src={`${process.env.REACT_APP_LOCAL_URL}/uploads/assets/${assetInsurance.assetPhoto}`}
-                                                                    style={{ width: "90px" }}
+                                                                    style={{ width: "90px" }} className="asset-image"
                                                                     alt="Asset"
                                                                 />
                                                             </td>

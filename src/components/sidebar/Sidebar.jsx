@@ -18,6 +18,7 @@ import AddAsset from "../../pages/AssetMaster/AddAsset";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import AddTransporterModal from "../../pages/Transport/AddTransporterModal";
+import logo from '../../images/Logo/logo.png';  //logo
 // list import  
 
 // import { Dashboard } from "@mui/icons-material";
@@ -234,7 +235,7 @@ function Sidebar({ handleLogout }) {
           {/*  <!-- Sidebar --> */}
           <ul className={style} id="accordionSidebar">
             {/*  <!-- Sidebar - Brand --> */}
-            <a className="sidebar-brand d-flex align-items-center justify-content-center w-100" href="#">
+            {/* <a className="sidebar-brand d-flex align-items-center justify-content-center w-100" href="#">
               <div className="sidebar-brand-text text-dark mx-3 w-100">
                 <div className='logo'>
                   <img
@@ -250,7 +251,24 @@ function Sidebar({ handleLogout }) {
               <div className="text-center d-none d-md-inline ">
                 <button className="rounded-circle border-0" id="sidebarToggle" onClick={changeStyle}></button>
               </div>
+            </a> */}
+            <a className="sidebar-brand d-flex align-items-center justify-content-center gap-2 px-3 py-1" href="#">
+              <div className="sidebar-brand-text" style={{width:"100%",height:"100%"}}>
+                <div className='logoo'>
+                  <img
+                    src={dashboardLogo.landingPageLogo
+                      ? `${process.env.REACT_APP_LOCAL_URL}/uploads/settings/${dashboardLogo.landingPageLogo}`
+                      : logo}
+                      className="img-logo"
+                    alt="LOGO"
+                  />
+                </div>
+              </div>
+              <div className="text-center d-none d-md-inline">
+                <button className="rounded-circle border-0" id="sidebarToggle" onClick={changeStyle}></button>
+              </div>
             </a>
+
             {/*   <!-- Divider --> */}
             <hr className="sidebar-divider my-0" />
 
@@ -476,12 +494,12 @@ function Sidebar({ handleLogout }) {
               </div>
             </li>
             {/* Nav Item - Total Delete */}
-            <li className="nav-item">
+            {/* <li className="nav-item">
               <Link className="nav-link" to="/deletelist" onClick={() => handleListClick("/deletelist")}>
                 <i className="fa fa-trash"></i>
                 <span>Delete List</span>
               </Link>
-            </li>
+            </li> */}
             {/* <!-- Divider --> */}
             <hr className="sidebar-divider d-none d-md-block" />
           </ul>
@@ -510,3 +528,24 @@ function Sidebar({ handleLogout }) {
 }
 
 export default Sidebar;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

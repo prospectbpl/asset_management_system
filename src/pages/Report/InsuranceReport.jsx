@@ -76,7 +76,7 @@ function InsuranceReport({ handleLogout, username }) {
     };
 
     return (
-        <div className='d-flex w-100% h-100'>
+        <div className='d-flex w-100% h-100 bg-white'>
             {showSidebar && <Sidebar />}
             <div className='w-100 bg-white'>
                 {showSearchBar && <SearchBar className="searchbarr" username={username} handleLogout={handleLogout} />}
@@ -153,7 +153,7 @@ function InsuranceReport({ handleLogout, username }) {
                                                                 <td>
                                                                     <img
                                                                         src={`${process.env.REACT_APP_LOCAL_URL}/uploads/assets/${insurance.assetPhoto}`}
-                                                                        style={{ width: "90px" }}
+                                                                        style={{ width: "90px" }} className="asset-image"
                                                                         alt="Asset Picture"
                                                                     />
                                                                 </td>

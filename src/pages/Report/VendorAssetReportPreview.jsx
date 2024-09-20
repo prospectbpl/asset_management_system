@@ -85,7 +85,7 @@ const VendorAssetReportPreview = ({ record, onClose }) => {
                                             <td>
                                                 <img
                                                     src={`${process.env.REACT_APP_LOCAL_URL}/uploads/assets/${asset.picture}`}
-                                                    style={{ width: "90px" }}
+                                                    style={{ width: "90px" }} className="asset-image"
                                                     alt="Asset"
                                                 />
                                             </td>

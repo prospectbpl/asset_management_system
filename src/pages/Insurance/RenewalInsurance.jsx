@@ -133,7 +133,7 @@ function RenewalInsurance({ renewalInsurances, onClose }) {
                         <tr key={assetInsurance.id}>
                           <td><img
                             src={`${process.env.REACT_APP_LOCAL_URL}/uploads/assets/${assetInsurance.assetPhoto}`}
-                            style={{ width: "90px" }}
+                            style={{ width: "90px" }} className="asset-image"
                             alt="Asset"
                           />
                           </td>

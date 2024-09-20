@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
+import { Container, Paper, Typography, TextField, Button, MenuItem, Select, InputLabel, FormControl } from '@mui/material';
 import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import myLogo from '../images/salary.jpg';
+import logo from '../images/salary.jpg';
+
 
 const SignUpAsset = () => {
   const [dashboardLogo, setDashboardLogo] = useState([]);
@@ -67,94 +69,106 @@ const SignUpAsset = () => {
   };
 
   const handleForgotPassword = () => {
-    navigate('/forgot-password'); // Adjust the route to your forgot password page
+    navigate('/forgotpassword');
   };
 
-  return (<div className="container-fluid d-flex flex-column justify-content-between align-items-center bg-body-tertiary" style={{ minHeight: '100vh' }}>
-    <ToastContainer /> {/* Toast container */}
-    <nav className="bg-transparent">
-      <div style={{ height: '50px' }}>
-        <img
-          src={dashboardLogo.landingPageLogo
-            ? `${process.env.REACT_APP_LOCAL_URL}/uploads/settings/${dashboardLogo.landingPageLogo}`
-            : myLogo}
-          style={{ height: "100%", objectFit: "cover" }}
-          alt="LOGO"
-        />
-      </div>
-    </nav>
-    <h1 className="text-black ml-3">HRM SOFTWARE</h1>
-    <div className="d-flex flex-column justify-content-between align-items-center gap-3 w-25">
-      <div className='bg-white p-3 rounded shadow-sm w-100' >
-        <div>
-          <h2 className='text-center text-black fw-bolder'>Signup</h2>
-          <form onSubmit={handleSubmit} autoComplete="off" noValidate="novalidate">
-            <div className="form-group">
-              <label className='text-black' htmlFor="username">Username</label>
-              <input
-                type="text"
-                id="username"
-                name="username"
-                value={formData.username}
-                onChange={handleChange}
-                required
-                placeholder='Username'
-                className='form-control'
-              />
-            </div>
-            <div className="form-group">
-              <label className='text-black' htmlFor="email">Email</label>
-              <input
-                type="email"
-                id="email"
-                name="email"
-                value={formData.email}
-                onChange={handleChange}
-                required
-                placeholder='Email'
-                className='form-control'
-              />
-            </div>
-            <div className="form-group">
-              <label className='text-black' htmlFor="password">Password</label>
-              <input
-                type="password"
-                id="password"
-                name="password"
-                value={formData.password}
-                onChange={handleChange}
-                required
-                placeholder='Password'
-                className='form-control'
-              />
-            </div>
-            <div className="form-group">
-              <label className='text-black' htmlFor="userType">userType</label>
-              <select
+
+  return (
+    <div className="container-fluid d-flex flex-column justify-content-between align-items-center bg-white" style={{ minHeight: '100vh' }}>
+      <ToastContainer /> {/* Toast container */}
+      <nav className="login-logo">
+        <div style={{ width: "100%", height: "100%" }} className=''>
+          <img
+            src={dashboardLogo.landingPageLogo
+              ? `${process.env.REACT_APP_LOCAL_URL}/uploads/settings/${dashboardLogo.landingPageLogo}`
+              : logo}
+            className='img-login-logo'
+            alt="LOGO"
+          />
+        </div>
+      </nav>
+
+      <Container className="d-flex flex-column justify-content-center align-items-center gap-3">
+        <h3 className="text-black ml-3 fw-bolder">HRM SOFTWARE</h3>
+        <Paper className="login-paper p-4" style={{ borderRadius: '20px' }} elevation={3}>
+          <Typography component="h1" variant="h5" style={{ textAlign: 'center' }}>
+            Sign Up
+          </Typography>
+          <form className="login-form" onSubmit={handleSubmit}>
+            <TextField
+              type="text"
+              id="username"
+              name="username"
+              value={formData.username}
+              onChange={handleChange}
+              required
+              placeholder="Username"
+              variant="outlined"
+              margin="normal"
+              fullWidth
+              label="Username"
+              autoComplete="username"
+              autoFocus
+            />
+            <TextField
+              type="email"
+              id="email"
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
+              required
+              placeholder="Email"
+              variant="outlined"
+              margin="normal"
+              fullWidth
+              label="Email Address"
+              autoComplete="email"
+            />
+            <TextField
+              type="password"
+              id="password"
+              name="password"
+              value={formData.password}
+              onChange={handleChange}
+              required
+              placeholder="Password"
+              variant="outlined"
+              margin="normal"
+              fullWidth
+              label="Password"
+              autoComplete="current-password"
+            />
+            <FormControl fullWidth margin="normal" variant="outlined">
+              <InputLabel id="userType-label">User Type</InputLabel>
+              <Select
+                labelId="userType-label"
                 id="userType"
                 name="userType"
                 value={formData.userType}
                 onChange={handleChange}
-                required
-                className='form-control'
+                label="User Type"
               >
-                <option value="user">User</option>
-                <option value="manager">Manager</option>
-                <option value="admin">Admin</option>
-              </select>
-            </div>
-            <div className='text-center'>
-              <button type="submit" className="btn btn-primary">Signup</button>
-            </div>
+                <MenuItem value="user">User</MenuItem>
+                <MenuItem value="manager">Manager</MenuItem>
+                <MenuItem value="admin">Admin</MenuItem>
+              </Select>
+            </FormControl>
+            <Button type="submit" fullWidth variant="contained" color="primary" className="login-button">
+              Sign Up
+            </Button>
+            <Typography variant="body2" className="text-center m-4">
+              <Link onClick={handleForgotPassword} className="signup-link" style={{ cursor: 'pointer' }}>
+                Forgot password?
+              </Link>
+            </Typography>
           </form>
-          <Link onClick={handleForgotPassword} className="forgot-password text-center">Forgot Password?</Link>
-        </div>
-      </div>
+        </Paper>
+      </Container>
       <footer className='p-2'>
         Version 1.0 &copy; Developed by Prospect Digital
       </footer>
     </div>
-  </div>);
+  );
 };
 
 export default SignUpAsset;

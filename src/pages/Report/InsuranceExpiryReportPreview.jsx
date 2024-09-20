@@ -116,7 +116,7 @@ const InsuranceExpiryReportPreview = ({ record, onClose }) => {
                                             <td>
                                                 <img
                                                     src={`${process.env.REACT_APP_LOCAL_URL}/uploads/assets/${insurance.assetPhoto}`}
-                                                    style={{ width: "90px" }}
+                                                    style={{ width: "90px" }} className="asset-image"
                                                     alt="Asset Picture"
                                                 />
                                             </td>

@@ -202,7 +202,7 @@ const AssetDesc = ({ asset, onClose }) => {
     }
 
     return (
-        <div className="shadow-sm bg-white rounded">
+        <div className="shadow-sm bg-white rounded mb-4">
             <ToastContainer />
             <div className="card-body p-4">
                 {/* Asset Details Section */}
@@ -351,7 +351,6 @@ const AssetDesc = ({ asset, onClose }) => {
                                 </a>
                             </li>
                         </ul>
-
                         {/* Tab Content Section */}
                         <div className="tab-content" id="myTabContent">
                             {/* Details Tab Content */}
@@ -362,90 +361,136 @@ const AssetDesc = ({ asset, onClose }) => {
                                 aria-labelledby="details-tab"
                             >
                                 {/* Asset Details */}
-                                <div class="row">
-                                    <div class="col-md-9 ">
+                                <div class="row ">
+                                    <div class="col-md-9">
                                         {/* Table for Asset Details */}
-                                        <table
-                                            class="table table-hover"
-                                            cellpadding="0"
-                                            cellspacing="0"
-                                        >
-                                            <tbody>
-                                                <tr>
-                                                    <td bgcolor="#f2f3f4" width="200">
-                                                        <p class="mb-0 fw-bolder">Asset Name</p>
-                                                    </td>
-                                                    <td>
-                                                        <p class="mb-0">: {asset.name}</p>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td bgcolor="#f2f3f4" width="200">
-                                                        <p class="mb-0 fw-bolder">Asset Tag</p>
-                                                    </td>
-                                                    <td>
-                                                        <p class="mb-0">: {asset.assettag}</p>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td bgcolor="#f2f3f4" width="200">
-                                                        <p class="mb-0 fw-bolder">Type</p>
-                                                    </td>
-                                                    <td>
-                                                        <p class="mb-0">: {asset.assetType}</p>
-                                                    </td>
-                                                </tr>
+                                        <div className='col-md-12 p-0' style={{ maxHeight: "450px", overflowY: "auto" }}>
+                                            <table className="table table-striped table-bordered" style={{ width: "100%" }}>
+                                                <tbody>
+                                                    <tr>
+                                                        <td bgcolor="#f2f3f4" width="200">
+                                                            <p class="mb-0 fw-bolder">Asset Name</p>
+                                                        </td>
+                                                        <td>
+                                                            <p class="mb-0">: {asset.name}</p>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td bgcolor="#f2f3f4" width="200">
+                                                            <p class="mb-0 fw-bolder">Asset Tag</p>
+                                                        </td>
+                                                        <td>
+                                                            <p class="mb-0">: {asset.assettag}</p>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td bgcolor="#f2f3f4" width="200">
+                                                            <p class="mb-0 fw-bolder">Type</p>
+                                                        </td>
+                                                        <td>
+                                                            <p class="mb-0">: {asset.assetType}</p>
+                                                        </td>
+                                                    </tr>
 
-                                                <tr>
-                                                    <td bgcolor="#f2f3f4" width="200">
-                                                        <p class="mb-0 fw-bolder">Serial</p>
-                                                    </td>
-                                                    <td>
-                                                        <p class="mb-0">: {asset.serial}</p>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td bgcolor="#f2f3f4" width="200">
-                                                        <p class="mb-0 fw-bolder">RTO Name</p>
-                                                    </td>
-                                                    <td>
-                                                        <p class="mb-0">: {asset.rtoName}</p>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td bgcolor="#f2f3f4" width="200">
-                                                        <p class="mb-0 fw-bolder">Registration Number</p>
-                                                    </td>
-                                                    <td>
-                                                        <p class="mb-0">: {asset.registrationNumber}</p>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td bgcolor="#f2f3f4" width="200">
-                                                        <p class="mb-0 fw-bolder">Insurance</p>
-                                                    </td>
-                                                    <td>
-                                                        <p class="mb-0">: {asset.takeInsurance}</p>
-                                                    </td>
-                                                </tr>
-                                                <h6 className=' m-0 text-primary fw-bolder p-2'>Asset Location wise ----</h6>
-                                                {assetDetails.map((assetDetail, index) => (
-                                                    <React.Fragment key={index}>
-                                                        <tr>
-                                                            <td bgcolor="#f2f3f4" width="200">
-                                                                <p className="mb-0 fw-bolder">Location</p>
-                                                            </td>
-                                                            <td bgcolor="#f2f3f4" >
-                                                                <p className="mb-0">: {assetDetail.location}</p>
-                                                                <p>&nbsp; Quantity :{assetDetail.quantity}</p>
+                                                    <tr>
+                                                        <td bgcolor="#f2f3f4" width="200">
+                                                            <p class="mb-0 fw-bolder">Serial</p>
+                                                        </td>
+                                                        <td>
+                                                            <p class="mb-0">: {asset.serial}</p>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td bgcolor="#f2f3f4" width="200">
+                                                            <p class="mb-0 fw-bolder">RTO Name</p>
+                                                        </td>
+                                                        <td>
+                                                            <p class="mb-0">: {asset.rtoName}</p>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td bgcolor="#f2f3f4" width="200">
+                                                            <p class="mb-0 fw-bolder">Registration Number</p>
+                                                        </td>
+                                                        <td>
+                                                            <p class="mb-0">: {asset.registrationNumber}</p>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td width="200">
+                                                            <p class="mb-0 fw-bolder">Vendor Company</p>
+                                                        </td>
+                                                        <td>
+                                                            <p class="mb-0">: {asset.vendorcompanyname}</p>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td width="200">
+                                                            <p class="mb-0 fw-bolder text-black">Category Name</p>
+                                                        </td>
+                                                        <td>
+                                                            <p class="mb-0">: {asset.category_name}</p>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td width="200">
+                                                            <p class="mb-0 fw-bolder text-black">Category Name</p>
+                                                        </td>
+                                                        <td>
+                                                            <p class="mb-0">: {asset.category_name}</p>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td width="200">
+                                                            <p class="mb-0 fw-bolder text-black">Cost</p>
+                                                        </td>
+                                                        <td>
+                                                            <p class="mb-0">: {asset.cost}</p>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td width="200">
+                                                            <p class="mb-0 fw-bolder text-black">Purchase Date</p>
+                                                        </td>
+                                                        <td>
+                                                            <p class="mb-0">: {formatDate(asset.purchaseDate)}</p>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td width="200">
+                                                            <p class="mb-0 fw-bolder text-black">Description</p>
+                                                        </td>
+                                                        <td>
+                                                            <p class="mb-0">: {asset.description}</p>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td bgcolor="#f2f3f4" width="200">
+                                                            <p class="mb-0 fw-bolder">Insurance</p>
+                                                        </td>
+                                                        <td>
+                                                            <p class="mb-0">: {asset.takeInsurance}</p>
+                                                        </td>
+                                                    </tr>
+                                                    <h6 className=' m-0 text-primary fw-bolder p-2'>Asset Location wise ----</h6>
+                                                    {assetDetails.map((assetDetail, index) => (
+                                                        <React.Fragment key={index}>
+                                                            <tr>
+                                                                <td bgcolor="#f2f3f4" width="200">
+                                                                    <p className="mb-0 fw-bolder">Location</p>
+                                                                </td>
+                                                                <td bgcolor="#f2f3f4" >
+                                                                    <p className="mb-0">: {assetDetail.location}</p>
+                                                                    <p>&nbsp; Quantity :{assetDetail.quantity}</p>
 
-                                                            </td>
-                                                        </tr>
+                                                                </td>
+                                                            </tr>
 
-                                                    </React.Fragment>
-                                                ))}
-                                            </tbody>
-                                        </table>
+                                                        </React.Fragment>
+                                                    ))}
+                                                </tbody>
+                                            </table>
+                                        </div>
                                     </div>
                                     {/* Image Section */}
                                     <div class="col-md-3 pt-2 text-center">
@@ -461,7 +506,7 @@ const AssetDesc = ({ asset, onClose }) => {
                             {/* History Tab Content */}
                             {/* History Tab Content */}
                             <div className="tab-pane fade" id="history" role="tabpanel" aria-labelledby="history-tab">
-                                <div className='col-md-12' style={{ maxHeight: "450px", overflowY: "auto" }}>
+                                <div className='col-md-12 p-0' style={{ maxHeight: "450px", overflowY: "auto" }}>
                                     <table className="table table-striped table-bordered" style={{ width: "100%" }}>
                                         <thead style={{ position: "sticky", top: "0", zIndex: "1", backgroundColor: "#fff" }}>
                                             <tr>
@@ -478,7 +523,7 @@ const AssetDesc = ({ asset, onClose }) => {
                                         <tbody>
                                             {purchasehistory.length === 0 ? (
                                                 <tr>
-                                                    <td colSpan="7" className="text-center">No Attendance Found. First Select the Employee.</td>
+                                                    <td colSpan="7" className="text-center">No Purchase History.</td>
                                                 </tr>
                                             ) : (
                                                 purchasehistory.map((event) => (
@@ -517,7 +562,7 @@ const AssetDesc = ({ asset, onClose }) => {
 
                             {/* Maintenance Tab Content */}
                             <div className="tab-pane fade" id="maintenance" role="tabpanel" aria-labelledby="maintenance-tab">
-                                <div className='col-md-12' style={{ maxHeight: "450px", overflowY: "auto" }}>
+                                <div className='col-md-12 p-0' style={{ maxHeight: "450px", overflowY: "auto" }}>
                                     <table className="table table-striped table-bordered" style={{ width: "100%" }}>
                                         <thead style={{ position: "sticky", top: "0", zIndex: "1", backgroundColor: "#fff" }}>
                                             <tr>
@@ -534,15 +579,15 @@ const AssetDesc = ({ asset, onClose }) => {
                                         <tbody>
                                             {maintenanceHistory.length === 0 ? (
                                                 <tr>
-                                                    <td colSpan="8" className="text-center">No Attendance Found. First Select the Employee.</td>
+                                                    <td colSpan="8" className="text-center">No Maintenencance Details.</td>
                                                 </tr>
                                             ) : (
                                                 maintenanceHistory.map((event) => (
                                                     <tr key={event.event_id}>
                                                         <td>
                                                             <img
-                                                                src={event.assetPhoto}
-                                                                style={{ width: "90px" }}
+                                                                src={`${process.env.REACT_APP_LOCAL_URL}/uploads/assets/${event.assetPhoto}`}
+                                                                style={{ width: "90px" }} className="asset-image"
                                                                 alt="Asset"
                                                             />
                                                         </td>
@@ -583,7 +628,7 @@ const AssetDesc = ({ asset, onClose }) => {
 
                             {/* Insurence Tab Content */}
                             <div className="tab-pane fade" id="insurence" role="tabpanel" aria-labelledby="insurence-tab">
-                                <div className='col-md-12' style={{ maxHeight: "450px", overflowY: "auto" }}>
+                                <div className='col-md-12 p-0' style={{ maxHeight: "450px", overflowY: "auto" }}>
                                     <table className="table table-striped table-bordered" style={{ width: "100%" }}>
                                         <thead style={{ position: "sticky", top: "0", zIndex: "1", backgroundColor: "#fff" }}>
                                             <tr>
@@ -599,15 +644,15 @@ const AssetDesc = ({ asset, onClose }) => {
                                         <tbody>
                                             {insurence.length === 0 ? (
                                                 <tr>
-                                                    <td colSpan="7" className="text-center">No Attendance Found. First Select the Employee.</td>
+                                                    <td colSpan="7" className="text-center">No Insurance Details.</td>
                                                 </tr>
                                             ) : (
                                                 insurence.map((event) => (
                                                     <tr key={event.event_id}>
                                                         <td>
                                                             <img
-                                                                src={event.assetPhoto}
-                                                                style={{ width: "90px" }}
+                                                                src={`${process.env.REACT_APP_LOCAL_URL}/uploads/assets/${event.assetPhoto}`}
+                                                                style={{ width: "90px" }} className="asset-image"
                                                                 alt="Asset"
                                                             />
                                                         </td>
@@ -630,7 +675,7 @@ const AssetDesc = ({ asset, onClose }) => {
 
                             {/* Insurence History Tab Content */}
                             <div className="tab-pane fade" id="insurenceHistory" role="tabpanel" aria-labelledby="insurenceHistory-tab">
-                                <div className='col-md-12' style={{ maxHeight: "450px", overflowY: "auto" }}>
+                                <div className='col-md-12 p-0' style={{ maxHeight: "450px", overflowY: "auto" }}>
                                     <table className="table table-striped table-bordered" style={{ width: "100%" }}>
                                         <thead style={{ position: "sticky", top: "0", zIndex: "1", backgroundColor: "#fff" }}>
                                             <tr>
@@ -646,15 +691,15 @@ const AssetDesc = ({ asset, onClose }) => {
                                         <tbody>
                                             {assetInsurenceHistory.length === 0 ? (
                                                 <tr>
-                                                    <td colSpan="7" className="text-center">No Attendance Found. First Select the Employee.</td>
+                                                    <td colSpan="7" className="text-center">No Asset Insurance .</td>
                                                 </tr>
                                             ) : (
                                                 assetInsurenceHistory.map((event) => (
                                                     <tr key={event.event_id}>
                                                         <td>
                                                             <img
-                                                                src={event.assetPhoto}
-                                                                style={{ width: "90px" }}
+                                                                src={`${process.env.REACT_APP_LOCAL_URL}/uploads/assets/${event.assetPhoto}`}
+                                                                style={{ width: "90px" }} className="asset-image"
                                                                 alt="Asset"
                                                             />
                                                         </td>
@@ -689,7 +734,7 @@ const AssetDesc = ({ asset, onClose }) => {
                             </div>
                             {/* Transfer Asset Tab Content */}
                             <div className="tab-pane fade" id="transferAsset" role="tabpanel" aria-labelledby="transferAsset-tab">
-                                <div className='col-md-12' style={{ maxHeight: "450px", overflowY: "auto" }}>
+                                <div className='col-md-12 p-0' style={{ maxHeight: "450px", overflowY: "auto" }}>
                                     <table className="table table-striped table-bordered" style={{ width: "100%" }}>
                                         <thead style={{ position: "sticky", top: "0", zIndex: "1", backgroundColor: "#fff" }}>
                                             <tr>
@@ -707,7 +752,7 @@ const AssetDesc = ({ asset, onClose }) => {
                                         <tbody>
                                             {assettransferhistory.length === 0 ? (
                                                 <tr>
-                                                    <td colSpan="8" className="text-center">No Attendance Found. First Select the Employee.</td>
+                                                    <td colSpan="8" className="text-center">No Transfer History.</td>
                                                 </tr>
                                             ) : (
                                                 assettransferhistory.map((transfer) => (
@@ -747,7 +792,7 @@ const AssetDesc = ({ asset, onClose }) => {
                             {/* lost Asset Tab Content */}
                             <div className="tab-pane fade" id="lostAsset" role="tabpanel" aria-labelledby="lostAsset-tab">
                                 <div>
-                                    <div className='col-md-12' style={{ maxHeight: "450px", overflowY: "auto" }}>
+                                    <div className='col-md-12 p-0' style={{ maxHeight: "450px", overflowY: "auto" }}>
                                         <table className="table table-striped table-bordered" style={{ width: "100%" }}>
                                             <thead style={{ position: "sticky", top: "0", zIndex: "1", backgroundColor: "#fff" }}>
                                                 <tr>
@@ -765,7 +810,7 @@ const AssetDesc = ({ asset, onClose }) => {
                                             <tbody>
                                                 {assetlosthistory.length === 0 ? (
                                                     <tr>
-                                                        <td colSpan="8" className="text-center">No Attendance Found. First Select the Employee.</td>
+                                                        <td colSpan="8" className="text-center">No Los History.</td>
                                                     </tr>
                                                 ) : (
                                                     assetlosthistory.map((lost) => (

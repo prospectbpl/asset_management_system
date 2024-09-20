@@ -78,8 +78,11 @@ const ApplicationSetting = ({ handleLogout, username }) => {
                     'Content-Type': 'multipart/form-data'
                 }
             });
-            fetchData();
-            toast.success('Data saved successfully');
+            setTimeout(() => {
+                toast.success('Data saved successfully');
+                window.location.reload();
+            }, 1000); // 1 second delay
+            
         } catch (error) {
             console.error('Error saving data:', error);
             toast.error('Failed to save data');
@@ -88,7 +91,7 @@ const ApplicationSetting = ({ handleLogout, username }) => {
 
 
     return (
-        <div className='d-flex w-100 h-100 '>
+        <div className='d-flex w-100 bg-white h-100 '>
             <Sidebar />
             <div className='w-100 bg-white'>
                 <SearchBar username={username} handleLogout={handleLogout} />
@@ -139,7 +142,7 @@ const ApplicationSetting = ({ handleLogout, username }) => {
                                         <div className="form-group row">
                                             <label className="col-xs-3 col-form-label">Favicon<span style={{ color: "red"}}>*</span></label>
                                             <div className="col-xs-9  d-flex">
-                                                <div className="me-2" style={{ width: "90px" }}>
+                                                <div className="me-2 asset-image">
                                                     <img src={`${process.env.REACT_APP_LOCAL_URL}/uploads/settings/${favicon}`} alt="Favicon" className="img-thumbnail" />
                                                 </div>
 

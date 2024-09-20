@@ -88,7 +88,7 @@ function CategoryAssetReport({ handleLogout, username }) {
     };
 
     return (
-        <div className='d-flex w-100 h-100'>
+        <div className='d-flex w-100 bg-white h-100'>
             {showSidebar && <Sidebar />}
             <div className='w-100 bg-white'>
                 {showSearchBar && <SearchBar className="searchbarr" username={username} handleLogout={handleLogout} />}
@@ -142,7 +142,7 @@ function CategoryAssetReport({ handleLogout, username }) {
                                                                 <td>
                                                                     <img
                                                                         src={`${process.env.REACT_APP_LOCAL_URL}/uploads/assets/${asset.picture}`}
-                                                                        style={{ width: "90px" }}
+                                                                        style={{ width: "90px" }} className="asset-image"
                                                                         alt="Asset"
                                                                     />
                                                                 </td>

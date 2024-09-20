@@ -4,6 +4,8 @@ import React from 'react';
 import { useEffect, useState } from 'react';
 import "./AssetPrintPreview.css"
 import assetImage from '../../images/default.jpg';
+import logo from '../../images/Logo/logo.png';
+
 
 function AssetPintPreview({ record, onClose }) {
     console.log("record", record);
@@ -259,7 +261,7 @@ function AssetPintPreview({ record, onClose }) {
                                 <img
                                     src={setting.landingPageLogo
                                         ? `${process.env.REACT_APP_LOCAL_URL}/uploads/settings/${setting.landingPageLogo}`
-                                        : <h4>Asset Managment</h4>}
+                                        : logo}
                                     style={{ objectFit: "cover", width: "100%", height: "100%" }}
                                     alt="LOGO"
                                 />
@@ -485,7 +487,7 @@ function AssetPintPreview({ record, onClose }) {
                                             <td>
                                                 <img
                                                      src={`${process.env.REACT_APP_LOCAL_URL}/uploads/assets/${event.assetPhoto}`}
-                                                    style={{ width: "90px" }}
+                                                    style={{ width: "90px" }} className="asset-image"
                                                     alt="Asset"
                                                 />
                                             </td>
@@ -535,7 +537,7 @@ function AssetPintPreview({ record, onClose }) {
                                                 <img
                                                 
                                                 src={`${process.env.REACT_APP_LOCAL_URL}/uploads/assets/${event.assetPhoto}`}
-                                                    style={{ width: "90px" }}
+                                                    style={{ width: "90px" }} className="asset-image"
                                                     alt="Asset"
                                                 />
                                             </td>
@@ -579,7 +581,7 @@ function AssetPintPreview({ record, onClose }) {
                                             <td>
                                                 <img
                                                     src={`${process.env.REACT_APP_LOCAL_URL}/uploads/assets/${event.assetPhoto}`}
-                                                    style={{ width: "90px" }}
+                                                    style={{ width: "90px" }} className="asset-image"
                                                     alt="Asset"
                                                 />
                                             </td>
