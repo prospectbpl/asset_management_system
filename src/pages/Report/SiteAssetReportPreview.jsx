@@ -1,7 +1,7 @@
 
 
 import React, { useEffect, useState } from 'react';
-import myLogo from '../../images/salary.jpg'; // Updated image reference for advances
+import myLogo from '../../images/Asset.jpg'; // Updated image reference for advances
 import axios from 'axios';
 
 const SiteAssetReportPreview = ({ record, onClose }) => {

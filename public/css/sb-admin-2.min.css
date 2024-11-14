@@ -11099,8 +11099,8 @@ a:focus {
 }
 
 .bg-gradient-primary {
-    background-color: #003f88;
-    background-image: linear-gradient(180deg, #003f88 10%, #00509d 100%);
+    background-color: rgb(40 135 167);
+    background-image: linear-gradient(180deg, rgb(40 135 167) 19%, #35A9D0 93%);
     background-size: cover;
 }
 
@@ -11582,7 +11582,7 @@ a:focus {
     text-transform: uppercase;
     font-weight: 800;
     font-size: .65rem;
-    color: #ef233c;
+    color: rgb(40 135 167);
     border-bottom: 1px solid #00509d;
 }
 
@@ -11925,11 +11925,11 @@ a:focus {
 }
 
 .sidebar-dark .nav-item .nav-link {
-    color: rgba(255, 255, 255, .8)
+    color: white;
 }
 
 .sidebar-dark .nav-item .nav-link i {
-    color: rgba(255, 255, 255, .3)
+    color: white
 }
 
 .sidebar-dark .nav-item .nav-link:active,
@@ -11957,7 +11957,7 @@ a:focus {
 }
 
 .sidebar-dark #sidebarToggle {
-    background-color: #00509d;
+    background-color: rgb(40 135 167);
 }
 
 .sidebar-dark #sidebarToggle::after {
@@ -12743,7 +12743,645 @@ body.sidebar-toggled footer.sticky-footer {
     z-index: 1050 !important; /* Ensure the calendar has a higher z-index */
 }
 
+/* these take from the petty cash manager  */
 
+.custom-modal {
+    background-color: #35A9D0 !important;
+    border-radius: 10px !important;
+    height: 500px !important;
+    position: "absolute" !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    z-index: 999 !important;
+    border: 1px solid black !important;
+}
+
+.incustom-modal {
+    width: 100%;
+    height: 100%;
+}
+
+.incustom-modal::-webkit-scrollbar {
+    display: none;
+}
+
+.modalnav {
+    width: 100% !important;
+    height: 15% !important;
+    background-color: #f3f3f3 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: start !important;
+    justify-content: center !important;
+    border-bottom: 1px solid rgb(116, 116, 116) !important;
+    padding: 1px 20px !important;
+}
+
+.modalnav h2 {
+    font-weight: 600 !important;
+}
+
+.modalmain {
+    width: 100% !important;
+    height: 70% !important;
+    overflow-y: auto !important;
+    background-color: white !important;
+    padding: 10px 10px !important;
+    display: flex !important;
+    justify-content: space-between !important;
+}
+
+.modalfooter {
+    width: 100% !important;
+    height: 15% !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: start !important;
+    justify-content: center !important;
+    border-top: 1px solid rgb(116, 116, 116) !important;
+    padding: 1px 20px !important;
+    background-color: #F3F3F3 !important;
+}
+
+.asset-title {
+    color: #35A9D0;
+    font-size: clamp(1rem, 2.5vw, 2rem);
+    /* Ensures text scales between min and max sizes */
+    white-space: nowrap;
+    /* Prevents the text from wrapping */
+    overflow: hidden;
+    /* Hides overflow */
+    text-overflow: ellipsis;
+    /* Adds "..." if text is too long sidebar  #09A1C4*/
+    width: 100%;
+}
+
+.logoo {
+    width: 100%;
+    height: 100%;
+}
+
+.employee-picture {
+    width: 15%;
+    height: 100%;
+}
+
+.salary_logo {
+    /* background-color: green; */
+    width: 30%;
+    height: 100%;
+}
+
+.salary_img_logo {
+    width: 100%;
+    /* Image takes full width of the container */
+    height: 100%;
+    /* padding: 5px;  */
+    object-fit: cover;
+}
+
+.img-logo {
+    width: 100%;
+    /* Image takes full width of the container */
+    height: 100%;
+    padding: 5px;
+    object-fit: cover;
+}
+
+.employee-image {
+    width: 90px;
+    height: 90px;
+    object-fit: cover;
+    /* Ensures the image fits without stretching */
+    border-radius: 4px;
+    padding: 1px;
+    border: 1px solid #ddd;
+}
+
+.login-logo {
+    width: 15vw;
+    height: 4vw;
+    padding: 2px;
+}
+
+.img-login-logo {
+    width: 100%;
+    /* Image takes full width of the container */
+    height: 100%;
+    padding: 1px;
+    /* background-color: green;  */
+    object-fit: cover;
+}
+
+/* Login Signup  */
+
+.login-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100vw;
+    height: 100vh;
+}
+
+.main-container {
+    width: 60%;
+    height: 80%;
+    border-radius: 10px;
+    display: flex;
+    overflow: hidden;
+}
+
+.main-container-forgotpassward {
+    width: 30%;
+    height: 80%;
+    border-radius: 10px;
+    display: flex;
+    overflow: hidden;
+}
+
+.forgot-main {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    /* align-items: center; #35A9D0 */
+    background-color: white;
+    justify-content: space-between;
+    /* padding: 1 vw; */
+}
+
+.login-left {
+    width: 50%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    /* align-items: center; */
+    background-color: white;
+    justify-content: space-between; 
+    /* padding: 1 vw; */
+}
+
+.heading p {
+    font-size: 13px;
+}
+
+.signin_logo {
+    width: 10vw;
+    height: 3vw;
+    padding: 2px;
+}
+
+.img-signin-logo {
+    width: 100%;
+    /* Image takes full width of the container */
+    height: 100%;
+    padding: 1px;
+    /* background-color: green;  */
+    object-fit: cover;
+}
+
+.header {
+    padding: 5px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    /* background-color: aqua; */
+}
+
+.company_logo {
+    display: none;
+}
+
+.main-box {
+    width: 70%;
+}
+.login-right {
+    width: 50%;
+    height: 100%;
+    /* Use full viewport height */
+    position: relative;
+    overflow: hidden;
+    background-color: #35A9D0;
+    color: white;
+    /* Ensure no overflow of child elements */
+}
+
+.loginimage {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    position: absolute;
+    top: 0;
+    left: 0;
+    /* opacity: 0; */
+    z-index: 1;
+}
+
+.login-favicon {
+    width: 20%;
+    object-fit: contain;
+}
+
+.right-div {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: space-between;
+    position: relative;
+    padding: 10px;
+    z-index: 2;
+    color: rgb(210, 210, 210);
+}
+
+/* Login Signup  loginimg */
+/* Salary Print */
+.salary-favicon {
+    /* background-color: green; */
+    width: 100%;
+    height: 100%;
+}
+
+.logo-pc {
+    display: block;
+}
+
+.logo-phone {
+    display: none;
+}
+
+/* sidebar footer */
+.sidebar-footer {
+    width: 60%;
+}
+
+/* SalesList.css */
+.react-datepicker-popper {
+    z-index: 1050 !important;
+    /* Ensure the calendar has a higher z-index */
+}
+
+/* Dashboard styling */
+.nunito {
+    font-family: "Nunito", sans-serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+    font-size: 1vw;
+    font-weight: 700;
+}
+/* Employee Details */
+.button_details {
+    background-color: transparent;
+    border: 1px solid white;
+    border-radius: 5px;
+    color: white;
+    padding: 3px 10px;
+    font-size: 1vw;
+    transition: background-color 0.3s ease, color 0.3s ease; /* Smooth transition for background color and text color */
+}
+
+.button_details:hover {
+    background-color: white; /* Change background color on hover */
+    color: #35A9D0; /* Change text color on hover */
+}
+
+/* Ensure the selected option text remains visible */
+.button_details option {
+    background-color: #35A9D0; /* Darker background for dropdown options */
+    color: white; /* Text color for options */
+}
+
+.button_action {
+    background-color: #35A9D0;
+    border: 1px solid white;
+    border-radius: 5px;
+    color: white;
+    padding: 3px 10px;
+    font-size: 1vw;
+}
+
+.pagenotfound{
+    font-family: "Nunito", sans-serif;
+    font-weight: 700;
+}
+/* new */
+.loginimg{
+    width: 50%;
+    height: 15%;
+}
+.signinimg{
+    width: 40%;
+    height: 10%;
+} 
+.footer-img{
+    display: none;
+}
+
+
+/* login page for the responsive content */
+/* Responsive behavior */
+@media screen and (max-width: 768px) {
+    .main-container {
+        width: 100%;
+        height: 100%;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .header {
+        width: 100%;
+        height: 10%;
+        display: flex;
+        align-items: start;
+        justify-content: start;
+        display: none;
+    }
+    .footer-phone{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+    }
+
+    .login-left {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+    .logo-phone {
+        display: block;
+    }
+
+    .company_logo {
+        display: block;
+        width: 40%;
+        height: 40%;
+        margin: 5px;
+    }
+
+    .heading h2 {
+        margin-top: 3px;
+        font-size: 20px;
+    }
+
+    .main-box {
+        width: 90%;
+    }
+
+    .login-right {
+        width: 0%;
+        height: 0%;
+        display: hidden;
+    }
+    .main-container-forgotpassward {
+        width: 100%;
+        height: 100%;
+        border-radius: 10px;
+        display: flex;
+        overflow: hidden;
+    }
+    .login-container {
+        display: flex;
+        /* align-items: start; */
+        /* justify-content: center; */
+        width: 100vw;
+        height: 100vh;
+    }
+    .mainphone{
+    margin-top: 30vw;
+    }
+    .footer-img{
+        display: block;
+    }
+
+}
+
+
+
+
+/* for userDashboard */
+.topinnerbox{
+    width: 30%;
+}
+.tabledata{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+}
+.tabledetails{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 3px;
+}
+.tableinnerdata{
+    display: flex;
+    align-items: center; 
+    gap: 5px;
+}
+.forresponsive{
+    max-height: 550px;
+    overflow-y: auto;
+}
+.searchbarheading{
+    margin-left: 90px;
+    margin-bottom: 0px;
+    font-family: "Nunito", sans-serif;
+    font-size: 2vw;
+    font-weight: 800;
+}
+.userentry{
+    display: none;
+}
+.userledgertable{
+    display: flex;
+    align-items: center; 
+    justify-content: space-between;
+}
+.useremployee-image {
+    width: 50%;
+    /* height: 50%; */
+    object-fit: cover;
+    padding: 1px;
+    border: 1px solid #ddd;
+}
+.mobileline{
+    display: none;
+}
+.dashboardmain{
+    padding: 0.5vw;
+}
+.dashboardcontainer{
+    padding: 5px;
+}
+
+/* dashboard */
+.usedashboardheading{
+    display: flex;
+    align-items: start;
+    flex-direction: column;
+    gap: 1px;
+    padding: 8px 20px;
+
+}
+.totalcashdetailsbig{
+    display: block;
+}
+.totalcashdetailssmall{
+    display: none;
+}
+.error{
+    width: 70%;
+}
+.errorbutton{
+    background-color: #FFAD14;
+    padding: 5px 10px;
+    border-radius: 10px;
+    color: white;
+    box-shadow: 1px 1px 5px black;
+}
+
+
+@media screen and (max-width: 768px) {
+    .topbox{
+        flex-direction: column;
+        gap: 1vw;
+    }
+    .topinnerbox{
+        width: 100%;
+    }
+    .userfont{
+        /* background-color: red; */
+        font-size: 5vw;
+    }
+    .tablefont{
+        font-size: 3vw;
+    }
+    .tabledata{
+        flex-direction: column;
+        align-items: start;
+        justify-content: start;
+        gap:"1px"
+    }
+    .forresponsive{
+        max-height: 710px;
+        overflow-y: auto;
+    }
+    .tableinnerdata{
+        display: flex;
+        align-items: start;
+        flex-direction: column;
+        gap: 5px;
+    }
+    .tabledetails{
+        align-items: start;
+    }
+    .searchbarheading{
+        margin-left: 30px;
+        font-size: 4vw;
+    }
+    .userentry{
+        display: block;
+        border-radius: 10px;
+        box-shadow: 1px 1px solid black;
+        padding: 8px;
+        background: linear-gradient(9deg, rgba(64,163,160,1) 19%, rgba(152,255,252,1) 93%);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+    }
+  .userbutton {
+        background-color: transparent;
+        border: 1px solid white;
+        border-radius: 5px;
+        color: white;
+        padding: 1px 5px;
+        font-size: 3.5vw;
+        transition: background-color 0.3s ease, color 0.3s ease; /* Smooth transition for background color and text color */
+    }
+    
+    .userbutton:hover {
+        background-color: white; /* Change background color on hover */
+        color: #35A9D0; /* Change text color on hover */
+    }
+    .userledgertable{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        /* justify-content: ; */
+    }
+    .mobileline{
+        display: block;
+        border-top: 1px solid white;
+        padding-top: 5px;
+    }
+    .button_details {
+        background-color: transparent;
+        border: 1px solid white;
+        border-radius: 5px;
+        color: white;
+        padding: 3px 5px;
+        font-size: 4vw;
+        transition: background-color 0.3s ease, color 0.3s ease; /* Smooth transition for background color and text color */
+    }
+    
+    .button_details:hover {
+        background-color: white; /* Change background color on hover */
+        color: #35A9D0; /* Change text color on hover */ 
+    }
+    .useremployee-image {
+        width: 100%;
+        /* height: 50%; */
+        object-fit: cover;
+        padding: 1px;
+        border: 1px solid #ddd;
+    }
+    .dashboardmain{
+        margin: 0px 0px;
+        padding: 0px 0px;
+    }
+    .dashboardcontainer{
+        padding: 10px 10px;
+    }
+    .usedashboardheading{
+        display: flex;
+        align-items:center;
+        justify-content: center;
+        flex-direction: column;
+        gap: 1px;
+        padding: 8px 20px;
+    
+    }
+    .totalcashdetailsbig{
+        display: none;
+    }
+    .totalcashdetailssmall{
+        display: block;
+    }
+    .error{
+        height: 100%;
+    }
+    .pagenotfound{
+        font-family: "Nunito", sans-serif;
+        font-weight: 700;
+        padding: 1vw;
+    }
+}
+
+
+/* .login-container #004691 */
+/* these take from the petty cash manager  */
 
 
 

@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import { Button, TextField, Paper, Typography, Link } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import './login.css'; // Import your external CSS file
-import myLogo from '../images/salary.jpg';
+// import './login.css'; // Import your external CSS file
+import myLogo from '../images/Asset.jpg';
+import loginimg from '../images/loginimg.png';
+import favicon from '../images/AssetTrans.png';
 import axios from 'axios';
-import logo from '../images/Logo/logo.png';  //logo
-import { Container } from '@mui/system';
 
 const Login = () => {
   const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -18,6 +18,7 @@ const Login = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    setIsLoading(true);
 
     try {
       const response = await fetch(`${process.env.REACT_APP_LOCAL_URL}/login`, {
@@ -40,6 +41,7 @@ const Login = () => {
         localStorage.setItem('username', loginDetails.username);
         localStorage.setItem('fetchemail', loginDetails.email);
         localStorage.setItem('employeeId', loginDetails.employeeId);
+        localStorage.setItem('projectId', loginDetails.projectId);
         localStorage.setItem('userType', loginDetails.userType);
 
         // Log the fetched data for debugging
@@ -60,11 +62,9 @@ const Login = () => {
     } catch (error) {
       toast.error('Failed to login');
       setError('Invalid email or password');
+    } finally {
+      setIsLoading(false);
     }
-  };
-
-  const handleForgotPassword = () => {
-    navigate('/forgotpassword');
   };
 
   const [dashboardLogo, setDashboardLogo] = useState([]);
@@ -78,82 +78,104 @@ const Login = () => {
         console.error('Error fetching Dashboard Logo', error);
       }
     };
-
     fetchDashboardLogo();
   }, []);
 
   return (
-    <div className="container-fluid d-flex flex-column justify-content-around align-items-center bg-white" style={{ minHeight: "100vh" }}>
-      <ToastContainer /> {/* Toast container */}
-      <nav className="login-logo">
-        <div style={{width:"100%",height:"100%"}} className=''>
-          <img
-            src={dashboardLogo.landingPageLogo
-              ? `${process.env.REACT_APP_LOCAL_URL}/uploads/settings/${dashboardLogo.landingPageLogo}`
-              : logo}
-              className='img-login-logo'
-              alt="LOGO"
-          />
+    <div style={{ backgroundColor: "#f9f9f9" }} className='login-container '>
+      <div className='main-container shadow-sm'>
+        <ToastContainer /> {/* Toast container */}
+        <div className='login-left'>
+          <div className='content d-flex flex-column align-items-center justify-content-center mainphone'>
+            <nav className="loginimg mt-4">
+              <div style={{ width: "100%", height: "100%" }} className=''>
+                <img
+                  src={dashboardLogo.landingPageLogo
+                    ? `${process.env.REACT_APP_LOCAL_URL}/uploads/settings/${dashboardLogo.landingPageLogo}`
+                    : myLogo}
+                  className='img-signin-logo'
+                  alt="LOGO"
+                />
+              </div>
+            </nav>
+            <div className='text-center heading mt-2'>
+              <h3 style={{ color: "#35A9D0" }} className="title-detail fw-bolder text-uppercase font-bold m-0">Asset Management</h3>
+              <p className=''>Track, Control, Optimize – Simplify Your Asset Management in Real-Time.</p>
+            </div>
+            <div style={{ boxShadow: "2px 2px 10px black" }} className=" main-box d-flex flex-column justify-content-around align-items-center gap-3  p-4 rounded-3 text-center ">
+              <h4 style={{ color: "#35A9D0" }} className="title-detail fw-bolder text-uppercase font-bold m-0">Login in</h4>
+              <form onSubmit={handleSubmit} autoComplete="off" noValidate="novalidate">
+                <div className="row">
+                  <div className="form-group">
+                    <input id="email" name="email"
+                      autoComplete="email"
+                      autoFocus
+                      type="email"
+                      placeholder="Email" value={email}
+                      onChange={(e) => setEmail(e.target.value)} className="form-control" required />
+                  </div>
+                  <div className="form-group">
+                    <input name="password" type="password" id="password" placeholder="Password"
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      className="form-control" required />
+                  </div>
+                  <div className="form-group">
+                    <button type="submit" className="btn btn-primary" disabled={isLoading}>
+                      {isLoading ? 'Loading...' : 'Sign In'}
+                    </button>
+                  </div>
+                  <hr className='m-1 p-0' />
+                  <div className="">
+
+                    <Link style={{ cursor: 'pointer' }} to="/forgotpassword">
+                      Forgot password?
+                    </Link>
+                  </div>
+                </div>
+
+              </form>
+            </div>
+          </div>
+          <div>
+            <div className="d-flex align-items-center justify-content-center">
+              <div style={{ width: "50%", height: "100%" }} className='footer-img'>
+                <img
+                  src={myLogo}
+                  className='img-signin-logo'
+                  alt="LOGO"
+                />
+              </div>
+            </div>
+            <p className="text-center text-body-secondary">Version 1.0 &copy; Developed by Prospect Digital</p>
+          </div>
         </div>
-      </nav>
-      <Container className="d-flex flex-column justify-content-between align-items-center gap-3">
-        <h1 className='text-black ml-3'>HRM Software.</h1>
-        <Paper className="login-paper p-4" style={{ borderRadius: "20px" }} elevation={3}>
-          <Typography component="h1" variant="h5" style={{ textAlign: "center" }}>
-            Sign in
-          </Typography>
-          <form className="login-form" onSubmit={handleSubmit}>
-            <TextField
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              id="email"
-              label="Email Address"
-              name="email"
-              autoComplete="email"
-              autoFocus
-              type="email"
-              placeholder="Email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-            <TextField
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              name="password"
-              label="Password"
-              type="password"
-              id="password"
-              autoComplete="current-password"
-              placeholder="Password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              color="primary"
-              className="login-button"
-            >
-              Sign In
-            </Button>
-            <Typography variant="body2" className='text-center m-4'>
-              <Link onClick={handleForgotPassword} className="signup-link">
-                Forgot password?
-              </Link>
-            </Typography>
-          </form>
-        </Paper>
-      </Container>
-      <footer className="">
-        <p className="text-center text-body-secondary border-top pt-3 ">Version 1.0 &copy; Developed by Prospect Digital</p>
-      </footer>
+        <div className='login-right d-flex align-item-end justify-content-end'>
+          <img className='loginimage' src={loginimg} alt="Background" />
+          <div className='right-div'>
+            <img className='login-favicon' src={favicon} alt="Background" />
+            <div style={{ color: "white" }}>
+              <h4 className='fw-bolder'>Asset Management</h4>
+              <p className='fw-bold'>Track, Control, Optimize – Simplify Your Asset Management in Real-Time.</p>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
 
 export default Login;
+
+
+
+
+
+
+
+
+
+
+
+
+
